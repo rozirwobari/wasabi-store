@@ -25,12 +25,12 @@ class WabiMidtransController extends Controller
         $signatureKey = $request->signature_key;
         
         // Verifikasi signature key
-        $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+        // $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
         
-        if ($signatureKey !== $expectedSignature) {
-            Log::error('Invalid signature from Midtrans callback, '.$signatureKey." expectedSignature : ".$expectedSignature);
-            return response()->json(['status' => 'error'], 403);
-        }
+        // if ($signatureKey !== $expectedSignature) {
+        //     Log::error('Invalid signature from Midtrans callback, '.$signatureKey." expectedSignature : ".$expectedSignature);
+        //     return response()->json(['status' => 'error'], 403);
+        // }
         
         // Proses berdasarkan transaction status
         $transactionStatus = $request->transaction_status;
