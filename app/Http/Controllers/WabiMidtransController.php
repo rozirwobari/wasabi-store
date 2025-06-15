@@ -13,7 +13,7 @@ class WabiMidtransController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function callback()
+    public function callback(Request $request)
     {
         // Ambil server key dari config
         $serverKey = config('midtrans.server_key');
