@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WabiMidtrans;
 use Illuminate\Http\Request;
 
+use App\Models\OrdersModel;
 use Illuminate\Support\Facades\Log;
 
 class WabiMidtransController extends Controller
@@ -74,7 +75,14 @@ class WabiMidtransController extends Controller
         
         // Log callback untuk debugging
         Log::info('Midtrans callback received', $request->all());
-        
+
+        $orders = OrdersModel::firstWhere('no_invoice', $orderId);
+        if ($orders) {
+            $orders->update([
+                'status' => 2,
+                'data_midtrans' => json_decode($request->all())
+            ]);
+        }
         return response()->json(['status' => 'ok']);
     }
 

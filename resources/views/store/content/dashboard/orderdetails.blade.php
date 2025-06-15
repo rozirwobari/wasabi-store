@@ -179,7 +179,7 @@
     <script type="text/javascript">
         function UpdateDatas(result) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', `{{ url('update-orders') }}`, true);
+            xhr.open('POST', `{{ url('api/midtrans/notification') }}`, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
             var data = JSON.stringify({
