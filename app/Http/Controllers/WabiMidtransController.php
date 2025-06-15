@@ -19,10 +19,10 @@ class WabiMidtransController extends Controller
         $serverKey = config('midtrans.server_key');
         
         // Ambil data dari callback
-        $orderId = $request->order_id;
-        $statusCode = $request->status_code;
-        $grossAmount = $request->gross_amount;
-        $signatureKey = $request->signature_key;
+        $orderId = $request->order_id ?? $request->no_invoice;
+        $statusCode = $request->status_code ?? $request->data->status_code;
+        $grossAmount = $request->gross_amount ?? $request->data->gross_amount;
+        $signatureKey = $request->signature_key ?? $request->data->signature_key;
         
         // Verifikasi signature key
         // $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
@@ -33,8 +33,8 @@ class WabiMidtransController extends Controller
         // }
         
         // Proses berdasarkan transaction status
-        $transactionStatus = $request->transaction_status;
-        $fraudStatus = $request->fraud_status ?? null;
+        $transactionStatus = $request->transaction_status ?? $request->data->no_invoice;
+        $fraudStatus = ($request->fraud_status ?? $request->data->fraud_status) ?? null;
         
         switch ($transactionStatus) {
             case 'capture':
@@ -74,7 +74,7 @@ class WabiMidtransController extends Controller
         }
         
         // Log callback untuk debugging
-        Log::info('Midtrans callback received', $request->all());
+        Log::info('Midtrans callback received', ($request->all()));
 
         $orders = OrdersModel::firstWhere('no_invoice', $orderId);
         if ($orders) {
