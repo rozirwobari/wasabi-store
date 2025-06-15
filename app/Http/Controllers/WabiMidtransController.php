@@ -80,7 +80,7 @@ class WabiMidtransController extends Controller
         if ($orders) {
             $orders->update([
                 'status' => 2,
-                'data_midtrans' => json_decode($request->all())
+                'data_midtrans' => json_encode($request->data)
             ]);
         }
         return response()->json(['status' => 'ok']);
