@@ -242,6 +242,7 @@ class WabiStoreController extends Controller
     {
         $carts = CartModel::where('user_id', auth()->id())->get();
         $items = [];
+        $generateInvoice = 'INV-WG-' . time();
         foreach ($carts as $cart) {
             $items[] = [
                 'id' => $cart->produk->id,
@@ -260,7 +261,7 @@ class WabiStoreController extends Controller
         $totalBayar = array_sum(array_column($items, 'total'));
         $transactionData = [
             'transaction_details' => [
-                'order_id' => 'WG-ORDER' . rand(),
+                'order_id' => $generateInvoice,
                 'gross_amount' => $totalBayar, // Uang yang dibayar
             ],
             'item_details' => $itemDetails,
@@ -274,7 +275,6 @@ class WabiStoreController extends Controller
         // dd($transactionData);
 
         try {
-            $generateInvoice = 'INV-WG-' . time();
             $snapToken = Snap::getSnapToken($transactionData);
             OrdersModel::create([
                 'user_id' => auth()->id(),
