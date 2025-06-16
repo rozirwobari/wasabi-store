@@ -37,51 +37,60 @@ class WabiMidtransController extends Controller
         $fraudStatus = ($request->fraud_status ?? $request->data['fraud_status']) ?? null;
         $status_code = 0;
         $reason = null;
+        $orders = OrdersModel::firstWhere('no_invoice', $orderId);
+        $tgl_transaksi = json_decode($orders->tgl_transaksi);
         switch ($transactionStatus) {
             case 'capture':
                 if ($fraudStatus == 'challenge') {
                     $status_code = 2;
+                    $tgl_transaksi["2"] = time();
                 } else if ($fraudStatus == 'accept') {
                     $status_code = 2;
+                    $tgl_transaksi["2"] = time();
                 }
                 break;
             case 'settlement':
                 $status_code = 2;
+                $tgl_transaksi["2"] = time();
                 break;
                 
             case 'pending':
                 $status_code = 1;
+                $tgl_transaksi["1"] = time();
                 break;
                 
             case 'deny':
                 $status_code = 404;
+                $tgl_transaksi["404"] = time();
                 $reason = "Pembayaran Ditolak";
                 break;
                 
             case 'expire':
                 $status_code = 404;
+                $tgl_transaksi["404"] = time();
                 $reason = "Pembayaran Kadaluarsa";
                 break;
                 
             case 'cancel':
                 $status_code = 404;
+                $tgl_transaksi["404"] = time();
                 $reason = "Pembayaran Dibatalkan";
                 break;
         }
 
         Log::info('Midtrans callback received', $request->all());
-
-        $orders = OrdersModel::firstWhere('no_invoice', $orderId);
         if ($orders) {
             $orders->update([
                 'status' => $status_code,
-                'data_midtrans' => ($reason ?? json_encode($request->data))
+                'data_midtrans' => ($reason ?? json_encode($request->data)),
+                'tgl_transaksi' => json_encode($tgl_transaksi),
             ]);
             if ($status_code >= 2) {
                 $orders->update([
-                'status' => 4,
-                'data_midtrans' => ($reason ?? json_encode($request->data))
-            ]);
+                    'status' => 4,
+                    'data_midtrans' => ($reason ?? json_encode($request->data)),
+                    'tgl_transaksi' => json_encode($tgl_transaksi),
+                ]);
             }
         }
         return response()->json(['status' => 'ok'], 200);
