@@ -16,18 +16,18 @@
                             </h2>
 
                             <div class="recent-orders">
-                                @php
-                                    $items = json_decode($orders, false);
-                                @endphp
                                 @if ($orders->isEmpty())
                                     <h5 class="text-center">Belum Ada Pesanan</h5>
                                 @else
                                     @foreach ($orders as $order)
+                                        @php
+                                            $items = json_decode($order->items, false);
+                                        @endphp
                                         <div class="order-item">
                                             <div class="order-info">
                                                 <h6><a href="{{ url('order-details/'.$order->no_invoice) }}">Order #{{ $order->no_invoice }}</a></h6>
                                                 <p>Tgl Pesanan : {{ \App\Helpers\WabiHelper::formatDate($order->created_at) }}</p>
-                                                <p>Items: {{ count($orders) }} | Total: Rp <b>{{ number_format($order->total, 0, ',', '.') }}</b></p>
+                                                <p>Items: {{ count($items) }} | Total: Rp <b>{{ number_format($order->total, 0, ',', '.') }}</b></p>
                                             </div>
                                             @if ($order->status >= 0 && $order->status <= 1)
                                                 <span class="order-status-badge status-pending">Pending</span>
