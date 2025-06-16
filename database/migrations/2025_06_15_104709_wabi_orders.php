@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0);
             $table->string('snap_token', 200)->nullable();
             $table->json('data_midtrans')->nullable();
+            $table->longText('tgl_transaksi')->nullable();
             $table->timestamps();
         });
     }
