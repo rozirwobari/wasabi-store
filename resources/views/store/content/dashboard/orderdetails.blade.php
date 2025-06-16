@@ -128,7 +128,7 @@
                                         class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Sampai</div>
-                                            <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game</div>
+                                            <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ \App\Helpers\WabiHelper::formatDate($orders->created_at) }}</div>
                                         </div>
                                     </div>
 
@@ -136,7 +136,7 @@
                                         class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Diambil</div>
-                                            <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game</div>
+                                            <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ \App\Helpers\WabiHelper::formatDate($orders->created_at) }}</div>
                                         </div>
                                     </div>
                                 </div>
