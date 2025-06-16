@@ -35,52 +35,48 @@ class WabiMidtransController extends Controller
         // Proses berdasarkan transaction status
         $transactionStatus = $request->transaction_status ?? $request->data['no_invoice'] ?? null;
         $fraudStatus = ($request->fraud_status ?? $request->data['fraud_status']) ?? null;
-        
+        $status_code = 0;
+        $reason = null;
         switch ($transactionStatus) {
             case 'capture':
                 if ($fraudStatus == 'challenge') {
-                    // Transaksi di-challenge, perlu review manual
-                    $this->updateOrderStatus($orderId, 'challenge');
+                    $status_code = 2;
                 } else if ($fraudStatus == 'accept') {
-                    // Transaksi berhasil
-                    $this->updateOrderStatus($orderId, 'success');
+                    $status_code = 2;
                 }
                 break;
                 
             case 'settlement':
-                // Transaksi berhasil (untuk non-card payment)
-                $this->updateOrderStatus($orderId, 'success');
+                $status_code = 2;
                 break;
                 
             case 'pending':
-                // Transaksi pending
-                $this->updateOrderStatus($orderId, 'pending');
+                $status_code = 1;
                 break;
                 
             case 'deny':
-                // Transaksi ditolak
-                $this->updateOrderStatus($orderId, 'failed');
+                $status_code = 404;
+                $reason = "Pembayaran Ditolak";
                 break;
                 
             case 'expire':
-                // Transaksi expired
-                $this->updateOrderStatus($orderId, 'expired');
+                $status_code = 404;
+                $reason = "Pembayaran Kadaluarsa";
                 break;
                 
             case 'cancel':
-                // Transaksi dibatalkan
-                $this->updateOrderStatus($orderId, 'cancelled');
+                $status_code = 404;
+                $reason = "Pembayaran Dibatalkan";
                 break;
         }
-        
-        // Log callback untuk debugging
-        Log::info('Midtrans callback received', ($request->all()));
+
+        Log::info('Midtrans callback received', $request->all());
 
         $orders = OrdersModel::firstWhere('no_invoice', $orderId);
         if ($orders) {
             $orders->update([
-                'status' => 2,
-                'data_midtrans' => json_encode($request->data)
+                'status' => $status_code,
+                'data_midtrans' => ($reason ?? json_encode($request->data))
             ]);
         }
         return response()->json(['status' => 'ok']);
