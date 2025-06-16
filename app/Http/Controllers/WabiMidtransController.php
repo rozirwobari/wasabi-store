@@ -79,7 +79,7 @@ class WabiMidtransController extends Controller
                 'data_midtrans' => ($reason ?? json_encode($request->data))
             ]);
         }
-        return response()->json(['status' => 'ok']);
+        return response()->json(['status' => 'ok'], 200);
     }
 
     /**
