@@ -45,7 +45,6 @@ class WabiMidtransController extends Controller
                     $status_code = 2;
                 }
                 break;
-                
             case 'settlement':
                 $status_code = 2;
                 break;
@@ -78,6 +77,12 @@ class WabiMidtransController extends Controller
                 'status' => $status_code,
                 'data_midtrans' => ($reason ?? json_encode($request->data))
             ]);
+            if ($status_code >= 2) {
+                $orders->update([
+                'status' => 3,
+                'data_midtrans' => ($reason ?? json_encode($request->data))
+            ]);
+            }
         }
         return response()->json(['status' => 'ok'], 200);
     }
