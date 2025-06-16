@@ -201,7 +201,7 @@
         document.getElementById('pay-button').onclick = function() {
             snap.pay('{{ $orders->snap_token }}', {
                 onSuccess: function(result) {
-                    UpdateDatas(result);
+                    // UpdateDatas(result);
                     location.reload();
                 },
                 onPending: function(result) {
