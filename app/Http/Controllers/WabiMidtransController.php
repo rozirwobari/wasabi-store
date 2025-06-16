@@ -79,7 +79,7 @@ class WabiMidtransController extends Controller
             ]);
             if ($status_code >= 2) {
                 $orders->update([
-                'status' => 3,
+                'status' => 4,
                 'data_midtrans' => ($reason ?? json_encode($request->data))
             ]);
             }
