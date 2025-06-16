@@ -5,9 +5,9 @@
         <!-- Banner -->
         <div class="banner" data-aos="fade-up">
             <div class="banner-content">
-                <h2 class="display-4">Spring Collection 2025</h2>
-                <p class="lead">Discover our latest arrivals with up to 40% off on selected items.</p>
-                <button class="btn btn-lg btn-secondary mt-3">Shop Now <i class="fas fa-arrow-right ms-2"></i></button>
+                <h2 class="display-4">Koleksi Item Terbaru 2025</h2>
+                <p class="lead">Jelajahi koleksi item unik dan spesial untuk meningkatkan gameplay-mu.</p>
+                <a href="#produks" class="btn btn-lg btn-secondary mt-3">Shop Now <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
             </div>
 
             <!-- Product Grid -->
-            <div class="col-lg-9">
+            <div class="col-lg-9" id="produks">
                 <!-- Products Row -->
                 <div class="row" id="products-container">
                     @foreach ($produks as $produk)
