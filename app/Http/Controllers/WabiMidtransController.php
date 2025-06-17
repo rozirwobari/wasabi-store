@@ -86,6 +86,8 @@ class WabiMidtransController extends Controller
                 'tgl_transaksi' => json_encode($tgl_transaksi),
             ]);
             if ($status_code >= 2) {
+                $tgl_transaksi["3"] = time();
+                $tgl_transaksi["4"] = time();
                 $orders->update([
                     'status' => 4,
                     'data_midtrans' => ($reason ?? json_encode($request->data)),
