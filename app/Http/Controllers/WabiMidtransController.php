@@ -38,7 +38,7 @@ class WabiMidtransController extends Controller
         $status_code = 0;
         $reason = null;
         $orders = OrdersModel::firstWhere('no_invoice', $orderId);
-        $tgl_transaksi = json_decode($orders->tgl_transaksi);
+        $tgl_transaksi = json_decode($orders->tgl_transaksi, true);
         switch ($transactionStatus) {
             case 'capture':
                 if ($fraudStatus == 'challenge') {
