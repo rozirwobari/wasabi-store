@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 
+@php
+    $deskripsi_website = "Wasabi Garden adalah server FiveM semi-mmorpg yang menghadirkan pengalaman imersif dengan menggabungkan era tua dan elemen fantasi dalam sebuah desa unik, di mana pemain dapat berinteraksi dalam ekosistem ekonomi, eksplorasi, dan komunitas yang dinamis, menciptakan dunia yang berkembang melalui perdagangan, crafting, serta peran yang mereka jalani."
+@endphp
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>@yield('title', 'Wasabi Store')</title>
-    <!-- Bootstrap 5.3 CSS -->
+
+    <meta name="description" content="{{ $deskripsi_website }}">
+    <meta name="keywords" content="wasabi, wasabi garden, garden, fivem, gta 5, gta v, roleplay">
+    <meta name="author" content="Rozir Wobari">
+    <meta name="robots" content="index, follow">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/home/logo/wasabi.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/home/logo/wasabi.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/home/logo/wasabi.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/home/logo/wasabi.png') }}">
+
+    <!-- Open Graph untuk social media (Facebook, WhatsApp, dll) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('title', 'Wasabi Store')">
+    <meta property="og:description" content="{{ $deskripsi_website }}">
+    <meta property="og:image" content="{{ asset('images/home/logo/wasabi.png') }}">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:site_name" content="Wasabi Store">
+    <meta property="og:locale" content="id_ID">
+
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- AOS Animation Library -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('WabiHome/css/style.css') }}">
     <script src="https://kit.fontawesome.com/7d89982a7c.js" crossorigin="anonymous"></script>
@@ -168,6 +192,22 @@
                 this.style.transform = 'translateY(0) scale(1)';
             });
         });
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "{{ @yield('title', 'Wasabi Store') }}",
+        "description": "{{ $deskripsi_website }}",
+        "url": "{{ url('/') }}",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "Wasabi Garden",
+            "url": "{{ url('/') }}",
+            "logo": "{{ asset('images/home/logo/wasabi.png') }}"
+        }
+    }
     </script>
     @yield('scripts')
 </body>

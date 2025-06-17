@@ -10,20 +10,9 @@ use App\Models\KategoriModel;
 use App\Models\OrdersModel;
 use App\Models\User;
 use Midtrans\Snap;
-use Midtrans\Config;
 
 class WabiStoreController extends Controller
 {
-
-    public function __construct()
-    {
-        // Set configuration Midtrans
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$clientKey = config('midtrans.client_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
-    }
 
     /**
      * Display a listing of the resource.
