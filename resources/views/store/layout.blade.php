@@ -16,16 +16,16 @@
     <meta name="author" content="Rozir Wobari">
     <meta name="robots" content="index, follow">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/home/logo/wasabi.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/home/logo/wasabi.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/home/logo/wasabi.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/home/logo/wasabi.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo/wasabi.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo/wasabi.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo/wasabi.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/logo/wasabi.png') }}">
 
     <!-- Open Graph untuk social media (Facebook, WhatsApp, dll) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title', 'Wasabi Store')">
     <meta property="og:description" content="{{ $deskripsi_website }}">
-    <meta property="og:image" content="{{ asset('images/home/logo/wasabi.png') }}">
+    <meta property="og:image" content="{{ asset('images/logo/wasabi.png') }}">
     <meta property="og:url" content="{{ url('/') }}">
     <meta property="og:site_name" content="Wasabi Store">
     <meta property="og:locale" content="id_ID">
