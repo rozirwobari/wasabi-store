@@ -198,14 +198,14 @@
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "{{ @yield('title', 'Wasabi Store') }}",
-        "description": "{{ $deskripsi_website }}",
-        "url": "{{ url('/') }}",
+        "name": "{!! json_encode(trim(strip_tags(isset($title) ? $title : 'Wasabi Store'))) !!}",
+        "description": "{!! json_encode(trim(strip_tags(isset($deskripsi_website) ? $deskripsi_website : 'Deskripsi default'))) !!}",
+        "url": "{!! json_encode(url('/')) !!}",
         "mainEntity": {
-            "@type": "Organization",
+            "@type": "Organization", 
             "name": "Wasabi Garden",
-            "url": "{{ url('/') }}",
-            "logo": "{{ asset('images/home/logo/wasabi.png') }}"
+            "url": "{!! json_encode(url('/')) !!}",
+            "logo": "{!! json_encode(asset('images/home/logo/wasabi.png')) !!}"
         }
     }
     </script>
