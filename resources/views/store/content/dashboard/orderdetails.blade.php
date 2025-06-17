@@ -112,7 +112,7 @@
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pembayaran Berhasil</div>
                                             <div class="timeline-date">
-                                                {{ ($value = $tgl_transaksi['1'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                                {{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
                                         </div>
                                     </div>
 
@@ -121,7 +121,7 @@
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Diproses</div>
                                             <div class="timeline-date">
-                                                {{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                                {{ ($value = $tgl_transaksi['3'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
                                         </div>
                                     </div>
 
@@ -129,7 +129,7 @@
                                         class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Sampai</div>
-                                            <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['3'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
                                         </div>
                                     </div>
 
@@ -137,7 +137,7 @@
                                         class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Diambil</div>
-                                            <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
                                         </div>
                                     </div>
                                 </div>
