@@ -9,10 +9,25 @@ use App\Models\CartModel;
 use App\Models\KategoriModel;
 use App\Models\OrdersModel;
 use App\Models\User;
+use Midtrans\Config;
 use Midtrans\Snap;
 
 class WabiStoreController extends Controller
 {
+
+    public function __construct()
+    {
+        // Set konfigurasi Midtrans
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.is_sanitized');
+        Config::$is3ds = config('midtrans.is_3ds');
+        
+        // Debug: Cek apakah config terbaca
+        if (!Config::$serverKey) {
+            throw new \Exception('Midtrans Server Key tidak ditemukan. Periksa file .env dan config/midtrans.php');
+        }
+    }
 
     /**
      * Display a listing of the resource.
