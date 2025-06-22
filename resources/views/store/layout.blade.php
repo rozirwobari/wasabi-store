@@ -209,6 +209,18 @@
         }
     }
     </script>
+
+    @section('scripts')
+        @if (session('alert') && session('alert')['title'])
+            <script>
+                Swal.fire({
+                    title: "{{ session('alert')['title'] }}",
+                    text: "{{ session('alert')['message'] }}",
+                    icon: "{{ session('alert')['type'] }}"
+                });
+            </script>
+        @endif
+    @endsection
     @yield('scripts')
 </body>
 

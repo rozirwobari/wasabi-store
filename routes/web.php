@@ -1,27 +1,43 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WabiStoreController;
 use App\Http\Controllers\WabiDashboardController;
+
+use App\Http\Controllers\WabiHome;
+use App\Http\Controllers\WabiCart;
+use App\Http\Controllers\WabiDashboardUser;
 
 Auth::routes();
 
-Route::get('/', [WabiStoreController::class, 'index']);
-Route::get('/produk-details/{id}', [WabiStoreController::class, 'produkdetail'])->name('produk-details');
-Route::get('/cart', [WabiStoreController::class, 'cart'])->middleware('auth');
-Route::get('/dashboard', [WabiStoreController::class, 'dashboard'])->name('dashboard')->middleware('auth');
-Route::get('/profile', [WabiStoreController::class, 'profile'])->name('profile')->middleware('auth');
-Route::get('/orders', [WabiStoreController::class, 'orders'])->name('orders')->middleware('auth');
-Route::get('/settings', [WabiStoreController::class, 'settings'])->name('settings')->middleware('auth');
-Route::get('/order-details/{invoice}', [WabiStoreController::class, 'orderdetails'])->name('order-details')->middleware('auth');
-Route::post('/addtocarts', [WabiStoreController::class, 'addtocart'])->name('addtocarts')->middleware('auth');
-Route::post('/deletecarts', [WabiStoreController::class, 'deletecarts'])->name('deletecarts')->middleware('auth');
-Route::post('/updatecarts', [WabiStoreController::class, 'updatecarts'])->name('updatecarts')->middleware('auth');
-Route::get('/checkout', [WabiStoreController::class, 'checkout'])->name('checkout')->middleware('auth');
-Route::get('/invoice/{invoice}', [WabiStoreController::class, 'invoice'])->name('invoice')->middleware('auth');
-Route::post('/update-orders', [WabiStoreController::class, 'updateorders'])->name('update-orders')->middleware('auth');
-Route::post('/profileupdate', [WabiStoreController::class, 'profileupdate'])->name('profileupdate')->middleware('auth');
-Route::post('/changepassword', [WabiStoreController::class, 'changepassword'])->name('changepassword')->middleware('auth');
+
+// Home
+Route::get('/', [WabiHome::class, 'index']);
+Route::get('/order-details/{invoice}', [WabiHome::class, 'orderdetails'])->name('order-details')->middleware('auth');
+Route::get('/produk-details/{id}', [WabiHome::class, 'produkdetail'])->name('produk-details');
+
+// Keranjang
+Route::get('/cart', [WabiCart::class, 'cart'])->middleware('auth');
+Route::get('/checkout', [WabiCart::class, 'checkout'])->name('checkout')->middleware('auth');
+Route::post('/addtocarts', [WabiCart::class, 'addtocart'])->name('addtocarts')->middleware('auth');
+Route::post('/deletecarts', [WabiCart::class, 'deletecarts'])->name('deletecarts')->middleware('auth');
+Route::post('/updatecarts', [WabiCart::class, 'updatecarts'])->name('updatecarts')->middleware('auth');
+
+// Dashboard User
+Route::get('/dashboard', [WabiDashboardUser::class, 'dashboard'])->name('dashboard')->middleware('auth');
+Route::get('/profile', [WabiDashboardUser::class, 'profile'])->name('profile')->middleware('auth');
+Route::get('/orders', [WabiDashboardUser::class, 'orders'])->name('orders')->middleware('auth');
+Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings')->middleware('auth');
+Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate')->middleware('auth');
+Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword')->middleware('auth');
+
+
+
+
+
+
+
+
+
 
 Route::get('/admin', [WabiDashboardController::class, 'admin'])->name('admin');
 Route::post('/authadmin', [WabiDashboardController::class, 'authadmin'])->name('authadmin');
