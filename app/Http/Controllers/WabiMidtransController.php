@@ -14,7 +14,7 @@ class WabiMidtransController extends Controller
 {
 
     private $secretKey = '8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG';
-    private $nodeJsUrl = 'http://208.76.40.92:803/api/proses';
+    private $nodeJsUrl = 'http://208.76.40.92:8080/api/proses';
 
     // Menigirim Data Ke Game Server
     private function CreateSignature($data)
