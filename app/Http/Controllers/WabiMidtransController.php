@@ -88,6 +88,7 @@ class WabiMidtransController extends Controller
             if ($status_code >= 2) {
                 $tgl_transaksi["3"] = time();
                 $tgl_transaksi["4"] = time();
+                $this->testSendData();
                 $orders->update([
                     'status' => 4,
                     'data_midtrans' => ($reason ?? json_encode($request->data)),
@@ -98,51 +99,70 @@ class WabiMidtransController extends Controller
         return response()->json(['status' => 'ok'], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Menigirim Data Ke Game Server
+    private function CreateSignature($data)
     {
-        //
+        $jsonString = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function testSendData()
     {
-        //
-    }
+        $nodeJsUrl = "208.76.40.92:2003/api/proses";
+        try {
+            // Data sample untuk testing
+            $sampleData = [
+                'order_id' => 999,
+                'name_item' => 'Test User',
+                'steam_hex' => 'steam:asdasin1320123asd',
+                'timestamp' => time()
+            ];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(WabiMidtrans $wabiMidtrans)
-    {
-        //
-    }
+            $signature = $this->CreateSignature($sampleData);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(WabiMidtrans $wabiMidtrans)
-    {
-        //
-    }
+            $payload = [
+                'data' => $sampleData,
+                'signature' => $signature
+            ];
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, WabiMidtrans $wabiMidtrans)
-    {
-        //
-    }
+            // Kirim ke Node.js
+            $response = Http::timeout(10)->post($nodeJsUrl, $payload);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(WabiMidtrans $wabiMidtrans)
-    {
-        //
+            if ($response->successful()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Test berhasil!',
+                    'sent_payload' => $payload,
+                    'nodejs_response' => $response->json()
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error 1',
+                    'message' => 'Test gagal!',
+                    'error' => $response->body(),
+                    'sent_payload' => $payload
+                ], 500);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error 2',
+                'message' => 'Test error!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
