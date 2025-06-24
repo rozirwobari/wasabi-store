@@ -8,7 +8,16 @@ use App\Models\KategoriModel;
 class ProdukModel extends Model
 {
     protected $table = 'wabi_produk';
-    protected $guarded = [];
+    // protected $guarded = [];
+    protected $fillable = [
+        'nama_produk',
+        'deskripsi', 
+        'harga',
+        'stok',
+        'kategori_id',
+        'gambar',
+        'status'
+    ];
 
     public function kategoris()
     {
