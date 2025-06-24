@@ -155,6 +155,36 @@ class WabiMidtransController extends Controller
         }
     }
 
+    public function testConnection()
+    {
+        try {
+            $startTime = microtime(true);
+            
+            // Test simple GET request dulu
+            $response = Http::timeout(10)
+                ->connectTimeout(5)
+                ->get($this->nodeJsUrl);
+                
+            $endTime = microtime(true);
+            $responseTime = ($endTime - $startTime) * 1000;
+
+            return [
+                'success' => true,
+                'status_code' => $response->status(),
+                'response_time_ms' => round($responseTime, 2),
+                'server_url' => $this->nodeJsUrl,
+                'response_preview' => substr($response->body(), 0, 200)
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'server_url' => $this->nodeJsUrl,
+                'error_type' => get_class($e)
+            ];
+        }
+    }
 
 
 
