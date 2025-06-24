@@ -6,6 +6,7 @@ use App\Http\Controllers\WabiDashboardController;
 use App\Http\Controllers\WabiHome;
 use App\Http\Controllers\WabiCart;
 use App\Http\Controllers\WabiDashboardUser;
+use App\Http\Controllers\WabiMidtransController;
 
 Auth::routes();
 
