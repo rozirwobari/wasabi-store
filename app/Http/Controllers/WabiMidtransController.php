@@ -92,7 +92,6 @@ class WabiMidtransController extends Controller
                 $tgl_transaksi["4"] = time();
                 $this->testSendData([
                     'order_id' => $orderId,
-                    'nama' => auth()->user()->name,
                 ]);
                 $orders->update([
                     'status' => 4,
@@ -131,7 +130,6 @@ class WabiMidtransController extends Controller
             // Data sample untuk testing
             $sampleData = [
                 'order_id' => $data['order_id'],
-                'nama' => $data['nama'],
                 'timestamp' => time()
             ];
 
