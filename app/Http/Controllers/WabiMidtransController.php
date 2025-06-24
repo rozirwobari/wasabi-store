@@ -130,8 +130,8 @@ class WabiMidtransController extends Controller
         try {
             // Data sample untuk testing
             $sampleData = [
-                'order_id' => $data->order_id,
-                'nama' => $data->nama,
+                'order_id' => $data['order_id'],
+                'nama' => $data['nama'],
                 'timestamp' => time()
             ];
 
