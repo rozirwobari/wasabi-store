@@ -40,7 +40,7 @@ class WabiMidtransController extends Controller
             ];
 
             // Kirim ke Node.js
-            $response = Http::timeout(10)->post($nodeJsUrl, $payload);
+            $response = Http::timeout(30)->post($nodeJsUrl, $payload);
 
             if ($response->successful()) {
                 return response()->json([
