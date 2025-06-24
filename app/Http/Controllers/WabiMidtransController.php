@@ -12,6 +12,71 @@ use Illuminate\Support\Facades\Log;
 
 class WabiMidtransController extends Controller
 {
+
+    // Menigirim Data Ke Game Server
+    private function CreateSignature($data)
+    {
+        $jsonString = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
+    }
+
+    public function testSendData()
+    {
+        $nodeJsUrl = "208.76.40.92:2003/api/proses";
+        try {
+            // Data sample untuk testing
+            $sampleData = [
+                'order_id' => 999,
+                'name_item' => 'Test User',
+                'steam_hex' => 'steam:asdasin1320123asd',
+                'timestamp' => time()
+            ];
+
+            $signature = $this->CreateSignature($sampleData);
+
+            $payload = [
+                'data' => $sampleData,
+                'signature' => $signature
+            ];
+
+            // Kirim ke Node.js
+            $response = Http::timeout(10)->post($nodeJsUrl, $payload);
+
+            if ($response->successful()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Test berhasil!',
+                    'sent_payload' => $payload,
+                    'nodejs_response' => $response->json()
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error 1',
+                    'message' => 'Test gagal!',
+                    'error' => $response->body(),
+                    'sent_payload' => $payload
+                ], 500);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error 2',
+                'message' => 'Test error!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -99,72 +164,5 @@ class WabiMidtransController extends Controller
             }
         }
         return response()->json(['status' => 'ok'], 200);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Menigirim Data Ke Game Server
-    private function CreateSignature($data)
-    {
-        $jsonString = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
-    }
-
-    private function testSendData()
-    {
-        $nodeJsUrl = "208.76.40.92:2003/api/proses";
-        try {
-            // Data sample untuk testing
-            $sampleData = [
-                'order_id' => 999,
-                'name_item' => 'Test User',
-                'steam_hex' => 'steam:asdasin1320123asd',
-                'timestamp' => time()
-            ];
-
-            $signature = $this->CreateSignature($sampleData);
-
-            $payload = [
-                'data' => $sampleData,
-                'signature' => $signature
-            ];
-
-            // Kirim ke Node.js
-            $response = Http::timeout(10)->post($nodeJsUrl, $payload);
-
-            if ($response->successful()) {
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Test berhasil!',
-                    'sent_payload' => $payload,
-                    'nodejs_response' => $response->json()
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'error 1',
-                    'message' => 'Test gagal!',
-                    'error' => $response->body(),
-                    'sent_payload' => $payload
-                ], 500);
-            }
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error 2',
-                'message' => 'Test error!',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
+    }   
 }
