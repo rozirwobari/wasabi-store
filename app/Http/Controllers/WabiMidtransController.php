@@ -12,189 +12,6 @@ use Illuminate\Support\Facades\Log;
 
 class WabiMidtransController extends Controller
 {
-
-    private $secretKey = '8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG';
-    private $nodeJsUrl = 'http://api.wasabistore.my.id/api/proses';
-
-    // Menigirim Data Ke Game Server
-    private function CreateSignature($data)
-    {
-        $jsonString = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        return hash_hmac('sha256', $jsonString, $this->secretKey);
-    }
-
-    public function testSendData()
-    {
-        try {
-            // PERBAIKAN: Cek koneksi dulu sebelum kirim data
-            $connectionTest = $this->testConnection();
-            if (!$connectionTest['success']) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Tidak dapat terhubung ke Node.js server',
-                    'connection_test' => $connectionTest,
-                    'troubleshooting' => [
-                        'check_nodejs_server' => 'Pastikan Node.js server running di ' . $this->nodeJsUrl,
-                        'check_port' => 'Cek apakah port 2003 terbuka',
-                        'check_firewall' => 'Pastikan firewall tidak memblokir koneksi'
-                    ]
-                ], 500);
-            }
-
-            // Data sample untuk testing
-            $sampleData = [
-                'order_id' => 999,
-                'name_item' => 'Test User',
-                'steam_hex' => 'steam:asdasin1320123asd',
-                'timestamp' => time(),
-                'test_message' => 'Hello from Laravel!'
-            ];
-
-            $signature = $this->createSignature($sampleData);
-
-            $payload = [
-                'data' => $sampleData,
-                'signature' => $signature
-            ];
-
-            // Log untuk debugging
-            Log::info('Mengirim test data ke Node.js:', [
-                'url' => $this->nodeJsUrl,
-                'payload' => $payload
-            ]);
-
-            // PERBAIKAN: Tambahkan headers dan error handling yang lebih baik
-            $response = Http::timeout(30)
-                ->connectTimeout(10)
-                ->retry(2, 1000) // Retry 2x dengan delay 1 detik
-                ->withHeaders([
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'User-Agent' => 'Laravel-NodeJS-Client/1.0'
-                ])
-                ->post($this->nodeJsUrl, $payload);
-
-            // Cek response sukses
-            if ($response->successful()) {
-                $responseData = $response->json();
-                
-                Log::info('Response sukses dari Node.js:', $responseData);
-                
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Test berhasil! Data terkirim ke Node.js',
-                    'sent_payload' => $payload,
-                    'nodejs_response' => $responseData,
-                    'response_time' => $response->transferStats?->getTransferTime(),
-                    'status_code' => $response->status()
-                ]);
-            } else {
-                // Response tidak sukses (4xx, 5xx)
-                Log::error('Response error dari Node.js:', [
-                    'status_code' => $response->status(),
-                    'response_body' => $response->body()
-                ]);
-                
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Node.js server mengembalikan error',
-                    'error_type' => 'http_error',
-                    'status_code' => $response->status(),
-                    'error_response' => $response->body(),
-                    'sent_payload' => $payload
-                ], $response->status());
-            }
-
-        } catch (\Illuminate\Http\Client\ConnectionException $e) {
-            // Error koneksi (tidak bisa connect ke server)
-            Log::error('Connection error ke Node.js:', [
-                'error' => $e->getMessage(),
-                'url' => $this->nodeJsUrl
-            ]);
-            
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tidak dapat terhubung ke Node.js server',
-                'error_type' => 'connection_error',
-                'error_details' => $e->getMessage(),
-                'server_url' => $this->nodeJsUrl,
-                'troubleshooting' => [
-                    'step_1' => 'Cek apakah Node.js server running: curl ' . $this->nodeJsUrl,
-                    'step_2' => 'Cek port: telnet 208.76.40.92 2003',
-                    'step_3' => 'Cek firewall dan security group',
-                    'step_4' => 'Pastikan Node.js bind ke 0.0.0.0:2003, bukan localhost:2003'
-                ]
-            ], 500);
-
-        } catch (\Illuminate\Http\Client\RequestException $e) {
-            // Error HTTP request
-            Log::error('Request error ke Node.js:', [
-                'error' => $e->getMessage()
-            ]);
-            
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Error saat mengirim request ke Node.js',
-                'error_type' => 'request_error',
-                'error_details' => $e->getMessage()
-            ], 500);
-
-        } catch (\Exception $e) {
-            // Error tidak terduga
-            Log::error('Unexpected error saat test send data:', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Terjadi error tidak terduga',
-                'error_type' => 'unexpected_error',
-                'error_details' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function testConnection()
-    {
-        try {
-            $startTime = microtime(true);
-            
-            // Test simple GET request dulu
-            $response = Http::timeout(10)
-                ->connectTimeout(5)
-                ->get($this->nodeJsUrl);
-                
-            $endTime = microtime(true);
-            $responseTime = ($endTime - $startTime) * 1000;
-
-            return [
-                'success' => true,
-                'status_code' => $response->status(),
-                'response_time_ms' => round($responseTime, 2),
-                'server_url' => $this->nodeJsUrl,
-                'response_preview' => substr($response->body(), 0, 200)
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'error' => $e->getMessage(),
-                'server_url' => $this->nodeJsUrl,
-                'error_type' => get_class($e)
-            ];
-        }
-    }
-
-
-
-
-
-
-
-
-
-
     /**
      * Display a listing of the resource.
      */
@@ -282,5 +99,72 @@ class WabiMidtransController extends Controller
             }
         }
         return response()->json(['status' => 'ok'], 200);
-    }   
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Menigirim Data Ke Game Server
+    private function CreateSignature($data)
+    {
+        $jsonString = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
+    }
+
+    public function testSendData()
+    {
+        $nodeJsUrl = "http://api.wasabistore.my.id/api/proses";
+        try {
+            // Data sample untuk testing
+            $sampleData = [
+                'order_id' => 999,
+                'name_item' => 'Test User',
+                'steam_hex' => 'steam:asdasin1320123asd',
+                'timestamp' => time()
+            ];
+
+            $signature = $this->CreateSignature($sampleData);
+
+            $payload = [
+                'data' => $sampleData,
+                'signature' => $signature
+            ];
+
+            // Kirim ke Node.js
+            $response = Http::timeout(10)->post($nodeJsUrl, $payload);
+
+            if ($response->successful()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Test berhasil!',
+                    'sent_payload' => $payload,
+                    'nodejs_response' => $response->json()
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error 1',
+                    'message' => 'Test gagal!',
+                    'error' => $response->body(),
+                    'sent_payload' => $payload
+                ], 500);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error 2',
+                'message' => 'Test error!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
