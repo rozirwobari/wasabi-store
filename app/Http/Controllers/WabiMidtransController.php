@@ -90,7 +90,10 @@ class WabiMidtransController extends Controller
             if ($status_code >= 2) {
                 $tgl_transaksi["3"] = time();
                 $tgl_transaksi["4"] = time();
-                $this->testSendData();
+                $this->testSendData([
+                    'order_id' => $orderId,
+                    'nama' => auth()->user()->name,
+                ]);
                 $orders->update([
                     'status' => 4,
                     'data_midtrans' => ($reason ?? json_encode($request->data)),
@@ -121,15 +124,14 @@ class WabiMidtransController extends Controller
         return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
     }
 
-    public function testSendData()
+    public function testSendData($data)
     {
         $nodeJsUrl = "http://api.wasabistore.my.id/api/proses";
         try {
             // Data sample untuk testing
             $sampleData = [
-                'order_id' => 999,
-                'name_item' => 'Test User',
-                'steam_hex' => 'steam:asdasin1320123asd',
+                'order_id' => $data->order_id,
+                'nama' => $data->nama,
                 'timestamp' => time()
             ];
 
