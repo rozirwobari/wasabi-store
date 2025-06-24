@@ -121,7 +121,7 @@ class WabiMidtransController extends Controller
         return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
     }
 
-    public function testSendData()
+    private function testSendData()
     {
         $nodeJsUrl = "208.76.40.92:2003/api/proses";
         try {
