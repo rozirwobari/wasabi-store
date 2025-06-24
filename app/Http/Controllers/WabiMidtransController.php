@@ -90,14 +90,16 @@ class WabiMidtransController extends Controller
             if ($status_code >= 2) {
                 $tgl_transaksi["3"] = time();
                 $tgl_transaksi["4"] = time();
-                $this->testSendData([
+                $sendtoServerGame = $this->testSendData([
                     'order_id' => $orderId,
                 ]);
-                $orders->update([
-                    'status' => 4,
-                    'data_midtrans' => ($reason ?? json_encode($request->data)),
-                    'tgl_transaksi' => json_encode($tgl_transaksi),
-                ]);
+                if ($sendtoServerGame) {
+                    $orders->update([
+                        'status' => 4,
+                        'data_midtrans' => ($reason ?? json_encode($request->data)),
+                        'tgl_transaksi' => json_encode($tgl_transaksi),
+                    ]);
+                }
             }
         }
         return response()->json(['status' => 'ok'], 200);
@@ -144,27 +146,30 @@ class WabiMidtransController extends Controller
             $response = Http::timeout(10)->post($nodeJsUrl, $payload);
 
             if ($response->successful()) {
-                return response()->json([
+                response()->json([
                     'status' => 'success',
                     'message' => 'Test berhasil!',
                     'sent_payload' => $payload,
                     'nodejs_response' => $response->json()
                 ]);
+                return true;
             } else {
-                return response()->json([
-                    'status' => 'error 1',
+                response()->json([
+                    'status' => 'error',
                     'message' => 'Test gagal!',
                     'error' => $response->body(),
                     'sent_payload' => $payload
                 ], 500);
+                return false;
             }
 
         } catch (\Exception $e) {
-            return response()->json([
+            response()->json([
                 'status' => 'error 2',
                 'message' => 'Test error!',
                 'error' => $e->getMessage()
             ], 500);
+            return false;
         }
     }
 }
