@@ -30,7 +30,7 @@ Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings'
 Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate')->middleware('auth');
 Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword')->middleware('auth');
 
-// Route::get('/testSendData', [WabiHome::class, 'testSendData'])->name('testSendData');
+Route::get('/testSendData', [WabiMidtransController::class, 'testSendData'])->name('testSendData');
 
 
 
