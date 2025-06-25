@@ -8,10 +8,12 @@ use App\Models\ProdukModel;
 class KategoriModel extends Model
 {
     protected $table = 'wabi_kategori';
-    protected $guarded = [];
+    protected $fillable = [
+        'label',
+    ];
 
     public function produk()
     {
-        return $this->hasMany(ProdukModel::class, 'kategori_id'); // 'kategori_id' adalah foreign key di tabel produk
+        return $this->hasMany(ProdukModel::class, 'kategori_id');
     }
 }

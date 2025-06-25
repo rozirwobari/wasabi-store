@@ -8,7 +8,6 @@ use App\Models\KategoriModel;
 class ProdukModel extends Model
 {
     protected $table = 'wabi_produk';
-    // protected $guarded = [];
     protected $fillable = [
         'nama_produk',
         'deskripsi', 
@@ -21,6 +20,6 @@ class ProdukModel extends Model
 
     public function kategoris()
     {
-        return $this->belongsTo(KategoriModel::class, 'kategori_id'); // 'kategori_id' adalah foreign key di tabel produk
+        return $this->belongsTo(KategoriModel::class, 'kategori_id');
     }
 }
