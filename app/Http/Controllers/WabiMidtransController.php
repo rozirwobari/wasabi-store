@@ -17,16 +17,13 @@ class WabiMidtransController extends Controller
      */
     public function callback(Request $request)
     {
-        // Ambil server key dari config
         $serverKey = config('midtrans.server_key');
         
-        // Ambil data dari callback
         $orderId = $request->order_id ?? $request->no_invoice ?? null;
         $statusCode = $request->status_code ?? $request->data['status_code'] ?? null;
         $grossAmount = $request->gross_amount ?? $request->data['gross_amount'] ?? null;
         $signatureKey = $request->signature_key ?? $request->data['signature_key'] ?? null;
         
-        // Verifikasi signature key
         $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
         
         if ($signatureKey !== $expectedSignature) {
@@ -34,7 +31,6 @@ class WabiMidtransController extends Controller
             return response()->json(['status' => 'error'], 403);
         }
         
-        // Proses berdasarkan transaction status
         $transactionStatus = $request->transaction_status ?? $request->data['no_invoice'] ?? null;
         $fraudStatus = ($request->fraud_status ?? $request->data['fraud_status']) ?? null;
         $status_code = 0;
