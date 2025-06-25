@@ -85,24 +85,17 @@ class WabiDashboardUser extends Controller
             return redirect()->back()->withErrors($e->validator);
         }
 
-        // Cek apakah password lama sesuai
         if (!Hash::check($request->password, auth()->user()->password)) {
             return redirect()->back()->withErrors(['password' => 'Password lama tidak sesuai.']);
         }
         
-        // Update password ke database
         $user = auth()->user();
         $user->password = Hash::make($request->new_password);
         $user->save();
         
-        // Logout user setelah berhasil update password
         Auth::logout();
-        
-        // Invalidate session dan regenerate token untuk keamanan
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
-        // Redirect ke halaman login dengan pesan sukses
         return redirect()->route('login')->with('alert', [
             'title' => 'Berhasil',
             'message' => 'Password berhasil diubah. Silakan login kembali.',

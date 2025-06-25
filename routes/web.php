@@ -23,20 +23,24 @@ Route::get('/', [WabiHome::class, 'index']);
 Route::get('/order-details/{invoice}', [WabiHome::class, 'orderdetails'])->name('order-details');
 Route::get('/produk-details/{id}', [WabiHome::class, 'produkdetail'])->name('produk-details');
 
-// Keranjang
-Route::get('/cart', [WabiCart::class, 'cart']);
-Route::get('/checkout', [WabiCart::class, 'checkout'])->name('checkout');
-Route::post('/addtocarts', [WabiCart::class, 'addtocart'])->name('addtocarts');
-Route::post('/deletecarts', [WabiCart::class, 'deletecarts'])->name('deletecarts');
-Route::post('/updatecarts', [WabiCart::class, 'updatecarts'])->name('updatecarts');
 
-// Dashboard User
-Route::get('/dashboard', [WabiDashboardUser::class, 'dashboard'])->name('dashboard');
-Route::get('/profile', [WabiDashboardUser::class, 'profile'])->name('profile');
-Route::get('/orders', [WabiDashboardUser::class, 'orders'])->name('orders');
-Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings');
-Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate');
-Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword');
+Route::middleware('auth')->group(function () {
+    // Keranjang
+    Route::get('/cart', [WabiCart::class, 'cart']);
+    Route::get('/checkout', [WabiCart::class, 'checkout'])->name('checkout');
+    Route::post('/addtocarts', [WabiCart::class, 'addtocart'])->name('addtocarts');
+    Route::post('/deletecarts', [WabiCart::class, 'deletecarts'])->name('deletecarts');
+    Route::post('/updatecarts', [WabiCart::class, 'updatecarts'])->name('updatecarts');
+
+    // Dashboard User
+    Route::get('/dashboard', [WabiDashboardUser::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [WabiDashboardUser::class, 'profile'])->name('profile');
+    Route::get('/orders', [WabiDashboardUser::class, 'orders'])->name('orders');
+    Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings');
+    Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate');
+    Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword');
+});
+
 
 Route::get('/testSendData', [WabiMidtransController::class, 'testSendData'])->name('testSendData');
 
