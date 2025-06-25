@@ -55,6 +55,11 @@
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password"
                             required>
+                        @error('password_confirmation')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-register w-100 mb-3">
                         <i class="fas fa-user-plus me-2"></i>Daftar Sekarang

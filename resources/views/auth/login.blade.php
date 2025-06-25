@@ -12,8 +12,7 @@
                     @csrf
                     <div class="input-group">
                         <i class="fas fa-envelope input-icon"></i>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                            id="email" placeholder="Email" required>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" value="{{ old('email') }}" required>
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

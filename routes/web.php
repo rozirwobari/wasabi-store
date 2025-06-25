@@ -3,33 +3,40 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WabiDashboardController;
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WabiHome;
 use App\Http\Controllers\WabiCart;
 use App\Http\Controllers\WabiDashboardUser;
 use App\Http\Controllers\WabiMidtransController;
 
-Auth::routes();
 
+// Auth
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
 // Home
 Route::get('/', [WabiHome::class, 'index']);
-Route::get('/order-details/{invoice}', [WabiHome::class, 'orderdetails'])->name('order-details')->middleware('auth');
+Route::get('/order-details/{invoice}', [WabiHome::class, 'orderdetails'])->name('order-details');
 Route::get('/produk-details/{id}', [WabiHome::class, 'produkdetail'])->name('produk-details');
 
 // Keranjang
-Route::get('/cart', [WabiCart::class, 'cart'])->middleware('auth');
-Route::get('/checkout', [WabiCart::class, 'checkout'])->name('checkout')->middleware('auth');
-Route::post('/addtocarts', [WabiCart::class, 'addtocart'])->name('addtocarts')->middleware('auth');
-Route::post('/deletecarts', [WabiCart::class, 'deletecarts'])->name('deletecarts')->middleware('auth');
-Route::post('/updatecarts', [WabiCart::class, 'updatecarts'])->name('updatecarts')->middleware('auth');
+Route::get('/cart', [WabiCart::class, 'cart']);
+Route::get('/checkout', [WabiCart::class, 'checkout'])->name('checkout');
+Route::post('/addtocarts', [WabiCart::class, 'addtocart'])->name('addtocarts');
+Route::post('/deletecarts', [WabiCart::class, 'deletecarts'])->name('deletecarts');
+Route::post('/updatecarts', [WabiCart::class, 'updatecarts'])->name('updatecarts');
 
 // Dashboard User
-Route::get('/dashboard', [WabiDashboardUser::class, 'dashboard'])->name('dashboard')->middleware('auth');
-Route::get('/profile', [WabiDashboardUser::class, 'profile'])->name('profile')->middleware('auth');
-Route::get('/orders', [WabiDashboardUser::class, 'orders'])->name('orders')->middleware('auth');
-Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings')->middleware('auth');
-Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate')->middleware('auth');
-Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword')->middleware('auth');
+Route::get('/dashboard', [WabiDashboardUser::class, 'dashboard'])->name('dashboard');
+Route::get('/profile', [WabiDashboardUser::class, 'profile'])->name('profile');
+Route::get('/orders', [WabiDashboardUser::class, 'orders'])->name('orders');
+Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings');
+Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate');
+Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword');
 
 Route::get('/testSendData', [WabiMidtransController::class, 'testSendData'])->name('testSendData');
 
