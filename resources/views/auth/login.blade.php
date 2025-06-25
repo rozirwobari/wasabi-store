@@ -39,7 +39,7 @@
                                 Ingat saya
                             </label>
                         </div>
-                        <a href="#" class="forgot-password">Lupa password?</a>
+                        {{-- <a href="#" class="forgot-password">Lupa password?</a> --}}
                     </div>
 
                     <button type="submit" class="btn btn-login w-100 mb-3">
