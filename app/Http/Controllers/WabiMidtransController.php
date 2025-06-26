@@ -89,6 +89,8 @@ class WabiMidtransController extends Controller
 
                 $sendtoServerGame = $this->testSendData([
                     'order_id' => $orderId,
+                    'steam_hex' => $orders->user->steam_hex,
+                    'email' => $orders->user->email
                 ]);
                 if ($sendtoServerGame) {
                     $orders->update([
