@@ -129,7 +129,7 @@ class WabiMidtransController extends Controller
         $nodeJsUrl = "http://api.wasabistore.my.id/api/proses";
         try {
             $sampleData = [
-                'order_id' => $data['order_id'],
+                'data' => $data,
                 'timestamp' => time()
             ];
 
