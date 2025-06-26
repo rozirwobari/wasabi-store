@@ -86,6 +86,7 @@ class WabiMidtransController extends Controller
             if ($status_code >= 2) {
                 $tgl_transaksi["3"] = time();
                 $tgl_transaksi["4"] = time();
+
                 $sendtoServerGame = $this->testSendData([
                     'order_id' => $orderId,
                 ]);
@@ -125,7 +126,6 @@ class WabiMidtransController extends Controller
     {
         $nodeJsUrl = "http://api.wasabistore.my.id/api/proses";
         try {
-            // Data sample untuk testing
             $sampleData = [
                 'order_id' => $data['order_id'],
                 'timestamp' => time()
@@ -138,7 +138,6 @@ class WabiMidtransController extends Controller
                 'signature' => $signature
             ];
 
-            // Kirim ke Node.js
             $response = Http::timeout(10)->post($nodeJsUrl, $payload);
 
             if ($response->successful()) {
