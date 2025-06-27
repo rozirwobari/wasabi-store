@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+
 use App\Models\User;
 use App\Models\CartModel;
 use App\Models\OrdersModel;
@@ -121,5 +123,57 @@ class WabiDashboardUser extends Controller
         $carts = CartModel::where('user_id', auth()->id())->get();
         $steamhexs = WabiGameProfile::where('user_id', auth()->id())->get();
         return view("store.content.dashboard.dataplayer", compact("carts", "steamhexs"));
+    }
+
+    public function GetPlayerData(Request $request)
+    {
+        try {
+            $data = [
+                'identifier' => $request->identifier // atau nilai langsung
+            ];
+            $response = Http::post('http://208.76.40.92/api/getdataplayer', $data);
+            if ($response->successful()) {
+                $playerData = $response->json();
+                
+                return response()->json([
+                    'success' => true,
+                    'data' => $playerData
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to fetch player data',
+                ], $response->status());
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function SavePlayerData(Request $request)
+    {
+        $dataPlayeres = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->get();
+        if (count($dataPlayeres) > 0) {
+            return response()->json([
+                'success' => false,
+                'message' => "Data Sudah Terdaftar",
+            ]); 
+        }
+        $profile = WabiGameProfile::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'identifier' => $request->identifier,
+        ]);
+
+        if ($profile) {
+            return response()->json([
+                'success' => true,
+                'data' => $profile,
+            ]);
+        }
     }
 }

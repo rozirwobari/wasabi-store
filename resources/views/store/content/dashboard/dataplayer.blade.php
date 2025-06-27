@@ -24,11 +24,6 @@
                                 </div>
                             </div>
 
-
-
-
-
-
                             <div class="recent-orders">
                                 @if ($steamhexs->isEmpty())
                                     <h5 class="text-center">Belum Ada Steam Hex</h5>
@@ -36,8 +31,8 @@
                                     @foreach ($steamhexs as $steamhex)
                                         <div class="order-item">
                                             <div class="order-info">
-                                                <h6>{{ $steamhex->name }}</h6>
-                                                <p>Steam Hex : {{ $steamhex->name }}</p>
+                                                <h5>{{ $steamhex->name }}</h5>
+                                                <p>Steam Hex : <b>{{ $steamhex->identifier }}</b></p>
                                             </div>
                                         </div>
                                     @endforeach
@@ -54,48 +49,32 @@
 
 @section('scripts')
     <script>
-        // function GetDataPlayer(identifiers) {
-        //     return new Promise((resolve, reject) => {
-        //         const xhr = new XMLHttpRequest();
-        //         xhr.open('POST', 'http://208.76.40.92/api/getdataplayer', true);
-        //         xhr.setRequestHeader('Content-Type', 'application/json');
-        //         xhr.onload = function() {
-        //             if (xhr.status === 200) {
-        //                 resolve(JSON.parse(xhr.responseText));
-        //             } else {
-        //                 reject(new Error('Request failed'));
-        //             }
-        //         };
-        //         xhr.send(JSON.stringify({
-        //             identifier: identifiers
-        //         }));
-        //     });
-        // }
-
-        function GetDataPlayer(identifiers) {
+        function SavePlayerData(data) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', `http://208.76.40.92/api/getdataplayer`, true);
+            xhr.open('POST', `{{ url('saveplayerdata') }}`, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
-
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
             var data = JSON.stringify({
-                identifier: identifiers,
+                name: data.name,
+                identifier: data.identifier,
             });
-
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        return JSON.parse(xhr.responseText);
-                    } else {
-                        return false;
+                        const respon = JSON.parse(xhr.responseText);
+                        if (respon.success) {
+                            location.reload(true);
+                        } else {
+                            Swal.fire({
+                                title: "Warning",
+                                text: `${respon.message}`,
+                                icon: "warning"
+                            });
+                        }
                     }
                 }
             };
-
             xhr.send(data);
-        }
-
-        function SavePlayerData(data) {
-
         }
 
         function AlertSaveSteam(data) {
@@ -108,8 +87,8 @@
             });
             swalWithBootstrapButtons.fire({
                 title: "Steam Data",
-                text: `Steam Hex : ${data.identifier}\nNama : ${data.name}`,
-                icon: "inform",
+                html: `Steam Hex: <b>${data.identifier}</b><br>Nama: <b>${data.name}</b>`,
+                icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ya Tambah",
                 cancelButtonText: "Tidak, Batal",
@@ -121,55 +100,70 @@
             });
         }
 
-        function AddSteam() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', `http://api.wasabistore.my.id/api/getdataplayer`, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var data = JSON.stringify({
-                identifier: "steam:11000010bfcda0d",
-            });
-            xhr.send(data);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        console.log(`Haisl aku ${JSON.parse(xhr.responseText)}`);
-                    } else {
-                        console.log(`Hasil Error`);
+        function GetDataPlayer(identifier) {
+            return new Promise((resolve, reject) => {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', `{{ url('getplayerdata') }}`, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+                var data = JSON.stringify({
+                    identifier: identifier,
+                });
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            try {
+                                const jsonResponse = JSON.parse(xhr.responseText);
+                                resolve(jsonResponse);
+                            } catch (e) {
+                                reject("Invalid JSON response");
+                            }
+                        } else {
+                            reject(`Request failed with status ${xhr.status}`);
+                        }
                     }
-                }
-            };            
+                };
+
+                xhr.onerror = function () {
+                    reject("Network error");
+                };
+
+                xhr.send(data);
+            });
         }
-        // function AddSteam() {
-        //     Swal.fire({
-        //         title: "Masukan Steam Hex",
-        //         input: "text",
-        //         inputAttributes: {
-        //             autocapitalize: "off"
-        //         },
-        //         showCancelButton: true,
-        //         confirmButtonText: "Cari Data",
-        //         showLoaderOnConfirm: true,
-        //         preConfirm: async (identifier) => {
-        //             if (identifier != "") {
-        //                 try {
-        //                     const playerData = await GetDataPlayer(identifier);
-        //                     AlertSaveSteam(playerData)
-        //                 } catch (error) {
-        //                     Swal.showValidationMessage(`Request failed: ${error}`);
-        //                 }
-        //             } else {
-        //                 Swal.showValidationMessage(`Input Tidak Boleh Kosong`);
-        //             }
-        //         },
-        //         allowOutsideClick: () => !Swal.isLoading()
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             Swal.fire({
-        //                 title: `${result.value.login}'s avatar`,
-        //                 imageUrl: result.value.avatar_url
-        //             });
-        //         }
-        //     });
-        // }
+
+
+        function AddSteam() {
+            Swal.fire({
+                title: "Masukan Steam Hex",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showCancelButton: true,
+                confirmButtonText: "Cari Data",
+                showLoaderOnConfirm: true,
+                preConfirm: async (dataInput) => {
+                    if (dataInput != "") {
+                        try {
+                            const playerData = await GetDataPlayer(dataInput);
+                            return playerData;
+                        } catch (error) {
+                            return Swal.showValidationMessage(`Request failed: ${error}`);
+                        }
+                    } else {
+                        return Swal.showValidationMessage(`Input Tidak Boleh Kosong`);
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(`hasilnya ${JSON.stringify(result)}`);
+                    AlertSaveSteam(result.value.data.data)
+                }
+            });
+        }
     </script>
 @endsection

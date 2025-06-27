@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings');
     Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate');
     Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword');
+    Route::post('/getplayerdata', [WabiDashboardUser::class, 'GetPlayerData'])->name('getplayerdata');
+    Route::post('/saveplayerdata', [WabiDashboardUser::class, 'SavePlayerData'])->name('saveplayerdata');
 });
 
 
