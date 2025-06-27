@@ -163,6 +163,54 @@
         .swal2-confirm {
             margin: 0.5vw;
         }
+
+        .btn-add-address {
+            border: 2px dashed #ddd;
+            background: none;
+            color: #666;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .btn-add-address:hover {
+            border-color: var(--green);
+            color: var(--green);
+            background-color: #f8f9fa;
+        }
+
+        .address-card {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .address-card:hover {
+            border-color: var(--green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .address-card.selected {
+            border-color: var(--green);
+            background-color: #f8f9fa;
+        }
+
+        .address-card.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--green);
+            font-size: 1.2rem;
+        }
     </style>
 @endsection
 
@@ -252,9 +300,12 @@
                             <span>Total</span>
                             <span>Rp <span id="total_harga">{{ number_format($total, 0, ',', '.') }}</span></span>
                         </div>
-                        <a href="{{ url('checkout') }}" class="btn btn-checkout w-100">
+                        {{-- <a href="{{ url('checkout') }}" class="btn btn-checkout w-100">
                             Ke Pembayaran <i class="fas fa-arrow-right ms-2"></i>
-                        </a>
+                        </a> --}}
+                        <button class="btn btn-checkout w-100" id="proceedCheckoutBtn">
+                            Ke Pembayaran <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
 
                         <a href="{{ url('/') }}" class="continue-shopping d-block text-center">
                             <i class="fas fa-arrow-left me-2"></i> Lanjut Belanja
@@ -275,6 +326,96 @@
                     </div>
                 </div>
             @endif
+        </div>
+    </div>
+
+
+    <!-- Address Selection Modal -->
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addressModalLabel">
+                        <i class="fas fa-map-marker-alt me-2"></i>Pilih Alamat Pengiriman
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Address List in Modal -->
+                    <div id="modalAddressList">
+                        <div class="address-card" data-address-id="1">
+                            <div class="address-name">
+                                Rumah <span class="address-type">Utama</span>
+                            </div>
+                            <div class="address-details">
+                                Jl. Merdeka No. 123, RT 02/RW 05<br>
+                                Kelurahan Sukajadi, Kecamatan Bandung Utara<br>
+                                Bandung, Jawa Barat 40164<br>
+                                <strong>John Doe</strong> | 0812-3456-7890
+                            </div>
+                            <div class="address-actions">
+                                <button class="btn btn-outline-primary btn-sm btn-edit-address">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm btn-delete-address">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="address-card" data-address-id="2">
+                            <div class="address-name">
+                                Kantor <span class="address-type">Kerja</span>
+                            </div>
+                            <div class="address-details">
+                                Jl. Asia Afrika No. 88, Lantai 12<br>
+                                Gedung Braga City Walk<br>
+                                Bandung, Jawa Barat 40111<br>
+                                <strong>John Doe</strong> | 0812-3456-7890
+                            </div>
+                            <div class="address-actions">
+                                <button class="btn btn-outline-primary btn-sm btn-edit-address">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm btn-delete-address">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="address-card" data-address-id="3">
+                            <div class="address-name">Rumah Orang Tua</div>
+                            <div class="address-details">
+                                Jl. Setiabudi No. 45, RT 03/RW 02<br>
+                                Kelurahan Hegarmanah<br>
+                                Bandung, Jawa Barat 40141<br>
+                                <strong>Jane Doe</strong> | 0856-1234-5678
+                            </div>
+                            <div class="address-actions">
+                                <button class="btn btn-outline-primary btn-sm btn-edit-address">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm btn-delete-address">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add New Address Button -->
+                    <button class="btn-add-address mt-3" onselect="tambahAlamat()">
+                        <i class="fas fa-plus me-2"></i>Tambah Alamat Baru
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Batal
+                    </button>
+                    <button type="button" class="btn btn-primary" id="confirmAddressBtn" disabled>
+                        <i class="fas fa-check me-2"></i>Konfirmasi Alamat
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -411,5 +552,112 @@
                 }
             });
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let selectedAddressId = null;
+        const proceedCheckoutBtn = document.getElementById('proceedCheckoutBtn');
+        const addressModal = new bootstrap.Modal(document.getElementById('addressModal'));
+        const addressCards = document.querySelectorAll('#modalAddressList .address-card');
+        const confirmAddressBtn = document.getElementById('confirmAddressBtn');
+        proceedCheckoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if (selectedAddressId) {
+                window.location.href = '#checkout';
+            } else {
+                addressModal.show();
+            }
+        });
+
+        // Address card selection in modal
+        addressCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards
+                addressCards.forEach(c => c.classList.remove('selected'));
+
+                // Add selected class to clicked card
+                this.classList.add('selected');
+
+                // Get address ID and enable confirm button
+                selectedAddressId = this.getAttribute('data-address-id');
+                confirmAddressBtn.disabled = false;
+            });
+        });
+
+        // Confirm address selection
+        confirmAddressBtn.addEventListener('click', function() {
+            if (selectedAddressId) {
+                const address = addressData[selectedAddressId];
+
+                // Hide modal
+                addressModal.hide();
+
+                // Show selected address display
+                document.getElementById('displayAddressName').innerHTML =
+                    address.name + (address.type ? ` <span class="address-type">${address.type}</span>` : '');
+                document.getElementById('displayAddressDetails').innerHTML = address.details;
+                selectedAddressDisplay.style.display = 'block';
+
+                // Update checkout button
+                proceedCheckoutBtn.innerHTML = 'Lanjutkan ke Pembayaran <i class="fas fa-arrow-right ms-2"></i>';
+
+                // Reset modal state
+                setTimeout(() => {
+                    addressCards.forEach(c => c.classList.remove('selected'));
+                    confirmAddressBtn.disabled = true;
+                }, 300);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+        function tambahAlamat() {
+            window.location.href = ;
+        }
+
+        function CheckOut(id, jumlah) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', `{{ url('updatecarts') }}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+            var data = JSON.stringify({
+                cart_id: id,
+                jumlah: jumlah,
+            });
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+
+                    }
+                }
+            };
+
+            xhr.send(data);
+        }
     </script>
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\CartModel;
 use App\Models\OrdersModel;
+use App\Models\WabiGameProfile;
 
 class WabiDashboardUser extends Controller
 {
@@ -110,5 +111,15 @@ class WabiDashboardUser extends Controller
     {
         $carts = CartModel::where('user_id', auth()->id())->get();
         return view("store.content.dashboard.settings", compact("carts"));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function dataplayers()
+    {
+        $carts = CartModel::where('user_id', auth()->id())->get();
+        $steamhexs = WabiGameProfile::where('user_id', auth()->id())->get();
+        return view("store.content.dashboard.dataplayer", compact("carts", "steamhexs"));
     }
 }

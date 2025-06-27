@@ -23,6 +23,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ url('dataplayers') }}" class="{{ (request()->is('dataplayers') || request()->is('dataplayers/*')) ? 'active' : '' }}" data-tab="orders">
+                                <i class="fas fa-box"></i>
+                                Data Player
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ url('orders') }}" class="{{ (request()->is('orders') || request()->is('order-details/*')) ? 'active' : '' }}" data-tab="orders">
                                 <i class="fas fa-box"></i>
                                 My Orders

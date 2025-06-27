@@ -36,13 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [WabiDashboardUser::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [WabiDashboardUser::class, 'profile'])->name('profile');
     Route::get('/orders', [WabiDashboardUser::class, 'orders'])->name('orders');
+    Route::get('/dataplayers', [WabiDashboardUser::class, 'dataplayers'])->name('dataplayers');
     Route::get('/settings', [WabiDashboardUser::class, 'settings'])->name('settings');
     Route::post('/profileupdate', [WabiDashboardUser::class, 'profileupdate'])->name('profileupdate');
     Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword');
 });
 
 
-Route::get('/testSendData', [WabiMidtransController::class, 'testSendData'])->name('testSendData');
+// Route::get('/testSendData', [WabiMidtransController::class, 'testSendData'])->name('testSendData');
 
 
 
