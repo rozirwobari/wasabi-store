@@ -154,6 +154,15 @@
                                     </div>
                                 </div>
 
+                                <div class="address-card mt-4">
+                                    <div class="address-title">
+                                        <i class="fa-solid fa-user"></i>
+                                        Player Data
+                                    </div>
+                                    <p class="mb-1">Nama : <strong>{{ $orders->playerData->name }}</strong></p>
+                                    <p class="mb-1">Identifier : {{ $orders->identifier }}</p>
+                                </div>
+
                                 <!-- Action Buttons -->
                                 <div class="mt-4">
                                     @if ($orders->status <= 1)

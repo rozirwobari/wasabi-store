@@ -10,7 +10,7 @@ use App\Models\ProdukModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class WabiDashboardController extends Controller
+class WabiDashboardAdmin
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class WabiDashboardController extends Controller
     {
         if (Auth::check()) {
             if (in_array(Auth::user()->role, ['admin', 'superadmin'])) {
-                return redirect()->route('dashboards.home');
+                return redirect()->route('admin.home');
             } else {
                 return redirect('/');
             }
@@ -41,7 +41,7 @@ class WabiDashboardController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 if (in_array($user->role, ['admin', 'superadmin'])) {
                     Auth::login($user, $request->has('remember'));
-                    return redirect()->route('dashboards.home');
+                    return redirect()->route('admin.home');
                 } else {
                     return redirect('/');
                 }
@@ -138,7 +138,8 @@ class WabiDashboardController extends Controller
     public function produk()
     {
         $produks = ProdukModel::all();
-        return view('dashboard.content.produk', compact('produks'));
+        $kategoris = KategoriModel::all();
+        return view('dashboard.content.produk', compact('produks', 'kategoris'));
     }
     
     /**
@@ -208,7 +209,7 @@ class WabiDashboardController extends Controller
             'harga' => $harga,
             'images' => json_encode($imagePaths),
         ]);
-        return redirect()->route('dashboards.produk')->with('alert', [
+        return redirect()->route('admin.produk')->with('alert', [
                 'title' => 'Berhasil',
                 'text' => "Berhasil Menyimpan Produk ".$produk_name,
                 'type' => "success"
@@ -231,9 +232,9 @@ class WabiDashboardController extends Controller
     public function updateproduk(Request $request)
     {
         $request->validate([
-            'produk_id' => 'required|exists:wabi-produk,id',
+            'produk_id' => 'required|exists:wabi_produk,id',
             'produk_name' => 'required|string|max:255',
-            'kategori' => 'required|exists:wabi-kategori,id',
+            'kategori' => 'required|exists:wabi_kategori,id',
             'harga' => 'required|numeric|min:1000',
             'deskripsi' => 'required|string',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB
@@ -255,12 +256,10 @@ class WabiDashboardController extends Controller
             
             if (is_array($deletedImagePaths)) {
                 foreach ($deletedImagePaths as $imagePath) {
-                    // Find position of deleted image
                     $deletePosition = array_search($imagePath, $finalImages);
                     if ($deletePosition !== false) {
                         $finalImages[$deletePosition] = null;
                     }
-                    
                     if (file_exists(public_path($imagePath))) {
                         unlink(public_path($imagePath));
                     }
@@ -271,14 +270,10 @@ class WabiDashboardController extends Controller
         for ($i = 0; $i < 5; $i++) {
             if ($request->hasFile("images.{$i}")) {
                 $file = $request->file("images.{$i}");
-                
-                // Generate unique filename
                 $timestamp = now()->timestamp;
-                $randomString = \Str::random(10);
+                $randomString = Str::random(10);
                 $extension = $file->getClientOriginalExtension();
                 $filename = $timestamp . '_' . $randomString . '.' . $extension;
-                
-                // Store file
                 $path = 'images/products/' . $filename;
                 $file->move(public_path('images/products'), $filename);
                 $finalImages[$i] = $path;
@@ -312,7 +307,7 @@ class WabiDashboardController extends Controller
         if (empty($finalImages)) {
             return back()->withErrors(['images' => 'Minimal 1 gambar produk harus ada.'])->withInput();
         }
-        return redirect()->route('dashboards.produk')->with('alert', [
+        return redirect()->route('admin.produk')->with('alert', [
             'title' => 'Berhasil',
             'text' => "Produk Berhasil Diupdate ".$request->produk_name,
             'type' => "success"

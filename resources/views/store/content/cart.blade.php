@@ -211,6 +211,19 @@
             color: var(--green);
             font-size: 1.2rem;
         }
+
+        .selected-address-display {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--green);
+        }
+
+        .selected-address-display .address-name {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
     </style>
 @endsection
 
@@ -290,6 +303,18 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="cart-summary" data-aos="fade-left">
+                        <!-- Selected Address Display -->
+                        <div class="selected-address-display" id="selectedAddressDisplay" style="display: none;">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="address-name" id="displayAddressName"></div>
+                                    <div class="address-details" id="displayAddressDetails"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2 w-100" id="tombolUbah">
+                                <i class="fas fa-edit"></i> Ubah
+                            </button>
+                        </div>
                         <h4 class="mb-4">Ringkasan Pesanan</h4>
 
                         <div class="summary-item">
@@ -331,79 +356,35 @@
 
 
     <!-- Address Selection Modal -->
-    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal fade" id="targetModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addressModalLabel">
-                        <i class="fas fa-map-marker-alt me-2"></i>Pilih Alamat Pengiriman
+                        <i class="fa-solid fa-users-viewfinder"></i> Target Player
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Address List in Modal -->
                     <div id="modalAddressList">
-                        <div class="address-card" data-address-id="1">
-                            <div class="address-name">
-                                Rumah <span class="address-type">Utama</span>
+                        @php
+                            $no = 0;
+                        @endphp
+                        @foreach ($dataPlayers as $dataPlayer)
+                            <div class="address-card" data-address-id="{{ $no++ }}">
+                                <div class="address-name">
+                                    <b>{{ $dataPlayer->name }}</b>
+                                </div>
+                                <div class="address-details">
+                                    Steam HEX : <b>{{ $dataPlayer->identifier }}</b>
+                                </div>
                             </div>
-                            <div class="address-details">
-                                Jl. Merdeka No. 123, RT 02/RW 05<br>
-                                Kelurahan Sukajadi, Kecamatan Bandung Utara<br>
-                                Bandung, Jawa Barat 40164<br>
-                                <strong>John Doe</strong> | 0812-3456-7890
-                            </div>
-                            <div class="address-actions">
-                                <button class="btn btn-outline-primary btn-sm btn-edit-address">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm btn-delete-address">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="address-card" data-address-id="2">
-                            <div class="address-name">
-                                Kantor <span class="address-type">Kerja</span>
-                            </div>
-                            <div class="address-details">
-                                Jl. Asia Afrika No. 88, Lantai 12<br>
-                                Gedung Braga City Walk<br>
-                                Bandung, Jawa Barat 40111<br>
-                                <strong>John Doe</strong> | 0812-3456-7890
-                            </div>
-                            <div class="address-actions">
-                                <button class="btn btn-outline-primary btn-sm btn-edit-address">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm btn-delete-address">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="address-card" data-address-id="3">
-                            <div class="address-name">Rumah Orang Tua</div>
-                            <div class="address-details">
-                                Jl. Setiabudi No. 45, RT 03/RW 02<br>
-                                Kelurahan Hegarmanah<br>
-                                Bandung, Jawa Barat 40141<br>
-                                <strong>Jane Doe</strong> | 0856-1234-5678
-                            </div>
-                            <div class="address-actions">
-                                <button class="btn btn-outline-primary btn-sm btn-edit-address">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm btn-delete-address">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Add New Address Button -->
-                    <button class="btn-add-address mt-3" onselect="tambahAlamat()">
+                    <button class="btn-add-address mt-3" onclick="tambahAlamat()">
                         <i class="fas fa-plus me-2"></i>Tambah Alamat Baru
                     </button>
                 </div>
@@ -423,6 +404,15 @@
 
 @section('scripts')
     <script>
+        let selectedAddressId = null;
+        let selectedFixAddressId = null;
+        const addressData = @json($dataPlayers);
+        const proceedCheckoutBtn = document.getElementById('proceedCheckoutBtn');
+        const targetModal = new bootstrap.Modal(document.getElementById('targetModal'));
+        const addressCards = document.querySelectorAll('#modalAddressList .address-card');
+        const confirmAddressBtn = document.getElementById('confirmAddressBtn');
+        const tombolUbah = document.getElementById('tombolUbah');
+
         function GetJumlah(id) {
             var jumlah = document.getElementById('quantityValue-' + id).value;
             return parseInt(jumlah);
@@ -517,7 +507,6 @@
                     });
                     xhr.send(data);
                     xhr.onreadystatechange = function() {
-                        // console.log(xhr.status);
                         if (xhr.status === 200) {
                             Swal.fire({
                                 title: "Hapus Produk",
@@ -554,70 +543,52 @@
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        let selectedAddressId = null;
-        const proceedCheckoutBtn = document.getElementById('proceedCheckoutBtn');
-        const addressModal = new bootstrap.Modal(document.getElementById('addressModal'));
-        const addressCards = document.querySelectorAll('#modalAddressList .address-card');
-        const confirmAddressBtn = document.getElementById('confirmAddressBtn');
         proceedCheckoutBtn.addEventListener('click', function(e) {
             e.preventDefault();
-
-            if (selectedAddressId) {
-                window.location.href = '#checkout';
+            if (selectedFixAddressId != null && (parseInt(selectedFixAddressId) == 0 || parseInt(selectedFixAddressId) > 0)) {
+                const address = addressData[parseInt(selectedFixAddressId)];
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `{{ url('checkout') }}`;
+                
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = `{{ csrf_token() }}`;
+                form.appendChild(csrfInput);
+                
+                const addressInput = document.createElement('input');
+                addressInput.type = 'hidden';
+                addressInput.name = 'identifier';
+                addressInput.value = address?.identifier;
+                form.appendChild(addressInput);
+                document.body.appendChild(form);
+                form.submit();
             } else {
-                addressModal.show();
+                targetModal.show();
             }
         });
 
-        // Address card selection in modal
         addressCards.forEach(card => {
             card.addEventListener('click', function() {
-                // Remove selected class from all cards
                 addressCards.forEach(c => c.classList.remove('selected'));
-
-                // Add selected class to clicked card
                 this.classList.add('selected');
-
-                // Get address ID and enable confirm button
                 selectedAddressId = this.getAttribute('data-address-id');
                 confirmAddressBtn.disabled = false;
             });
         });
 
-        // Confirm address selection
         confirmAddressBtn.addEventListener('click', function() {
             if (selectedAddressId) {
-                const address = addressData[selectedAddressId];
-
-                // Hide modal
-                addressModal.hide();
-
-                // Show selected address display
+                const address = addressData[parseInt(selectedAddressId)];
+                targetModal.hide();
                 document.getElementById('displayAddressName').innerHTML =
-                    address.name + (address.type ? ` <span class="address-type">${address.type}</span>` : '');
-                document.getElementById('displayAddressDetails').innerHTML = address.details;
+                    `Nama : <b>${address?.name ?? "Tidak Diketahui"}</b>`;
+                document.getElementById('displayAddressDetails').innerHTML =
+                    `Identifier : <b>${address?.identifier ?? "Identifier Tidak Diketahui"}</b>`;
                 selectedAddressDisplay.style.display = 'block';
-
-                // Update checkout button
                 proceedCheckoutBtn.innerHTML = 'Lanjutkan ke Pembayaran <i class="fas fa-arrow-right ms-2"></i>';
-
-                // Reset modal state
+                selectedFixAddressId = parseInt(selectedAddressId);
                 setTimeout(() => {
                     addressCards.forEach(c => c.classList.remove('selected'));
                     confirmAddressBtn.disabled = true;
@@ -625,17 +596,21 @@
             }
         });
 
-
-
-
-
-
-
-
-
+        tombolUbah.addEventListener('click', function(e) {
+            e.preventDefault();
+            targetModal.show();
+            if (selectedAddressId) {
+                const currentCard = document.querySelector(
+                    `#modalAddressList .address-card[data-address-id="${selectedAddressId}"]`);
+                if (currentCard) {
+                    currentCard.classList.add('selected');
+                    confirmAddressBtn.disabled = false;
+                }
+            }
+        });
 
         function tambahAlamat() {
-            window.location.href = ;
+            window.location.href = `{{ url('dataplayers') }}`;
         }
 
         function CheckOut(id, jumlah) {
@@ -656,7 +631,6 @@
                     }
                 }
             };
-
             xhr.send(data);
         }
     </script>

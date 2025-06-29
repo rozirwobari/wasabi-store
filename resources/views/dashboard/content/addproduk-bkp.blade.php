@@ -443,8 +443,8 @@
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('dashboards') }}" class="text-decoration-none">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ url('dashboards/produk') }}" class="text-decoration-none">Produk</a>
+                <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-decoration-none">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('admin/produk') }}" class="text-decoration-none">Produk</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah Produk</li>
             </ol>
@@ -471,7 +471,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ url('dashboards/saveproduk') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ url('admin/saveproduk') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-step active" data-step="1">
                 <div class="form-card fade-in">
@@ -555,7 +555,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <a href="{{ url('dashboards/produk') }}" class="btn btn-secondary prev-step">
+                        <a href="{{ url('admin/produk') }}" class="btn btn-secondary prev-step">
                             <i class="fas fa-arrow-left me-2"></i>Kembali
                         </a>
                         <button type="submit" class="btn btn-primary" id="saveProduct">

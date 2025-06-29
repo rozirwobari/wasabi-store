@@ -24,8 +24,8 @@
                         </li>
                         <li>
                             <a href="{{ url('dataplayers') }}" class="{{ (request()->is('dataplayers') || request()->is('dataplayers/*')) ? 'active' : '' }}" data-tab="orders">
-                                <i class="fas fa-box"></i>
-                                Data Player
+                                <i class="fa-solid fa-layer-group"></i>
+                                Alamat Player Data 
                             </a>
                         </li>
                         <li>

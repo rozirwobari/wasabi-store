@@ -19,12 +19,6 @@
                                     <label class="form-label">Nama Lengkap</label>
                                     <input type="text" class="form-control-dashboard w-100" id="name" name="name" value="{{ Auth::user()->name }}">
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="form-label">Steam Hex</label>
-                                    <input type="text" class="form-control-dashboard w-100" id="steam_hex" name="steam_hex" value="{{ Auth::user()->steam_hex }}">
-                                </div>
-
                                 <div class="form-group">
                                     <label class="form-label">Email Address</label>
                                     <input type="email" class="form-control-dashboard w-100" id="email" name="email" value="{{ Auth::user()->email }}" readonly>

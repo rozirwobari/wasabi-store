@@ -13,7 +13,7 @@ use App\Models\CartModel;
 use App\Models\OrdersModel;
 use App\Models\WabiGameProfile;
 
-class WabiDashboardUser extends Controller
+class WabiDashboardUser
 {
     /**
      * Display a listing of the resource.
@@ -51,10 +51,8 @@ class WabiDashboardUser extends Controller
     {
         $email = $request->input('email');
         $name = $request->input('name');
-        $steam_hex = $request->input('steam_hex');
         User::where('email', $email)->update([
             'name' => $name,
-            'steam_hex' => $steam_hex,
         ]);
         return redirect()->back()->with('alert', [
             'title' => 'Berhasil',
@@ -175,5 +173,61 @@ class WabiDashboardUser extends Controller
                 'data' => $profile,
             ]);
         }
+    }
+
+    public function updateplayerdata(Request $request)
+    {
+        $dataPlayer = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->first();
+        if (!$dataPlayer) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Tidak Ditemukan',
+            ], 500);
+        }
+        try {
+            $data = [
+                'identifier' => $request->identifier
+            ];
+            $response = Http::post('http://208.76.40.92/api/getdataplayer', $data);
+            if ($response->successful()) {
+                $playerData = $response->json();
+
+                $dataPlayer->name = $playerData['data']['name'];
+                $dataPlayer->save();
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => "Data Berhasil Diupdate",
+                    'data' => $playerData['data']
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to fetch player data',
+                ], $response->status());
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function deleteplayerdata(Request $request)
+    {
+        $dataPlayer = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->first();
+        if (!$dataPlayer) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Tidak Ditemukan',
+            ], 500);
+        }
+        $dataPlayer->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhaisl Dihapus',
+        ], 200);
     }
 }

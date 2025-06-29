@@ -17,28 +17,7 @@
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
         }
 
-        .form-header {
-            background: linear-gradient(135deg, var(--primary-green), #4a5a37);
-            color: white;
-            padding: 25px 30px;
-            margin: -30px -30px 30px -30px;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .form-header h4 {
-            margin: 0;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-
-        .form-header i {
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
+        
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -689,156 +668,161 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid px-4">
-        <!-- Alert Section -->
-        <div id="alertContainer"></div>
+    <div class="col-lg-9 col-md-8">
+        <div data-aos="fade-up">
+            <div class="container-fluid px-4">
+                <!-- Alert Section -->
+                <div id="alertContainer"></div>
+                <!-- Update form tag -->
+                <form id="productForm" method="POST" action="{{ url('admin/saveproduk') }}" enctype="multipart/form-data"
+                    novalidate>
+                    @csrf
 
-        <!-- Form Container -->
-        <!-- Update form tag -->
-        <form id="productForm" method="POST" action="{{ url('dashboards/saveproduk') }}" enctype="multipart/form-data" novalidate>
-            @csrf
-
-            <!-- Step 1: Basic Information -->
-            <div class="form-step active" data-step="1">
-                <div class="form-card fade-in">
-                    <div class="form-header">
-                        <h4><i class="fas fa-info-circle"></i>Informasi Dasar Produk</h4>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="produk_name">
-                                    Nama Produk <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="productName" name="produk_name"
-                                    placeholder="Masukkan nama produk" required value="{{ old('name') }}">
-                                @error('name')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" data-step="1">
+                        <div class="form-card fade-in">
+                            <div class="form-header">
+                                <h4><i class="fas fa-info-circle"></i>Informasi Dasar Produk</h4>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="productCategory">
-                                    Kategori <span class="text-danger">*</span>
-                                </label>
-                                <select class="form-select" id="productCategory" name="kategori" required>
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach ($kategoris as $kategori)
-                                        <option value="{{ $kategori->id }}"
-                                            {{ old('category_id') == $kategori->id ? 'selected' : '' }}>
-                                            {{ $kategori->label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('category_id')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label" for="productPrice">
-                                    Harga Jual <span class="text-danger">*</span>
-                                </label>
-                                <div class="price-input-group">
-                                    <input type="number" class="form-control" id="productPrice" name="harga"
-                                        placeholder="0" min="0" step="0.01" required value="{{ old('price') }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="produk_name">
+                                            Nama Produk <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="productName" name="produk_name"
+                                            placeholder="Masukkan nama produk" required value="{{ old('name') }}">
+                                        @error('name')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @error('price')
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="productCategory">
+                                            Kategori <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="productCategory" name="kategori" required>
+                                            <option value="">Pilih Kategori</option>
+                                            @foreach ($kategoris as $kategori)
+                                                <option value="{{ $kategori->id }}"
+                                                    {{ old('category_id') == $kategori->id ? 'selected' : '' }}>
+                                                    {{ $kategori->label }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="productPrice">
+                                            Harga Jual <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="price-input-group">
+                                            <input type="number" class="form-control" id="productPrice" name="harga"
+                                                placeholder="0" min="0" step="0.01" required
+                                                value="{{ old('price') }}">
+                                        </div>
+                                        @error('price')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="productDescription">
+                                    Deskripsi Produk <span class="text-danger">*</span>
+                                </label>
+                                <textarea class="form-control" id="productDescription" name="deskripsi" rows="4"
+                                    placeholder="Jelaskan produk secara detail..." required>{{ old('description') }}</textarea>
+                                @error('description')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="productDescription">
-                            Deskripsi Produk <span class="text-danger">*</span>
-                        </label>
-                        <textarea class="form-control" id="productDescription" name="deskripsi" rows="4"
-                            placeholder="Jelaskan produk secara detail..." required>{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
+                    <!-- Step 3: Images -->
+                    <div class="form-step" data-step="3">
+                        <div class="form-card fade-in">
+                            <div class="form-header">
+                                <h4><i class="fas fa-images"></i>Gambar Produk</h4>
+                            </div>
 
-            <!-- Step 3: Images -->
-            <div class="form-step" data-step="3">
-                <div class="form-card fade-in">
-                    <div class="form-header">
-                        <h4><i class="fas fa-images"></i>Gambar Produk</h4>
-                    </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Upload Gambar Produk <span class="text-danger">*</span>
+                                </label>
+                                <p class="text-muted mb-3">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Upload maksimal 5 gambar. Gambar pertama akan menjadi gambar utama produk.
+                                    Format: JPG, PNG, WebP. Maksimal 5MB per file.
+                                </p>
 
-                    <div class="form-group">
-                        <label class="form-label">
-                            Upload Gambar Produk <span class="text-danger">*</span>
-                        </label>
-                        <p class="text-muted mb-3">
-                            <i class="fas fa-info-circle me-1"></i>
-                            Upload maksimal 5 gambar. Gambar pertama akan menjadi gambar utama produk.
-                            Format: JPG, PNG, WebP. Maksimal 5MB per file.
-                        </p>
+                                <!-- Hidden inputs for images -->
+                                <input type="file" name="images[]" id="hiddenImageInput1" style="display: none;"
+                                    accept="image/*">
+                                <input type="file" name="images[]" id="hiddenImageInput2" style="display: none;"
+                                    accept="image/*">
+                                <input type="file" name="images[]" id="hiddenImageInput3" style="display: none;"
+                                    accept="image/*">
+                                <input type="file" name="images[]" id="hiddenImageInput4" style="display: none;"
+                                    accept="image/*">
+                                <input type="file" name="images[]" id="hiddenImageInput5" style="display: none;"
+                                    accept="image/*">
 
-                        <!-- Hidden inputs for images -->
-                        <input type="file" name="images[]" id="hiddenImageInput1" style="display: none;"
-                            accept="image/*">
-                        <input type="file" name="images[]" id="hiddenImageInput2" style="display: none;"
-                            accept="image/*">
-                        <input type="file" name="images[]" id="hiddenImageInput3" style="display: none;"
-                            accept="image/*">
-                        <input type="file" name="images[]" id="hiddenImageInput4" style="display: none;"
-                            accept="image/*">
-                        <input type="file" name="images[]" id="hiddenImageInput5" style="display: none;"
-                            accept="image/*">
+                                <!-- Hidden input for main image index -->
+                                <input type="hidden" name="main_image_index" id="mainImageIndexInput" value="0">
 
-                        <!-- Hidden input for main image index -->
-                        <input type="hidden" name="main_image_index" id="mainImageIndexInput" value="0">
+                                <div class="image-upload-grid" id="imageUploadGrid">
+                                    <!-- Image upload boxes will be generated here -->
+                                </div>
+                                @error('images')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                                @error('images.*')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                                <div class="invalid-feedback d-block" id="imageUploadError"
+                                    style="display: none !important;">
+                                    Minimal 1 gambar produk harus diupload
+                                </div>
+                            </div>
 
-                        <div class="image-upload-grid" id="imageUploadGrid">
-                            <!-- Image upload boxes will be generated here -->
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url('admin/produk') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>Kembali
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Simpan Produk
+                                </button>
+                            </div>
                         </div>
-                        @error('images')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                        @error('images.*')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                        <div class="invalid-feedback d-block" id="imageUploadError" style="display: none !important;">
-                            Minimal 1 gambar produk harus diupload
+                    </div>
+                </form>
+
+                <!-- Footer -->
+                <footer class="mt-5 py-4 border-top">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-muted mb-0">&copy; 2025 AdminPanel. Semua hak dilindungi.</p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <p class="text-muted mb-0">Versi 2.1.0 | <a href="#"
+                                    class="text-decoration-none">Dokumentasi</a></p>
                         </div>
                     </div>
-
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary prev-step">
-                            <i class="fas fa-arrow-left me-2"></i>Kembali
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Simpan Produk
-                        </button>
-                    </div>
-                </div>
+                </footer>
             </div>
-        </form>
-
-        <!-- Footer -->
-        <footer class="mt-5 py-4 border-top">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="text-muted mb-0">&copy; 2025 AdminPanel. Semua hak dilindungi.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="text-muted mb-0">Versi 2.1.0 | <a href="#"
-                            class="text-decoration-none">Dokumentasi</a></p>
-                </div>
-            </div>
-        </footer>
+        </div>
     </div>
 @endsection
 
@@ -1043,7 +1027,7 @@
 
         function removeImage(index) {
             uploadedImages[index] = null;
-            
+
             // Clear hidden input
             const hiddenInput = document.getElementById(`hiddenImageInput${index + 1}`);
             hiddenInput.value = '';
@@ -1199,7 +1183,7 @@
         document.getElementById('productForm').addEventListener('submit', (e) => {
             // Validate that at least one image is uploaded
             const hasImages = uploadedImages.some(img => img !== null);
-            
+
             if (!hasImages) {
                 e.preventDefault();
                 showAlert('Minimal 1 gambar produk harus diupload', 'danger');
@@ -1208,7 +1192,7 @@
 
             // Update main image index
             document.getElementById('mainImageIndexInput').value = mainImageIndex;
-            
+
             // Show loading state
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;

@@ -1,114 +1,128 @@
 @extends('dashboard.layout')
 
-@section("title", "Dashboard")
+@section('title', 'Dashboard')
 
 @section('content')
-    <div class="container-fluid px-4 py-5">
-        <!-- Stats Cards -->
-        <div class="row fade-in">
-            <div class="col-xl-3 col-md-6">
-                <div class="stats-card green">
-                    <div class="stats-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stats-number">2,847</div>
-                    <div class="stats-label">Total Pengguna</div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="stats-card red">
-                    <div class="stats-icon">
-                        <i class="fa-solid fa-spinner"></i>
-                    </div>
-                    <div class="stats-number">1,234</div>
-                    <div class="stats-label">Pesanan Diproses</div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="stats-card gold">
-                    <div class="stats-icon">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                    </div>
-                    <div class="stats-number">Rp 45.2M</div>
-                    <div class="stats-label">Pesanan Berhasil</div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="stats-card white">
-                    <div class="stats-icon">
+    <div class="col-lg-9 col-md-8">
+        <div class="main-content" data-aos="fade-up">
+            <div id="dashboard" class="tab-content active">
+                <h2 class="section-title">
+                    Admin Dashboard Overview
+                </h2>
 
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="stats-number">Rp 4.5jt</div>
-                    <div class="stats-label">Pendapatan</div>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <a href="#" class="quick-action-btn">
+                        <i class="fas fa-plus me-2"></i>Add Product
+                    </a>
+                    <a href="#" class="quick-action-btn">
+                        <i class="fas fa-truck me-2"></i>Process Orders
+                    </a>
+                    <a href="#" class="quick-action-btn">
+                        <i class="fas fa-user-plus me-2"></i>Add User
+                    </a>
+                    <a href="#" class="quick-action-btn">
+                        <i class="fas fa-chart-bar me-2"></i>View Analytics
+                    </a>
                 </div>
-            </div>
-        </div>
 
-        <!-- Charts Row -->
-        <div class="row">
-            <div class="col-xl-8">
-                <div class="chart-card">
-                    <h5 class="mb-4">Grafik Penjualan</h5>
-                    <canvas id="salesChart" height="100"></canvas>
-                </div>
-            </div>
-            <div class="col-xl-4">
-                <div class="chart-card">
-                    <h5 class="mb-4">Aktivitas Terbaru</h5>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="fw-bold">Pengguna baru mendaftar</div>
-                            <div class="activity-time">2 menit yang lalu</div>
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card revenue">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
                         </div>
-                        <div class="activity-item">
-                            <div class="fw-bold">Pesanan #1234 selesai</div>
-                            <div class="activity-time">5 menit yang lalu</div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="fw-bold">Produk baru ditambahkan</div>
-                            <div class="activity-time">10 menit yang lalu</div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="fw-bold">Pembayaran berhasil</div>
-                            <div class="activity-time">15 menit yang lalu</div>
+                        <div class="stat-value">Rp 15.5M</div>
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +12.5% from last month
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Data Table -->
-        <div class="row">
-            <div class="col-12">
-                <div class="table-card">
-                    <div class="table-header">
-                        <h5 class="mb-0">Pesanan Terbaru</h5>
+                    <div class="stat-card orders">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Total Orders</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +8.3% from last month
+                        </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>ID Pesanan</th>
-                                    <th>Pelanggan</th>
-                                    <th>Produk</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                    <th>Tanggal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>#ORD-001</strong></td>
-                                    <td>Ahmad Wijaya</td>
-                                    <td>Laptop Gaming</td>
-                                    <td><strong>Rp 15.500.000</strong></td>
-                                    <td><span class="badge badge-success">Selesai</span></td>
-                                    <td>07 Jun 2025</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <div class="stat-card users">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value">3,856</div>
+                        <div class="stat-label">Active Users</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +15.2% from last month
+                        </div>
                     </div>
+
+                    <div class="stat-card products">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-value">289</div>
+                        <div class="stat-label">Total Products</div>
+                        <div class="stat-change negative">
+                            <i class="fas fa-arrow-down"></i> -2.1% from last month
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <h3 class="section-title">Recent Orders</h3>
+                <div class="data-table">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#12345</td>
+                                <td>John Doe</td>
+                                <td>28 May 2025</td>
+                                <td>Rp 150.000</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary-custom me-1">View</button>
+                                    <button class="btn btn-sm btn-primary-custom">Process</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#12344</td>
+                                <td>Jane Smith</td>
+                                <td>27 May 2025</td>
+                                <td>Rp 280.000</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary-custom me-1">View</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Archive</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#12343</td>
+                                <td>Mike Johnson</td>
+                                <td>26 May 2025</td>
+                                <td>Rp 95.000</td>
+                                <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary-custom me-1">View</button>
+                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

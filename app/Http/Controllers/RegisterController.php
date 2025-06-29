@@ -27,7 +27,6 @@ class RegisterController
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'steam_hex' => 'required|string|max:255',
             'password' => 'required|string|min:6',
             'password_confirmation' => 'required|same:password'
         ], [
@@ -36,7 +35,6 @@ class RegisterController
             'email.required' => 'Email wajib diisi',
             'email.email' => 'Format email tidak valid',
             'email.unique' => 'Email sudah terdaftar',
-            'steam_hex.required' => 'Steam HEX wajib diisi',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 6 karakter',
             'password_confirmation.required' => 'Konfirmasi password wajib diisi',
@@ -46,7 +44,6 @@ class RegisterController
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'steam_hex' => $request->steam_hex,
             'password' => Hash::make($request->password),
         ]);
 

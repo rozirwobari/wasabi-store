@@ -16,29 +16,6 @@
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
         }
 
-        .form-header {
-            background: linear-gradient(135deg, var(--primary-green), #4a5a37);
-            color: white;
-            padding: 25px 30px;
-            margin: -30px -30px 30px -30px;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .form-header h4 {
-            margin: 0;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-
-        .form-header i {
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -439,132 +416,140 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid px-4">
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('dashboards') }}" class="text-decoration-none">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ url('dashboards/produk') }}" class="text-decoration-none">Produk</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah Produk</li>
-            </ol>
-        </nav>
+    <div class="col-lg-9 col-md-8">
+        <div class="main-content" data-aos="fade-up">
+            <div class="container-fluid px-4">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-decoration-none">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/produk') }}"
+                                class="text-decoration-none">Produk</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah Produk</li>
+                    </ol>
+                </nav>
 
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                <strong>Error!</strong> {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        @if ($errors->any())
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle me-2"></i>
-                <strong>Perhatian!</strong> Terdapat kesalahan dalam pengisian form:
-                <ul class="mb-0 mt-2">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        <form method="POST" action="{{ url('dashboards/saveproduk') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="form-step active" data-step="1">
-                <div class="form-card fade-in">
-                    <div class="form-header">
-                        <h4><i class="fas fa-info-circle"></i>Informasi Dasar Produk</h4>
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Error!</strong> {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
+                @endif
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="productName">Nama Produk <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="produk_name" name="produk_name"
-                                    placeholder="Masukkan nama produk" required>
-                                <div class="invalid-feedback">Nama produk harus diisi</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="productCategory">
-                                    Kategori <span class="text-danger">*</span>
-                                </label>
-                                <select class="form-select" id="kategori" name="kategori" required>
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach ($kategoris as $kategori)
-                                        <option value="{{ $kategori->id }}">{{ $kategori->label }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">Kategori harus dipilih</div>
-                            </div>
-                        </div>
+                @if ($errors->any())
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <strong>Perhatian!</strong> Terdapat kesalahan dalam pengisian form:
+                        <ul class="mb-0 mt-2">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
+                @endif
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label" for="harga">Harga <span class="text-danger">*</span></label>
-                                <div class="price-input-group">
-                                    <input type="number" class="form-control" id="harga" name="harga" placeholder="0"
-                                        min="1000" step="1000" required>
+                <form method="POST" action="{{ url('admin/saveproduk') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-step active" data-step="1">
+                        <div class="form-card fade-in">
+                            <div class="form-header">
+                                <h4><i class="fas fa-info-circle"></i>Informasi Dasar Produk</h4>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="productName">Nama Produk <span
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="produk_name" name="produk_name"
+                                            placeholder="Masukkan nama produk" required>
+                                        <div class="invalid-feedback">Nama produk harus diisi</div>
+                                    </div>
                                 </div>
-                                <div class="invalid-feedback">Harga jual harus diisi</div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="productCategory">
+                                            Kategori <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="kategori" name="kategori" required>
+                                            <option value="">Pilih Kategori</option>
+                                            @foreach ($kategoris as $kategori)
+                                                <option value="{{ $kategori->id }}">{{ $kategori->label }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">Kategori harus dipilih</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="harga">Harga <span
+                                                class="text-danger">*</span></label>
+                                        <div class="price-input-group">
+                                            <input type="number" class="form-control" id="harga" name="harga"
+                                                placeholder="0" min="1000" step="1000" required>
+                                        </div>
+                                        <div class="invalid-feedback">Harga jual harus diisi</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="productDescription">Deskripsi Produk <span
+                                        class="text-danger">*</span>
+                                </label>
+                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4"
+                                    placeholder="Jelaskan produk secara detail..." required></textarea>
+                                <div class="invalid-feedback">Deskripsi produk harus diisi</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="productDescription">Deskripsi Produk <span
-                                class="text-danger">*</span>
-                        </label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4"
-                            placeholder="Jelaskan produk secara detail..." required></textarea>
-                        <div class="invalid-feedback">Deskripsi produk harus diisi</div>
-                    </div>
-                </div>
-            </div>
+                    <div class="form-step" data-step="3">
+                        <div class="form-card fade-in">
+                            <div class="form-header">
+                                <h4><i class="fas fa-images"></i>Gambar Produk</h4>
+                            </div>
 
-            <div class="form-step" data-step="3">
-                <div class="form-card fade-in">
-                    <div class="form-header">
-                        <h4><i class="fas fa-images"></i>Gambar Produk</h4>
-                    </div>
+                            <div id="imagePreviewContainer" class="mt-3 text-center">
+                            </div>
 
-                    <div id="imagePreviewContainer" class="mt-3 text-center">
-                    </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Upload Gambar Produk <span class="text-danger">*</span>
+                                </label>
+                                <div class="image-upload-area" id="imageUploadArea">
+                                    <i class="fas fa-cloud-upload-alt fs-1 text-muted mb-3"></i>
+                                    <h5>Drag & Drop gambar di sini</h5>
+                                    <p class="text-muted">atau klik untuk memilih file</p>
+                                    <input type="file" id="productImages" name="productImages[]" accept="image/*"
+                                        multiple style="display: none;">
+                                    <small class="text-muted">
+                                        Format: JPG, PNG, WebP. Maksimal 5MB per file. Maksimal 10 gambar.
+                                    </small>
+                                </div>
+                                <div class="invalid-feedback">Minimal 1 gambar produk harus diupload</div>
+                            </div>
 
-                    <div class="form-group">
-                        <label class="form-label">
-                            Upload Gambar Produk <span class="text-danger">*</span>
-                        </label>
-                        <div class="image-upload-area" id="imageUploadArea">
-                            <i class="fas fa-cloud-upload-alt fs-1 text-muted mb-3"></i>
-                            <h5>Drag & Drop gambar di sini</h5>
-                            <p class="text-muted">atau klik untuk memilih file</p>
-                            <input type="file" id="productImages" name="productImages[]" accept="image/*" multiple
-                                style="display: none;">
-                            <small class="text-muted">
-                                Format: JPG, PNG, WebP. Maksimal 5MB per file. Maksimal 10 gambar.
-                            </small>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url('admin/produk') }}" class="btn btn-secondary prev-step">
+                                    <i class="fas fa-arrow-left me-2"></i>Kembali
+                                </a>
+                                <button type="submit" class="btn btn-primary" id="saveProduct">
+                                    <i class="fas fa-check me-2"></i>Simpan Produk
+                                </button>
+                            </div>
                         </div>
-                        <div class="invalid-feedback">Minimal 1 gambar produk harus diupload</div>
                     </div>
-
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ url('dashboards/produk') }}" class="btn btn-secondary prev-step">
-                            <i class="fas fa-arrow-left me-2"></i>Kembali
-                        </a>
-                        <button type="submit" class="btn btn-primary" id="saveProduct">
-                            <i class="fas fa-check me-2"></i>Simpan Produk
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 @endsection

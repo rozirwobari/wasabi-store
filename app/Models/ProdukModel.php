@@ -9,7 +9,7 @@ class ProdukModel extends Model
 {
     protected $table = 'wabi_produk';
     protected $fillable = [
-        'nama_produk',
+        'label',
         'deskripsi', 
         'harga',
         'stok',

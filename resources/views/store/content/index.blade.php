@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container py-5">
-        <!-- Banner -->
         <div class="banner" data-aos="fade-up">
             <div class="banner-content">
                 <h2 class="display-4">Koleksi Item Terbaru 2025</h2>
@@ -12,13 +11,10 @@
         </div>
 
         <div class="row">
-            <!-- Sidebar Categories -->
             <div class="col-lg-3 mb-4">
                 <div class="filter-sidebar" data-aos="fade-right">
                     <h4 class="filter-header">Kategori</h4>
                     <hr>
-
-                    <!-- Search Bar -->
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text bg-white border-end-0">
@@ -29,7 +25,6 @@
                         <small class="text-muted">Hasil diperbarui saat Kamu mengetik</small>
                     </div>
 
-                    <!-- Categories -->
                     <div class="mb-4">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -96,32 +91,20 @@
 
 @section('scripts')
     <script>
-        // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Get all product cards and category links
             const productCards = document.querySelectorAll('.produk-card');
             const categoryLinks = document.querySelectorAll('.category-link');
             const searchInput = document.getElementById('realTimeSearch');
-
-
-            // Category filter functionality
             categoryLinks.forEach((link, index) => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-
-                    // Remove active class from all links
                     categoryLinks.forEach(l => l.classList.remove('active'));
-
-                    // Add active class to clicked link
                     this.classList.add('active');
-
                     const selectedCategory = this.getAttribute('data-category');
-                    
                     filterProducts(selectedCategory, searchInput.value);
                 });
             });
 
-            // Real-time search functionality
             searchInput.addEventListener('input', function() {
                 const activeCategory = document.querySelector('.category-link.active');
                 const categoryValue = activeCategory ? activeCategory.getAttribute('data-category') : 'all';
@@ -129,32 +112,22 @@
                 filterProducts(categoryValue, this.value);
             });
 
-            // Filter products function
             function filterProducts(category, searchTerm = '') {
                 let visibleCount = 0;
-                
                 productCards.forEach((card, index) => {
                     const cardCategory = card.getAttribute('data-category');
                     const productName = card.getAttribute('data-product-name');
-                    
                     let shouldShow = true;
-
-                    // Check category filter
                     if (category !== 'all') {
-                        // Convert both to string for comparison
                         if (String(cardCategory) !== String(category)) {
                             shouldShow = false;
                         }
                     }
-                    
-                    // Check search filter
                     if (searchTerm && searchTerm.trim() !== '') {
                         if (!productName.includes(searchTerm.toLowerCase().trim())) {
                             shouldShow = false;
                         }
                     }
-                    
-                    // Show or hide the product card
                     if (shouldShow) {
                         card.style.display = 'block';
                         visibleCount++;
@@ -163,8 +136,6 @@
                     }
                 });
             }
-
-            // Initial filter
             filterProducts('all', '');
         });
 

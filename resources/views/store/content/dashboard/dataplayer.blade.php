@@ -29,10 +29,20 @@
                                     <h5 class="text-center">Belum Ada Steam Hex</h5>
                                 @else
                                     @foreach ($steamhexs as $steamhex)
-                                        <div class="order-item">
+                                        <div class="order-item d-flex justify-content-between align-items-center">
                                             <div class="order-info">
-                                                <h5>{{ $steamhex->name }}</h5>
+                                                <h5 id="player_name_{{ $steamhex->identifier }}">{{ $steamhex->name }}</h5>
                                                 <p>Steam Hex : <b>{{ $steamhex->identifier }}</b></p>
+                                            </div>
+                                            <div class="order-actions">
+                                                <button type="button" class="btn btn-primary-custom"
+                                                    onclick="RefreshData('{{ $steamhex->identifier }}')">
+                                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger-custom"
+                                                    onclick="HapusPlayerData('{{ $steamhex->identifier }}', '{{ $steamhex->name }}')">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     @endforeach
@@ -58,7 +68,7 @@
                 name: data.name,
                 identifier: data.identifier,
             });
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         const respon = JSON.parse(xhr.responseText);
@@ -111,7 +121,7 @@
                     identifier: identifier,
                 });
 
-                xhr.onreadystatechange = function () {
+                xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
                             try {
@@ -126,7 +136,7 @@
                     }
                 };
 
-                xhr.onerror = function () {
+                xhr.onerror = function() {
                     reject("Network error");
                 };
 
@@ -160,8 +170,111 @@
                 allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log(`hasilnya ${JSON.stringify(result)}`);
                     AlertSaveSteam(result.value.data.data)
+                }
+            });
+        }
+
+        function RefreshData(steam) {
+            Swal.fire({
+                title: `Memproses...`,
+                text: 'Sedang mengupdate data Player',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', `{{ url('updateplayerdata') }}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+            var data = JSON.stringify({
+                identifier: steam,
+            });
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const respon = JSON.parse(xhr.responseText);
+                        if (respon.success) {
+                            let PlayerData = respon.data
+                            document.getElementById(`player_name_${steam}`).textContent = PlayerData.name;
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: 'Data Steam berhasil diupdate',
+                                showConfirmButton: true
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Gagal!',
+                                text: 'Data Steam gagal diupdate',
+                                showConfirmButton: true
+                            });
+                        }
+                    }
+                }
+            };
+            xhr.send(data);
+        }
+
+        function HapusPlayerData(steam, name) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "Kamu Yakin?",
+                text: `Apakah Kamu Benar Benar Ingin Menghapus Data Player ${name}`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Tidak, Batalkan!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', `{{ url('deleteplayerdata') }}`, true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+                    var data = JSON.stringify({
+                        identifier: steam,
+                    });
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                const respon = JSON.parse(xhr.responseText);
+                                if (!respon.success) {
+                                    return Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Gagal!',
+                                        text: `${respon?.message ?? 'Data Steam gagal dihapus'}`,
+                                        showConfirmButton: true
+                                    });
+                                }
+                                Swal.fire({
+                                    title: `Memproses...`,
+                                    text: 'Sedang menghapus data Player',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false,
+                                    showConfirmButton: false,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                                location.reload(true);
+                            }
+                        }
+                    };
+                    xhr.send(data);
                 }
             });
         }

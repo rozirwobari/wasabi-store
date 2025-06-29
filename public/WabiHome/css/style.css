@@ -1369,6 +1369,22 @@ a {
     color: white;
 }
 
+.btn-danger-custom {
+    background: linear-gradient(135deg, #e2515f 0%, #dc3545 100%);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-dagener-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 166, 92, 0.3);
+    color: white;
+}
+
 /* Footer Styles (from register page) */
 .footer {
     background-color: #2a2a2a;
@@ -1829,7 +1845,17 @@ a {
     transform: translateX(0);
 }
 
+.profile-dropdown .dropdown-item.active::before {
+    transform: translateX(0);
+}
+
 .profile-dropdown .dropdown-item:hover {
+    background: rgba(231, 166, 92, 0.1);
+    color: var(--green);
+    padding-left: 30px;
+}
+
+.profile-dropdown .dropdown-item.active {
     background: rgba(231, 166, 92, 0.1);
     color: var(--green);
     padding-left: 30px;
@@ -1843,6 +1869,11 @@ a {
 }
 
 .profile-dropdown .dropdown-item:hover i {
+    color: var(--gold);
+    transform: scale(1.2);
+}
+
+.profile-dropdown .dropdown-item.active i {
     color: var(--gold);
     transform: scale(1.2);
 }

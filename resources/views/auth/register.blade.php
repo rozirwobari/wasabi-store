@@ -22,17 +22,6 @@
                     </div>
 
                     <div class="input-group">
-                        {{-- <i class="fas fa-user input-icon"></i> --}}
-                        <i class="fa-brands fa-steam input-icon"></i>
-                        <input type="text" class="form-control @error('steam_hex') is-invalid @enderror" id="steam_hex" name="steam_hex" placeholder="Steam Hex (steam:1100001588f2cf8)" value="{{ old('steam_hex') }}" required>
-                        @error('steam_hex')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="input-group">
                         <i class="fas fa-envelope input-icon"></i>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
                         @error('email')

@@ -78,10 +78,11 @@
                                         <h6 class="mb-0">{{ Auth::user()->name }}</h6>
                                         <small style="opacity: 0.8;">{{ Auth::user()->email }}</small>
                                     </li>
-                                    <li><a class="dropdown-item" href="{{ url('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('profile') }}"><i class="fa-solid fa-user"></i> Profile</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('orders') }}"><i class="fa-solid fa-box"></i> Orders</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('settings') }}"><i class="fa-solid fa-cog"></i> Settings</a></li>
+                                    <li><a class="dropdown-item {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ url('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                                    <li><a class="dropdown-item {{ request()->is('profile') ? 'active' : '' }}" href="{{ url('profile') }}"><i class="fa-solid fa-user"></i> Profile</a></li>
+                                    <li><a class="dropdown-item {{ (request()->is('dataplayers') || request()->is('dataplayers/*')) ? 'active' : '' }}" href="{{ url('dataplayers') }}"><i class="fa-solid fa-layer-group"></i> Alamat Player Data</a></li>
+                                    <li><a class="dropdown-item {{ (request()->is('orders') || request()->is('order-details/*')) ? 'active' : '' }}" href="{{ url('orders') }}"><i class="fa-solid fa-box"></i> Orders</a></li>
+                                    <li><a class="dropdown-item {{ request()->is('settings') ? 'active' : '' }}" href="{{ url('settings') }}"><i class="fa-solid fa-cog"></i> Settings</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

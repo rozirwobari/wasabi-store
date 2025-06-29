@@ -9,7 +9,7 @@ use App\Models\CartModel;
 use App\Models\KategoriModel;
 use App\Models\OrdersModel;
 
-class WabiHome extends Controller
+class WabiHome
 {
     /**
      * Display a listing of the resource.

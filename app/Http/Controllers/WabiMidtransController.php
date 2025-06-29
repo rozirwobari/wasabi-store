@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\OrdersModel;
 use Illuminate\Support\Facades\Log;
 
-class WabiMidtransController extends Controller
+class WabiMidtransController
 {
     /**
      * Display a listing of the resource.

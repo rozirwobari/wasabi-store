@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WabiDashboardController;
+use App\Http\Controllers\WabiDashboardAdmin;
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -27,7 +27,7 @@ Route::get('/produk-details/{id}', [WabiHome::class, 'produkdetail'])->name('pro
 Route::middleware('auth')->group(function () {
     // Keranjang
     Route::get('/cart', [WabiCart::class, 'cart']);
-    Route::get('/checkout', [WabiCart::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [WabiCart::class, 'checkout'])->name('checkout');
     Route::post('/addtocarts', [WabiCart::class, 'addtocart'])->name('addtocarts');
     Route::post('/deletecarts', [WabiCart::class, 'deletecarts'])->name('deletecarts');
     Route::post('/updatecarts', [WabiCart::class, 'updatecarts'])->name('updatecarts');
@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/changepassword', [WabiDashboardUser::class, 'changepassword'])->name('changepassword');
     Route::post('/getplayerdata', [WabiDashboardUser::class, 'GetPlayerData'])->name('getplayerdata');
     Route::post('/saveplayerdata', [WabiDashboardUser::class, 'SavePlayerData'])->name('saveplayerdata');
+    Route::post('/updateplayerdata', [WabiDashboardUser::class, 'updateplayerdata'])->name('updateplayerdata');
+    Route::post('/deleteplayerdata', [WabiDashboardUser::class, 'deleteplayerdata'])->name('deleteplayerdata');
 });
 
 
@@ -56,26 +58,26 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/admin', [WabiDashboardController::class, 'admin'])->name('admin');
-Route::post('/authadmin', [WabiDashboardController::class, 'authadmin'])->name('authadmin');
-Route::prefix('dashboards')->name('dashboards.')->group(function () {
-    Route::get('/', [WabiDashboardController::class, 'index'])->name('home');
+Route::get('/admin', [WabiDashboardAdmin::class, 'admin'])->name('admin');
+Route::post('/authadmin', [WabiDashboardAdmin::class, 'authadmin'])->name('authadmin');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [WabiDashboardAdmin::class, 'index'])->name('home');
     // Kategori
-    Route::get('/kategori', [WabiDashboardController::class, 'kategori'])->name('kategori');
-    Route::post('/hapuskategori', [WabiDashboardController::class, 'hapuskategori'])->name('hapuskategori');
-    Route::post('/tambahkategori', [WabiDashboardController::class, 'tambahkategori'])->name('tambahkategori');
-    Route::post('/editkategori', [WabiDashboardController::class, 'editkategori'])->name('editkategori');
+    Route::get('/kategori', [WabiDashboardAdmin::class, 'kategori'])->name('kategori');
+    Route::post('/hapuskategori', [WabiDashboardAdmin::class, 'hapuskategori'])->name('hapuskategori');
+    Route::post('/tambahkategori', [WabiDashboardAdmin::class, 'tambahkategori'])->name('tambahkategori');
+    Route::post('/editkategori', [WabiDashboardAdmin::class, 'editkategori'])->name('editkategori');
     // Produk
-    Route::get('/produk', [WabiDashboardController::class, 'produk'])->name('produk');
-    Route::get('/tambahproduk', [WabiDashboardController::class, 'tambahproduk'])->name('tambahproduk');
-    Route::get('/editproduk/{id}', [WabiDashboardController::class, 'editproduk'])->name('editproduk');
-    Route::post('/editproduk', [WabiDashboardController::class, 'saveeditproduk'])->name('saveeditproduk');
-    Route::post('/saveproduk', [WabiDashboardController::class, 'saveproduk'])->name('saveproduk');
-    Route::post('/hapusproduk', [WabiDashboardController::class, 'hapusproduk'])->name('hapusproduk');
-    Route::post('/updateproduk', [WabiDashboardController::class, 'updateproduk'])->name('updateproduk');
+    Route::get('/produk', [WabiDashboardAdmin::class, 'produk'])->name('produk');
+    Route::get('/tambahproduk', [WabiDashboardAdmin::class, 'tambahproduk'])->name('tambahproduk');
+    Route::get('/editproduk/{id}', [WabiDashboardAdmin::class, 'editproduk'])->name('editproduk');
+    Route::post('/editproduk', [WabiDashboardAdmin::class, 'saveeditproduk'])->name('saveeditproduk');
+    Route::post('/saveproduk', [WabiDashboardAdmin::class, 'saveproduk'])->name('saveproduk');
+    Route::post('/hapusproduk', [WabiDashboardAdmin::class, 'hapusproduk'])->name('hapusproduk');
+    Route::post('/updateproduk', [WabiDashboardAdmin::class, 'updateproduk'])->name('updateproduk');
     // Pengguna
-    Route::get('/pengguna', [WabiDashboardController::class, 'pengguna'])->name('pengguna');
-    Route::get('/editpengguna', [WabiDashboardController::class, 'editpengguna'])->name('editpengguna');
-    Route::post('/savepengguna', [WabiDashboardController::class, 'savepengguna'])->name('savepengguna');
-    Route::post('/hapuspengguna', [WabiDashboardController::class, 'hapuspengguna'])->name('hapuspengguna');
+    Route::get('/pengguna', [WabiDashboardAdmin::class, 'pengguna'])->name('pengguna');
+    Route::get('/editpengguna', [WabiDashboardAdmin::class, 'editpengguna'])->name('editpengguna');
+    Route::post('/savepengguna', [WabiDashboardAdmin::class, 'savepengguna'])->name('savepengguna');
+    Route::post('/hapuspengguna', [WabiDashboardAdmin::class, 'hapuspengguna'])->name('hapuspengguna');
 });

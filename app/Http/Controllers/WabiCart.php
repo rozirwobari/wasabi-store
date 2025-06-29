@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\ProdukModel;
 use App\Models\CartModel;
 use App\Models\OrdersModel;
+use App\Models\WabiGameProfile;
 
 use Midtrans\Config;
 use Midtrans\Snap;
 
-class WabiCart extends Controller
+class WabiCart
 {
 
     public function __construct()
@@ -31,7 +32,8 @@ class WabiCart extends Controller
     public function cart()
     {
         $carts = CartModel::where('user_id', auth()->id())->get();
-        return view("store.content.cart", compact("carts"));
+        $dataPlayers = WabiGameProfile::where('user_id', auth()->id())->get();
+        return view("store.content.cart", compact("carts", "dataPlayers"));
     }
 
     /**
@@ -141,8 +143,9 @@ class WabiCart extends Controller
         ], 200);
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
+        $identifier = $request->identifier;
         $carts = CartModel::where('user_id', auth()->id())->get();
         $items = [];
         $generateInvoice = 'INV-WG-' . time();
@@ -183,6 +186,7 @@ class WabiCart extends Controller
                 'items' => json_encode($items),
                 'total' => $totalBayar,
                 'snap_token' => $snapToken,
+                'identifier' => $identifier
             ]);
             CartModel::where('user_id', auth()->id())->delete();
             return redirect()->route('order-details', ['invoice' => $generateInvoice]);

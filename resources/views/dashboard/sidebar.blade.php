@@ -1,49 +1,53 @@
-<!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h3>AdminPanel</h3>
-            <div class="subtitle">Dashboard</div>
+<div class="col-lg-3 col-md-4">
+    <div class="sidebar" data-aos="fade-right">
+        <div class="admin-profile">
+            <div class="admin-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h5 class="admin-name">Admin User</h5>
+            <p class="admin-role">System Administrator</p>
         </div>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link  {{ request()->is('dashboards') ? 'active' : '' }}" href="{{ url('dashboards') }}">
+
+        <ul class="sidebar-menu">
+            <li>
+                <a class="{{ request()->is('admin') ? 'active' : '' }}" href="{{ url('admin') }}" data-tab="dashboard">
                     <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                    Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('dashboards/kategori') ? 'active' : '' }}" href="{{ url('dashboards/kategori') }}">
-                    <i class="fa-solid fa-list"></i>
-                    <span>Kategori</span>
+            <li>
+                <a class="{{ request()->is('admin/kategori') ? 'active' : '' }}" href="{{ url('admin/kategori') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    Kategori Management
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ (request()->is('dashboards/produk') || request()->is('dashboards/tambahproduk') || request()->is('dashboards/editproduk/*')) ? 'active' : '' }}" href="{{ url('dashboards/produk') }}">
+            <li>
+                <a class="{{ (request()->is('admin/produk') || request()->is('admin/tambahproduk') || request()->is('admin/editproduk/*')) ? 'active' : '' }}" href="{{ url('admin/produk') }}">
                     <i class="fas fa-box"></i>
-                    <span>Produk</span>
+                    Produk Management
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('dashboards/pengguna') ? 'active' : '' }}" href="{{ url('dashboards/pengguna') }}">
+            <li>
+                <a class="{{ request()->is('admin/pengguna') ? 'active' : '' }}" href="{{ url('admin/pengguna') }}">
                     <i class="fas fa-users"></i>
-                    <span>Pengguna</span>
+                    Users Management
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('dashboards/pengaturan') ? 'active' : '' }}" href="{{ url('dashboards/pengaturan') }}">
-                    <i class="fas fa-cog"></i>
-                    <span>Pengaturan</span>
+            <li>
+                <a class="{{ request()->is('admin/pengaturan') ? 'active' : '' }}" href="{{ url('admin/pengaturan') }}">
+                    <i class="fas fa-chart-line"></i>
+                    Settings
                 </a>
             </li>
-            <li class="nav-item">
+            <li>
                 <form action="{{ url('logout') }}" id="logout_admin" method="POST">
                     @csrf
                 </form>
-                <a href="javascript:void(0);" onclick="document.getElementById('logout_admin').submit();" class="nav-link">
+                <a href="javascript:void(0);" onclick="document.getElementById('logout_admin').submit();">
                     <i class="fas fa-users"></i>
                     <span>Logout</span>
                 </a>
             </li>
-
         </ul>
-    </nav>
+    </div>
+</div>

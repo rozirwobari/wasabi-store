@@ -1,51 +1,56 @@
 @extends('dashboard.layout')
 
-@section("title", "Kategori")
+@section('title', 'Kategori')
 
 @section('content')
-    <div class="container-fluid px-4 py-5">
-        <!-- Data Table -->
-        <div class="row">
-            <div class="col-12">
-                <div class="table-card">
-                    <div class="table-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Kategori</h5>
-                        <button class="btn btn-primary" onclick="TambahKategori()">
-                            <i class="fas fa-plus"></i> Tambah Kategori
-                        </button>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="table-light p-2">
-                                <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (count($kategoris) > 0)
-                                    @foreach ($kategoris as $kategori)
+    <div class="col-lg-9 col-md-8">
+        <div data-aos="fade-up">
+            <div class="container-fluid px-4 py-5">
+                <!-- Data Table -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-card">
+                            <div class="table-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Kategori</h5>
+                                <button class="btn btn-primary" onclick="TambahKategori()">
+                                    <i class="fas fa-plus"></i> Tambah Kategori
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light p-2">
                                         <tr>
-                                            <td>{{ $kategori->label }}</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-danger me-1"
-                                                    onclick="HapusKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-warning me-1"
-                                                    onclick="EditKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </td>
+                                            <th>Nama Kategori</th>
+                                            <th>Action</th>
                                         </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="2" class="text-center">Tidak ada kategori yang tersedia.</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        @if (count($kategoris) > 0)
+                                            @foreach ($kategoris as $kategori)
+                                                <tr>
+                                                    <td>{{ $kategori->label }}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger me-1"
+                                                            onclick="HapusKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-warning me-1"
+                                                            onclick="EditKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="2" class="text-center">Tidak ada kategori yang tersedia.
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,7 +73,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     var xhr = new XMLHttpRequest();
-                    xhr.open('POST', `{{ url('dashboards/hapuskategori') }}`, true);
+                    xhr.open('POST', `{{ url('admin/hapuskategori') }}`, true);
                     xhr.setRequestHeader('Content-Type', 'application/json');
                     xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
                     var data = JSON.stringify({
@@ -108,7 +113,7 @@
                 preConfirm: async (login) => {
                     console.log(login);
                     var xhr = new XMLHttpRequest();
-                    xhr.open('POST', `{{ url('dashboards/tambahkategori') }}`, true);
+                    xhr.open('POST', `{{ url('admin/tambahkategori') }}`, true);
                     xhr.setRequestHeader('Content-Type', 'application/json');
                     xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
                     var data = JSON.stringify({
@@ -148,7 +153,7 @@
                 preConfirm: async (login) => {
                     console.log(login);
                     var xhr = new XMLHttpRequest();
-                    xhr.open('POST', `{{ url('dashboards/editkategori') }}`, true);
+                    xhr.open('POST', `{{ url('admin/editkategori') }}`, true);
                     xhr.setRequestHeader('Content-Type', 'application/json');
                     xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
                     var data = JSON.stringify({
