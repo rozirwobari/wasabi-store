@@ -19,7 +19,7 @@
             --red: #ab343e;
             --gold: #e7a65c;
             --dark-gray: #2a2a2a;
-            --light-gray: #f8f9fa;
+            --light-gray: #f7f7f7;
             --blue: #2196f3;
             --purple: #9c27b0;
             --orange: #ff9800;

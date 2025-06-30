@@ -744,9 +744,7 @@
                                         <label class="form-label" for="harga">Harga <span
                                                 class="text-danger">*</span></label>
                                         <div class="price-input-group">
-                                            <input type="number" class="form-control" id="harga" name="harga"
-                                                placeholder="0" min="1000" step="1000" value="{{ $produk->harga }}"
-                                                required>
+                                            <input type="number" class="form-control" id="harga" name="harga" placeholder="0" min="100" step="100" value="{{ $produk->harga }}" required>
                                         </div>
                                         <div class="invalid-feedback">Harga harus diisi</div>
                                     </div>
