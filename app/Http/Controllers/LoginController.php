@@ -35,6 +35,18 @@ class LoginController
             ])->withInput($request->only('email'));
         }
 
+        if ($user->is_active == 0) {
+            return back()->withErrors([
+                'email' => 'Kamu Perlu Verifikasi Email',
+            ])->withInput($request->only('email'));
+        }
+
+        if ($user->is_active == 9) {
+            return back()->withErrors([
+                'email' => 'Aku Kamu Ditangguhkan',
+            ])->withInput($request->only('email'));
+        }
+
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->intended('/')->with('success', 'Login berhasil!');

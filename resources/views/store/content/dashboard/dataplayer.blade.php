@@ -131,7 +131,8 @@
                                 reject("Invalid JSON response");
                             }
                         } else {
-                            reject(`Request failed with status ${xhr.status}`);
+                            const jsonResponse = JSON.parse(xhr.responseText);
+                            reject(`${jsonResponse.message}`);
                         }
                     }
                 };
@@ -161,7 +162,7 @@
                             const playerData = await GetDataPlayer(dataInput);
                             return playerData;
                         } catch (error) {
-                            return Swal.showValidationMessage(`Request failed: ${error}`);
+                            return Swal.showValidationMessage(`${error}`);
                         }
                     } else {
                         return Swal.showValidationMessage(`Input Tidak Boleh Kosong`);

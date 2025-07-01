@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('steam_hex', 150)->nullable();
             $table->enum('role', ['user', 'admin', 'superadmin'])->default('user');
+            $table->boolean('is_active')->default(false)->after('email');
+            $table->string('activation_token')->nullable()->after('remember_token');
         });
     }
 
@@ -23,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['steam_hex', 'role']);
+            $table->dropColumn(['is_active', 'role', 'activation_token']);
         });
     }
 };

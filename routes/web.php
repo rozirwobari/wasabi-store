@@ -24,6 +24,10 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+// Route untuk aktivasi akun
+Route::get('/activate/{token}', [RegisterController::class, 'activate'])->name('account.activate');
+Route::post('/resend-activation', [RegisterController::class, 'resendActivation'])->name('account.resend-activation');
+
 // Home
 Route::get('/', [WabiHome::class, 'index']);
 Route::get('/order-details/{invoice}', [WabiHome::class, 'orderdetails'])->name('order-details');

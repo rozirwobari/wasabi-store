@@ -130,17 +130,17 @@ class WabiDashboardUser
                 'identifier' => $request->identifier // atau nilai langsung
             ];
             $response = Http::post('http://208.76.40.92/api/getdataplayer', $data);
+            $dataRespon = $response->json();
             if ($response->successful()) {
-                $playerData = $response->json();
                 
                 return response()->json([
                     'success' => true,
-                    'data' => $playerData
+                    'data' => $dataRespon
                 ]);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to fetch player data',
+                    'message' => "(".$request->identifier.") ".$dataRespon['message'],
                 ], $response->status());
             }
 
