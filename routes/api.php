@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\WabiMidtransController;
+use App\Http\Controllers\WabiApiController;
 
-Route::post('/midtrans/notification', [WabiMidtransController::class, 'callback'])->name('midtrans.callback');
+Route::post('/midtrans/notification', [WabiApiController::class, 'MidtransCallback'])->name('midtrans.callback');
+Route::post('/game/webhook', [WabiApiController::class, 'callback'])->name('game.webhook');

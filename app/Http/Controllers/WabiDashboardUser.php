@@ -15,6 +15,13 @@ use App\Models\WabiGameProfile;
 
 class WabiDashboardUser
 {
+    protected $gameEndpoint;
+
+    public function __construct()
+    {
+        $this->gameEndpoint = "http://208.76.40.92/";
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -129,7 +136,7 @@ class WabiDashboardUser
             $data = [
                 'identifier' => $request->identifier // atau nilai langsung
             ];
-            $response = Http::post('http://208.76.40.92/api/getdataplayer', $data);
+            $response = Http::post($this->gameEndpoint.'api/getdataplayer', $data);
             $dataRespon = $response->json();
             if ($response->successful()) {
                 
@@ -188,7 +195,7 @@ class WabiDashboardUser
             $data = [
                 'identifier' => $request->identifier
             ];
-            $response = Http::post('http://208.76.40.92/api/getdataplayer', $data);
+            $response = Http::post($this->gameEndpoint.'api/getdataplayer', $data);
             if ($response->successful()) {
                 $playerData = $response->json();
 

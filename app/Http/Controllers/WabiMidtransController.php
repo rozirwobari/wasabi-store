@@ -10,15 +10,19 @@ use Illuminate\Support\Facades\Http;
 use App\Models\OrdersModel;
 use Illuminate\Support\Facades\Log;
 
-class WabiMidtransController
+class WabiApiController
 {
+    protected $gameEndpoint;
+    public function __construct()
+    {
+        $this->gameEndpoint = "http://208.76.40.92/";
+    }
     /**
      * Display a listing of the resource.
      */
-    public function callback(Request $request)
+    public function MidtransCallback(Request $request)
     {
         $serverKey = config('midtrans.server_key');
-        
         $orderId = $request->order_id ?? $request->no_invoice ?? null;
         $statusCode = $request->status_code ?? $request->data['status_code'] ?? null;
         $grossAmount = $request->gross_amount ?? $request->data['gross_amount'] ?? null;
@@ -85,37 +89,20 @@ class WabiMidtransController
             ]);
             if ($status_code >= 2) {
                 $tgl_transaksi["3"] = time();
-                $tgl_transaksi["4"] = time();
-
-                $sendtoServerGame = $this->testSendData([
+                $orders->update([
+                    'status' => 4,
+                    'data_midtrans' => ($reason ?? json_encode($request->data)),
+                    'tgl_transaksi' => json_encode($tgl_transaksi),
+                ]);
+                $this->SendDataToGame([
                     'order_id' => $orderId,
                     'steam_hex' => $orders->user->steam_hex,
                     'email' => $orders->user->email
                 ]);
-                if ($sendtoServerGame) {
-                    $orders->update([
-                        'status' => 4,
-                        'data_midtrans' => ($reason ?? json_encode($request->data)),
-                        'tgl_transaksi' => json_encode($tgl_transaksi),
-                    ]);
-                }
             }
         }
         return response()->json(['status' => 'ok'], 200);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Menigirim Data Ke Game Server
     private function CreateSignature($data)
@@ -124,24 +111,19 @@ class WabiMidtransController
         return hash_hmac('sha256', $jsonString, "8L5MdvnIT6NVXZE2mbqxXMalDGuFGsBG");
     }
 
-    public function testSendData($data)
+    private function SendDataToGame($data)
     {
-        $nodeJsUrl = "http://api.wasabistore.my.id/api/proses";
         try {
             $sampleData = [
                 'data' => $data,
                 'timestamp' => time()
             ];
-
             $signature = $this->CreateSignature($sampleData);
-
             $payload = [
                 'data' => $sampleData,
                 'signature' => $signature
             ];
-
-            $response = Http::timeout(10)->post($nodeJsUrl, $payload);
-
+            $response = Http::timeout(10)->post($this->gameEndpoint.'api/proses', $payload);
             if ($response->successful()) {
                 response()->json([
                     'status' => 'success',
@@ -168,5 +150,10 @@ class WabiMidtransController
             ], 500);
             return false;
         }
+    }
+
+    public function WebhookGame(Request $request)
+    {
+        Log::error($request->all());
     }
 }
