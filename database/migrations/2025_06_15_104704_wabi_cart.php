@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('produk_id')->nullable();
             $table->integer('jumlah')->nullable();
             $table->timestamps();
+            $table->index('user_id');
         });
     }
 

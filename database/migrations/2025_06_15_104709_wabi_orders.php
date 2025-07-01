@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('wabi_orders', function (Blueprint $table) {
             $table->id();
             $table->string('no_invoice', 150)->default('0');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('identifier', 150)->nullable();
             $table->json('items')->default('[]');
             $table->integer('total');
             $table->tinyInteger('status')->default(0);
             $table->string('snap_token', 200)->nullable();
             $table->json('data_midtrans')->nullable();
-            $table->json('tgl_transaksi')->default('[]');
+            $table->longText('tgl_transaksi')->nullable();
             $table->timestamps();
+            $table->index('user_id');
         });
     }
 

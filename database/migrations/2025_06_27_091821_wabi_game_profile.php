@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wabi_game_profile', function (Blueprint $table) {
-            $table->id(); // auto increment primary key
-            $table->integer('user_id')->default(0);
+            $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('identifier', 150)->nullable();
             $table->mediumText('name')->nullable();
             $table->timestamps();
+            $table->index('user_id');
         });
     }
 

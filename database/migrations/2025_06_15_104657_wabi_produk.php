@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('harga')->nullable();
             $table->json('images')->default('[]');
             $table->timestamps();
+            $table->index('kategori_id');
         });
     }
 
