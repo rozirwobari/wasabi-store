@@ -1922,11 +1922,6 @@ a {
     display: inline-block;
 }
 
-.status-pending {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #ff9800;
-}
-
 .status-completed {
     background-color: rgba(76, 175, 80, 0.2);
     color: #4caf50;

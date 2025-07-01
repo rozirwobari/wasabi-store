@@ -58,7 +58,7 @@
                              data-aos-delay="100">
                             <div class="card h-100">
                                 @if ($images && count($images) > 0 && $images[0])
-                                    <img src="{{ asset($images[0]) }}" class="card-img-top" alt="Product Image">
+                                    <img src="{{ $images[0] ? asset($images[0]) : 'https://placehold.co/600x400' }}" class="card-img-top" alt="Product Image">
                                 @else
                                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
                                         <p class="text-muted">Tidak Ada Gambar</p>

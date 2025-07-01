@@ -4,54 +4,69 @@
 
 @section('content')
     <div class="col-lg-9 col-md-8">
-        <div data-aos="fade-up">
-            <div class="container-fluid px-4 py-5">
-                <!-- Data Table -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-card">
-                            <div class="table-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Kategori</h5>
-                                <button class="btn btn-primary" onclick="TambahKategori()">
-                                    <i class="fas fa-plus"></i> Tambah Kategori
-                                </button>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0">
-                                    <thead class="table-light p-2">
-                                        <tr>
-                                            <th>Nama Kategori</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (count($kategoris) > 0)
-                                            @foreach ($kategoris as $kategori)
-                                                <tr>
-                                                    <td>{{ $kategori->label }}</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-danger me-1"
-                                                            onclick="HapusKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-warning me-1"
-                                                            onclick="EditKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="2" class="text-center">Tidak ada kategori yang tersedia.
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+        <div class="main-content" data-aos="fade-up">
+            <div class="tab-content">
+                <h2 class="section-title">
+                    Kategori Management
+                </h2>
+
+                <div class="produk-table">
+                    <div class="row align-items-center mb-3">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Cari Kategori..." style="width: 350px;">
+                        </div>
+                        <div class="col-auto ms-auto">
+                            <button class="btn btn-primary-custom" onclick="TambahKategori()">
+                        <i class="fas fa-plus me-2"></i>Tambah Kategori
+                    </button>
                         </div>
                     </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Total Produk</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (count($kategoris) > 0)
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($kategoris as $kategori)
+                                    <tr>
+                                        <td class="text-center">
+                                            {{ $no++ }}
+                                        </td>
+                                        <td>
+                                            <div class="product-info">
+                                                <strong>{{ $kategori->label }}</strong>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="status-badge status-active">{{ count($kategori->produk) }} Produk</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-secondary-custom me-1" title="Edit Product" onclick="EditKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger-custom me-1" title="View Details"
+                                                onclick="HapusKategori({{ $kategori->id }}, '{{ $kategori->label }}')">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="2" class="text-center">Tidak ada Produk Yang Tersedia.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -180,5 +195,20 @@
                 allowOutsideClick: () => !Swal.isLoading()
             });
         }
+
+        // Search functionality
+        const searchInputs = document.querySelectorAll('input[placeholder*="Cari Kategori"]');
+        searchInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const table = this.closest('.produk-table').querySelector('table tbody');
+                const rows = table.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
     </script>
 @endsection

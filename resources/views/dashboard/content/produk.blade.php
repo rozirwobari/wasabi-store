@@ -58,10 +58,8 @@
                                     <tr>
                                         <td>
                                             <div class="product-image-wrapper">
-                                                <a href="{{ asset($images[0]) }}" data-lightbox="image-{{ $produk->id }}"
-                                                    data-title="{{ $produk->label }}">
-                                                    <img src="{{ asset($images[0]) }}" alt="Premium Wasabi Seeds"
-                                                        class="product-image">
+                                                <a href="{{ $images && $images[0] ? asset($images[0]) : 'https://placehold.co/600x400' }}" data-lightbox="image-{{ $produk->id }}" data-title="{{ $produk->label }}">
+                                                    <img src="{{ $images && $images[0] ? asset($images[0]) : 'https://placehold.co/600x400' }}" alt="Premium Wasabi Seeds" class="product-image">
                                                 </a>
                                                 @foreach ($images as $key => $image)
                                                     @if ($key > 0)
@@ -80,17 +78,16 @@
                                                 @endforeach
                                             </div>
                                         </td>
-                                        <td>
+                                        <td style="width: 16vw">
                                             <div class="product-info">
                                                 <strong>{{ $produk->label }}</strong>
-                                                <small class="text-muted d-block">High-quality seeds for premium wasabi
-                                                    cultivation</small>
+                                                <small class="text-muted d-block">Item/aksesoris premium berkualitas tinggi untuk senjata dan desain karakter kamu</small>
                                             </div>
                                         </td>
                                         <td>{{ $produk->kategoris && $produk->kategoris->label ? $produk->kategoris->label : 'Tidak Diketahui' }}
                                         </td>
                                         <td>Rp {{ number_format($produk->harga, 0, ',', '.') }}</td>
-                                        <td class="text-center">
+                                        <td class="text-center" style="width: 8vw">
                                             <a class="btn btn-sm btn-secondary-custom me-1" title="Edit Product"
                                                 href="{{ url('admin/editproduk/' . $produk->id) }}">
                                                 <i class="fas fa-edit"></i>
@@ -157,5 +154,52 @@
                 }
             });
         }
+
+        const searchInputs = document.querySelectorAll('input[placeholder*="Cari Produk"]');
+        searchInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const table = this.closest('.produk-table').querySelector('table tbody');
+                const rows = table.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+
+        const statusSelects = document.querySelectorAll('select');
+        statusSelects.forEach(select => {
+            select.addEventListener('change', function() {
+                const filterValue = this.value.toLowerCase();
+                const table = this.closest('.produk-table').querySelector('table tbody');
+                const rows = table.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    if (filterValue === '' || filterValue === 'all status' || filterValue ===
+                        'semua kategori' || filterValue === 'all roles') {
+                        row.style.display = '';
+                    } else {
+                        const statusBadge = row.querySelector('.status-badge');
+                        const categoryCell = row.cells[2];
+
+                        let shouldShow = false;
+
+                        if (statusBadge && statusBadge.textContent.toLowerCase().includes(
+                                filterValue)) {
+                            shouldShow = true;
+                        }
+
+                        if (categoryCell && categoryCell.textContent.toLowerCase().includes(
+                                filterValue)) {
+                            shouldShow = true;
+                        }
+
+                        row.style.display = shouldShow ? '' : 'none';
+                    }
+                });
+            });
+        });
     </script>
 @endsection

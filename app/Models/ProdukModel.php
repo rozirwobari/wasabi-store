@@ -9,13 +9,11 @@ class ProdukModel extends Model
 {
     protected $table = 'wabi_produk';
     protected $fillable = [
-        'label',
-        'deskripsi', 
-        'harga',
-        'stok',
         'kategori_id',
-        'gambar',
-        'status'
+        'label', 
+        'deskripsi',
+        'harga',
+        'images',
     ];
 
     public function kategoris()

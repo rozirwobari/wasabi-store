@@ -676,7 +676,7 @@
                         <li class="breadcrumb-item"><a href="{{ url('admin/pengguna') }}"
                                 class="text-decoration-none">User Management</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
                     </ol>
                 </nav>
 
@@ -703,7 +703,6 @@
 
                 <form method="POST" action="{{ url('admin/updatepengguna') }}">
                     @csrf
-                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <div class="form-step active" data-step="1">
                         <div class="form-card fade-in">
                             <div class="form-header">
@@ -715,7 +714,7 @@
                                     <div class="form-group">
                                         <label class="form-label" for="productName">Nama <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama" value="{{ $user->name }}" required>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama" required>
                                         @error('name')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -723,22 +722,23 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="role">Role <span class="text-danger">*</span>
+                                        <label class="form-label" for="role">
+                                            Role <span class="text-danger">*</span>
                                         </label>
-                                        @if (Auth::user()->id == $user->id)
-                                            <select class="form-select" id="role" name="role_display" disabled>
-                                                <option value="user" @selected($user->role == 'user')>User</option>
-                                                <option value="admin" @selected($user->role == 'admin')>Admin</option>
-                                                <option value="superadmin" @selected($user->role == 'superadmin')>Super Admin</option>
-                                            </select>
-                                            <input type="hidden" name="role" value="{{ $user->role }}">
-                                        @else
-                                            <select class="form-select" id="role" name="role" required>
-                                                <option value="user" @selected($user->role == 'user')>User</option>
-                                                <option value="admin" @selected($user->role == 'admin')>Admin</option>
-                                                <option value="superadmin" @selected($user->role == 'superadmin')>Super Admin</option>
-                                            </select>
-                                        @endif
+                                        <select class="form-select" id="role" name="role" required>
+                                            <option value="">
+                                                Pilih Role
+                                            </option>
+                                            <option value="user">
+                                                User
+                                            </option>
+                                            <option value="admin">
+                                                Admin
+                                            </option>
+                                            <option value="superadmin">
+                                                Super Admin
+                                            </option>
+                                        </select>
                                         @error('role')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -749,9 +749,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="email">Email <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" required>
+                                        <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
                                         @error('email')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -759,29 +758,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="display_is_active">
+                                        <label class="form-label" for="is_active">
                                             Akun Aktif? <span class="text-danger">*</span>
                                         </label>
-                                        @if (Auth::user()->id == $user->id)
-                                            <select class="form-select" id="display_is_active" name="display_is_active" disabled>
-                                                <option value="1" {{ $user->is_active == 1 ? 'selected' : '' }}>
-                                                    Aktif
-                                                </option>
-                                                <option value="0" {{ $user->is_active == 0 ? 'selected' : '' }}>
-                                                    Tidak Aktif
-                                                </option>
-                                            </select>
-                                            <input type="hidden" name="is_active" value="{{ $user->is_active }}">
-                                        @else
-                                            <select class="form-select" id="is_active" name="is_active" required>
-                                                <option value="1" {{ $user->is_active == 1 ? 'selected' : '' }}>
-                                                    Aktif
-                                                </option>
-                                                <option value="0" {{ $user->is_active == 0 ? 'selected' : '' }}>
-                                                    Tidak Aktif
-                                                </option>
-                                            </select>
-                                        @endif
+                                        <select class="form-select" id="is_active" name="is_active" required>
+                                            <option value="1">
+                                                Aktif
+                                            </option>
+                                            <option value="0">
+                                                Tidak Aktif
+                                            </option>
+                                        </select>
                                         @error('is_active')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -794,7 +781,7 @@
                                     <i class="fas fa-arrow-left me-2"></i>Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary-custom">
-                                    <i class="fas fa-save me-2"></i>Update User
+                                    <i class="fas fa-save me-2"></i>Tambah User
                                 </button>
                             </div>
                         </div>

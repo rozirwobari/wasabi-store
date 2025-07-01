@@ -17,25 +17,31 @@
             </li>
             <li>
                 <a class="{{ request()->is('admin/kategori') ? 'active' : '' }}" href="{{ url('admin/kategori') }}">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fa-solid fa-list"></i>
                     Kategori Management
                 </a>
             </li>
             <li>
                 <a class="{{ (request()->is('admin/produk') || request()->is('admin/tambahproduk') || request()->is('admin/editproduk/*')) ? 'active' : '' }}" href="{{ url('admin/produk') }}">
-                    <i class="fas fa-box"></i>
+                    <i class="fa-solid fa-box"></i>
                     Produk Management
                 </a>
             </li>
             <li>
-                <a class="{{ request()->is('admin/pengguna') ? 'active' : '' }}" href="{{ url('admin/pengguna') }}">
+                <a class="{{ request()->is('admin/orders') ? 'active' : '' }}" href="{{ url('admin/orders') }}">
+                    <i class="fa-solid fa-cart-flatbed"></i>
+                    Orders Management
+                </a>
+            </li>
+            <li>
+                <a class="{{ request()->is('admin/pengguna') || request()->is('admin/editpengguna/*') || request()->is('admin/tambahpengguna') ? 'active' : '' }}" href="{{ url('admin/pengguna') }}">
                     <i class="fas fa-users"></i>
                     Users Management
                 </a>
             </li>
             <li>
-                <a class="{{ request()->is('admin/pengaturan') ? 'active' : '' }}" href="{{ url('admin/pengaturan') }}">
-                    <i class="fas fa-chart-line"></i>
+                <a class="{{ request()->is('admin/setting') ? 'active' : '' }}" href="{{ url('admin/setting') }}">
+                    <i class="fa-solid fa-gear"></i>
                     Settings
                 </a>
             </li>
@@ -44,7 +50,7 @@
                     @csrf
                 </form>
                 <a href="javascript:void(0);" onclick="document.getElementById('logout_admin').submit();">
-                    <i class="fas fa-users"></i>
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Logout</span>
                 </a>
             </li>

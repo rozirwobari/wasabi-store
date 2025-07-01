@@ -676,7 +676,7 @@
                         <li class="breadcrumb-item"><a href="{{ url('admin/produk') }}"
                                 class="text-decoration-none">Produk</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Tambah Produk</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Produk</li>
                     </ol>
                 </nav>
 

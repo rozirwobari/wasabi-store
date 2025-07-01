@@ -723,30 +723,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="role">Role <span class="text-danger">*</span>
+                                        <label class="form-label" for="email">Email <span class="text-danger">*</span>
                                         </label>
-                                        @if (Auth::user()->id == $user->id)
-                                            <select class="form-select" id="role" name="role_display" disabled>
-                                                <option value="user" @selected($user->role == 'user')>User</option>
-                                                <option value="admin" @selected($user->role == 'admin')>Admin</option>
-                                                <option value="superadmin" @selected($user->role == 'superadmin')>Super Admin</option>
-                                            </select>
-                                            <input type="hidden" name="role" value="{{ $user->role }}">
-                                        @else
-                                            <select class="form-select" id="role" name="role" required>
-                                                <option value="user" @selected($user->role == 'user')>User</option>
-                                                <option value="admin" @selected($user->role == 'admin')>Admin</option>
-                                                <option value="superadmin" @selected($user->role == 'superadmin')>Super Admin</option>
-                                            </select>
-                                        @endif
-                                        @error('role')
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" required>
+                                        @error('email')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="email">Email <span class="text-danger">*</span>
@@ -759,35 +746,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="display_is_active">
-                                            Akun Aktif? <span class="text-danger">*</span>
+                                        <label class="form-label" for="email">Password <span class="text-danger">*</span>
                                         </label>
-                                        @if (Auth::user()->id == $user->id)
-                                            <select class="form-select" id="display_is_active" name="display_is_active" disabled>
-                                                <option value="1" {{ $user->is_active == 1 ? 'selected' : '' }}>
-                                                    Aktif
-                                                </option>
-                                                <option value="0" {{ $user->is_active == 0 ? 'selected' : '' }}>
-                                                    Tidak Aktif
-                                                </option>
-                                            </select>
-                                            <input type="hidden" name="is_active" value="{{ $user->is_active }}">
-                                        @else
-                                            <select class="form-select" id="is_active" name="is_active" required>
-                                                <option value="1" {{ $user->is_active == 1 ? 'selected' : '' }}>
-                                                    Aktif
-                                                </option>
-                                                <option value="0" {{ $user->is_active == 0 ? 'selected' : '' }}>
-                                                    Tidak Aktif
-                                                </option>
-                                            </select>
-                                        @endif
-                                        @error('is_active')
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" required>
+                                        @error('email')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="d-flex justify-content-between">
                                 <a href="{{ url('admin/pengguna') }}" class="btn btn-secondary">

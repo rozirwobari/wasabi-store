@@ -671,14 +671,21 @@
     <div class="col-lg-9 col-md-8">
         <div data-aos="fade-up">
             <div class="container-fluid px-4">
-                <!-- Alert Section -->
-                <div id="alertContainer"></div>
-                <!-- Update form tag -->
-                <form id="productForm" method="POST" action="{{ url('admin/saveproduk') }}" enctype="multipart/form-data"
-                    novalidate>
-                    @csrf
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-decoration-none">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/produk') }}"
+                                class="text-decoration-none">Produk</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah Produk</li>
+                    </ol>
+                </nav>
 
-                    <!-- Step 1: Basic Information -->
+                <div id="alertContainer"></div>
+                <form id="productForm" method="POST" action="{{ url('admin/saveproduk') }}" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-step active" data-step="1">
                         <div class="form-card fade-in">
                             <div class="form-header">

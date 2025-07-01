@@ -3,6 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WabiDashboardAdmin;
 
+use App\Http\Controllers\Admin\WabiAdminDashboard;
+use App\Http\Controllers\Admin\WabiAdminKategori;
+use App\Http\Controllers\Admin\WabiAdminProduk;
+use App\Http\Controllers\Admin\WabiAdminUsers;
+use App\Http\Controllers\Admin\WabiAdminOrders;
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WabiHome;
@@ -46,38 +52,29 @@ Route::middleware('auth')->group(function () {
     Route::post('/deleteplayerdata', [WabiDashboardUser::class, 'deleteplayerdata'])->name('deleteplayerdata');
 });
 
-
-// Route::get('/testSendData', [WabiMidtransController::class, 'testSendData'])->name('testSendData');
-
-
-
-
-
-
-
-
-
-
-Route::get('/admin', [WabiDashboardAdmin::class, 'admin'])->name('admin');
+Route::get('/adminlogin', [WabiDashboardAdmin::class, 'admin'])->name('admin.login');
 Route::post('/authadmin', [WabiDashboardAdmin::class, 'authadmin'])->name('authadmin');
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [WabiDashboardAdmin::class, 'index'])->name('home');
+Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function () {
+    Route::get('/', [WabiAdminDashboard::class, 'index'])->name('admin.home');
     // Kategori
-    Route::get('/kategori', [WabiDashboardAdmin::class, 'kategori'])->name('kategori');
-    Route::post('/hapuskategori', [WabiDashboardAdmin::class, 'hapuskategori'])->name('hapuskategori');
-    Route::post('/tambahkategori', [WabiDashboardAdmin::class, 'tambahkategori'])->name('tambahkategori');
-    Route::post('/editkategori', [WabiDashboardAdmin::class, 'editkategori'])->name('editkategori');
+    Route::get('/kategori', [WabiAdminKategori::class, 'index'])->name('kategori');
+    Route::post('/hapuskategori', [WabiAdminKategori::class, 'hapuskategori'])->name('hapuskategori');
+    Route::post('/tambahkategori', [WabiAdminKategori::class, 'tambahkategori'])->name('tambahkategori');
+    Route::post('/editkategori', [WabiAdminKategori::class, 'editkategori'])->name('editkategori');
     // Produk
-    Route::get('/produk', [WabiDashboardAdmin::class, 'produk'])->name('produk');
-    Route::get('/tambahproduk', [WabiDashboardAdmin::class, 'tambahproduk'])->name('tambahproduk');
-    Route::get('/editproduk/{id}', [WabiDashboardAdmin::class, 'editproduk'])->name('editproduk');
-    Route::post('/editproduk', [WabiDashboardAdmin::class, 'saveeditproduk'])->name('saveeditproduk');
-    Route::post('/saveproduk', [WabiDashboardAdmin::class, 'saveproduk'])->name('saveproduk');
-    Route::post('/hapusproduk', [WabiDashboardAdmin::class, 'hapusproduk'])->name('hapusproduk');
-    Route::post('/updateproduk', [WabiDashboardAdmin::class, 'updateproduk'])->name('updateproduk');
+    Route::get('/produk', [WabiAdminProduk::class, 'produk'])->name('produk');
+    Route::get('/tambahproduk', [WabiAdminProduk::class, 'tambahproduk'])->name('tambahproduk');
+    Route::get('/editproduk/{id}', [WabiAdminProduk::class, 'editproduk'])->name('editproduk');
+    Route::post('/saveproduk', [WabiAdminProduk::class, 'saveproduk'])->name('saveproduk');
+    Route::post('/hapusproduk', [WabiAdminProduk::class, 'hapusproduk'])->name('hapusproduk');
+    Route::post('/updateproduk', [WabiAdminProduk::class, 'updateproduk'])->name('updateproduk');
+    // Orders
+    Route::get('/orders', [WabiAdminOrders::class, 'index'])->name('orders');
     // Pengguna
-    Route::get('/pengguna', [WabiDashboardAdmin::class, 'pengguna'])->name('pengguna');
-    Route::get('/editpengguna', [WabiDashboardAdmin::class, 'editpengguna'])->name('editpengguna');
-    Route::post('/savepengguna', [WabiDashboardAdmin::class, 'savepengguna'])->name('savepengguna');
-    Route::post('/hapuspengguna', [WabiDashboardAdmin::class, 'hapuspengguna'])->name('hapuspengguna');
+    Route::get('/pengguna', [WabiAdminUsers::class, 'index'])->name('pengguna');
+    Route::get('/editpengguna/{id}', [WabiAdminUsers::class, 'editpengguna'])->name('editpengguna');
+    Route::get('/tambahpengguna', [WabiAdminUsers::class, 'tambahpengguna'])->name('tambahpengguna');
+    Route::get('/setting', [WabiAdminUsers::class, 'setting'])->name('setting');
+    Route::post('/hapususer', [WabiAdminUsers::class, 'hapususer'])->name('hapususer');
+    Route::post('/updatepengguna', [WabiAdminUsers::class, 'updatepengguna'])->name('updatepengguna');
 });

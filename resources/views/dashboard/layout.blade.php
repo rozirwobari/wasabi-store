@@ -292,6 +292,7 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
+            text-align: center;
         }
 
         .status-active {
@@ -312,6 +313,16 @@
         .status-completed {
             background-color: rgba(76, 175, 80, 0.2);
             color: #4caf50;
+        }
+
+        .status-processing {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+        }
+
+        .status-shipped {
+            background-color: rgba(156, 39, 176, 0.2);
+            color: #9c27b0;
         }
 
         .status-cancelled {
@@ -579,55 +590,6 @@
             });
         });
 
-        // Search functionality
-        const searchInputs = document.querySelectorAll('input[placeholder*="Cari Produk"]');
-        searchInputs.forEach(input => {
-            input.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const table = this.closest('.produk-table').querySelector('table tbody');
-                const rows = table.querySelectorAll('tr');
-
-                rows.forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(searchTerm) ? '' : 'none';
-                });
-            });
-        });
-
-        // Status filter functionality
-        const statusSelects = document.querySelectorAll('select');
-        statusSelects.forEach(select => {
-            select.addEventListener('change', function() {
-                const filterValue = this.value.toLowerCase();
-                const table = this.closest('.produk-table').querySelector('table tbody');
-                const rows = table.querySelectorAll('tr');
-
-                rows.forEach(row => {
-                    if (filterValue === '' || filterValue === 'all status' || filterValue ===
-                        'semua kategori' || filterValue === 'all roles') {
-                        row.style.display = '';
-                    } else {
-                        const statusBadge = row.querySelector('.status-badge');
-                        const categoryCell = row.cells[2]; // Assuming category is 3rd column
-
-                        let shouldShow = false;
-
-                        if (statusBadge && statusBadge.textContent.toLowerCase().includes(
-                                filterValue)) {
-                            shouldShow = true;
-                        }
-
-                        if (categoryCell && categoryCell.textContent.toLowerCase().includes(
-                                filterValue)) {
-                            shouldShow = true;
-                        }
-
-                        row.style.display = shouldShow ? '' : 'none';
-                    }
-                });
-            });
-        });
-
         // Smooth scroll for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -647,11 +609,7 @@
         quickActionBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-
-                // Get the action from button text
                 const action = this.textContent.trim();
-
-                // Simulate quick action
                 const originalColor = this.style.backgroundColor;
                 this.style.backgroundColor = '#4caf50';
                 this.style.color = 'white';
@@ -659,8 +617,6 @@
                 setTimeout(() => {
                     this.style.backgroundColor = originalColor;
                     this.style.color = '';
-
-                    // Show success message
                     alert(`${action} executed successfully!`);
                 }, 1000);
             });

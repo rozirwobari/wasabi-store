@@ -18,6 +18,8 @@ class OrdersModel extends Model
         'data_midtrans',
         'tgl_transaksi',
         'identifier',
+        'created_at',
+        'updated_at',
     ];
 
     public function user()
