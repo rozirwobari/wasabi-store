@@ -154,7 +154,7 @@
                                             @endphp
                                             <div class="timeline-title">Diambil</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
-                                            <div class="timeline-date">System : </div>
+                                            <br>
                                             @foreach ($reason_claim_array as $data_claim)
                                                 <div class="timeline-date">{{ $no++ }}. {{ $data_claim }}</div>
                                             @endforeach
