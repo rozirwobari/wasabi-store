@@ -192,7 +192,11 @@ class WabiCart
             CartModel::where('user_id', auth()->id())->delete();
             return redirect()->route('order-details', ['invoice' => $generateInvoice]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses pembayaran: ' . $e->getMessage());
+            return redirect()->back()->with('alert', [
+                'title' => 'Gagal',
+                'message' => 'Terjadi kesalahan saat memproses pembayaran: ' . $e->getMessage(),
+                'type' => 'error',
+            ]);
         }
     }
 }
