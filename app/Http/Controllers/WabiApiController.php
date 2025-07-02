@@ -207,7 +207,7 @@ class WabiApiController
                     $get_tgl_transaksi = json_decode($orders->tgl_transaksi, true);
                     $get_tgl_transaksi["5"] = time();
                     $reason_games = json_decode($orders->reason_game, true);
-                    if (!$reason_games['claim_item']) {
+                    if (!($reason_claim && isset($reason_claim['claim_item']))) {
                         $reason_games['claim_item'] = [];
                     }
                     array_push($reason_games['claim_item'], $request->message);
