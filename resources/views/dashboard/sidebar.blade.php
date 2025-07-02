@@ -4,8 +4,8 @@
             <div class="admin-avatar">
                 <i class="fas fa-user-shield"></i>
             </div>
-            <h5 class="admin-name">Admin User</h5>
-            <p class="admin-role">System Administrator</p>
+            <h5 class="admin-name">{{ Auth::user()->name }}</h5>
+            <p class="admin-role">{{ Auth::user()->email }}</p>
         </div>
 
         <ul class="sidebar-menu">

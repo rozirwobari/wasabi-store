@@ -727,7 +727,18 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="productPrice">Harga Jual <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="name_item" name="name_item" list="name_items" placeholder="Nama Item Game" value="{{ old('price') }}" required>
+                                        <datalist id="name_items">
+                                            @foreach ($items as $item)
+                                                <option value="{{ $item->name }}">
+                                            @endforeach
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="productPrice">
                                             Harga Jual <span class="text-danger">*</span>

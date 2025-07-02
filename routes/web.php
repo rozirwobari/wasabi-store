@@ -56,8 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/deleteplayerdata', [WabiDashboardUser::class, 'deleteplayerdata'])->name('deleteplayerdata');
 });
 
-Route::get('/adminlogin', [WabiDashboardAdmin::class, 'admin'])->name('admin.login');
-Route::post('/authadmin', [WabiDashboardAdmin::class, 'authadmin'])->name('authadmin');
+Route::get('/adminlogin', [WabiAdminAuth::class, 'admin'])->name('admin.login');
+Route::post('/authadmin', [WabiAdminAuth::class, 'authadmin'])->name('authadmin');
 Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function () {
     Route::get('/', [WabiAdminDashboard::class, 'index'])->name('admin.home');
     // Kategori

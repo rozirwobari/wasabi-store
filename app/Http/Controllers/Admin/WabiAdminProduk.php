@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\KategoriModel;
 use App\Models\ProdukModel;
+use App\Http\Controllers\WabiApiController;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,8 +23,11 @@ class WabiAdminProduk
 
     public function tambahproduk()
     {
+        $WabiApiController = new WabiApiController();
         $kategoris = KategoriModel::all();
-        return view('dashboard.content.addproduk', compact('kategoris'));
+        $GetItems = $WabiApiController->GetItemGame();
+        $items = json_decode($GetItems, false)->data;
+        return view('dashboard.content.addproduk', compact('kategoris', 'items'));
     }
 
     public function editproduk($id)
@@ -37,7 +41,7 @@ class WabiAdminProduk
     {
         $imagePaths = [];
         if ($request->hasFile('images')) {
-            $uploadPath = public_path('images/products');
+            $uploadPath = 'images/products';
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0755, true);
             }
@@ -96,8 +100,8 @@ class WabiAdminProduk
                     if ($deletePosition !== false) {
                         $finalImages[$deletePosition] = null;
                     }
-                    if (file_exists(public_path($imagePath))) {
-                        unlink(public_path($imagePath));
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
                     }
                 }
             }
@@ -111,7 +115,7 @@ class WabiAdminProduk
                 $extension = $file->getClientOriginalExtension();
                 $filename = $timestamp . '_' . $randomString . '.' . $extension;
                 $path = 'images/products/' . $filename;
-                $file->move(public_path('images/products'), $filename);
+                $file->move('images/products', $filename);
                 $finalImages[$i] = $path;
             }
         }

@@ -10,7 +10,8 @@ class ProdukModel extends Model
     protected $table = 'wabi_produk';
     protected $fillable = [
         'kategori_id',
-        'label', 
+        'label',
+        'name_item',
         'deskripsi',
         'harga',
         'images',

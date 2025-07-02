@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->mediumText('label')->nullable();
+            $table->mediumText('name_item')->nullable();
             $table->longText('deskripsi')->nullable();
             $table->integer('harga')->nullable();
             $table->json('images')->default('[]');
