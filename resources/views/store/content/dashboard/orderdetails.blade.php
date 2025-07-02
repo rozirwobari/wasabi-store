@@ -128,17 +128,34 @@
                                     <div
                                         class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
                                         <div class="timeline-content">
+                                            @php
+                                                $reason_pengiriman = json_decode($orders->reason_game, false)
+                                                $reason_pengiriman_txt = ""
+                                                if ($reason_pengiriman->pengiriman) {
+                                                    $reason_pengiriman_txt = $reason_pengiriman->pengiriman
+                                                }
+                                            @endphp
                                             <div class="timeline-title">Pesanan Sampai</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
-                                            <div class="timeline-date">{{ $orders->reason_game ?? "" }}</div>
+                                            <div class="timeline-date">{{ $reason_pengiriman_txt }}</div>
                                         </div>
                                     </div>
 
                                     <div
                                         class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
                                         <div class="timeline-content">
+                                            @php
+                                                $reason_claim = json_decode($orders->reason_game, false)
+                                                $reason_claim_array = []
+                                                if ($reason_claim->claim_item) {
+                                                    $reason_claim_array = $reason_claim->claim_item
+                                                }
+                                            @endphp
                                             <div class="timeline-title">Diambil</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            @foreach ($reason_claim_array as $data_claim)
+                                                <div class="timeline-date">{{ $data_claim }}</div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

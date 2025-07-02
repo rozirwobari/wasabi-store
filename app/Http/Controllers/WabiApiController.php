@@ -183,19 +183,44 @@ class WabiApiController
     public function GameWebhook(Request $request)
     {
         if ($request->success) {
-            $orders = OrdersModel::firstWhere('no_invoice', $request->order_id);
-            if ($orders) {
-                $get_tgl_transaksi = json_decode($orders->tgl_transaksi, true);
-                $get_tgl_transaksi["4"] = time();
-                $orders->update([
-                    'status' => 4,
-                    'reason_game' => $request->message,
-                    'tgl_transaksi' => json_encode($get_tgl_transaksi),
-                ]);
-                response()->json([
-                    'success' => true,
-                    'message' => 'Berhasil Update Data',
-                ], 200);
+            if ($request->order_id) {
+                $orders = OrdersModel::firstWhere('no_invoice', $request->order_id);
+                if ($orders) {
+                    $get_tgl_transaksi = json_decode($orders->tgl_transaksi, true);
+                    $get_tgl_transaksi["4"] = time();
+                    $orders->update([
+                        'status' => 4,
+                        'reason_game' => json_encode([
+                            'pengiriman' => $request->message
+                        ]),
+                        'tgl_transaksi' => json_encode($get_tgl_transaksi),
+                    ]);
+                    response()->json([
+                        'success' => true,
+                        'message' => 'Berhasil Update Data',
+                    ], 200);
+                }
+            }
+            if ($request->status == 'claim_item') {
+                $orders = OrdersModel::firstWhere('no_invoice', $request->order_id);
+                if ($orders) {
+                    $get_tgl_transaksi = json_decode($orders->tgl_transaksi, true);
+                    $get_tgl_transaksi["5"] = time();
+                    $reason_games = json_decode($orders->reason_game, true);
+                    if (!$reason_games['claim_item']) {
+                        $reason_games['claim_item'] = [];
+                    }
+                    array_push($reason_games['claim_item'], $request->message);
+                    $orders->update([
+                        'status' => 5,
+                        'reason_game' => $request->message,
+                        'tgl_transaksi' => json_encode($reason_games),
+                    ]);
+                    response()->json([
+                        'success' => true,
+                        'message' => 'Berhasil Update Data',
+                    ], 200);
+                }
             }
         }
         response()->json([
