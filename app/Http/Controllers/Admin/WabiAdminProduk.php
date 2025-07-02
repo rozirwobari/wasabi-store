@@ -32,9 +32,12 @@ class WabiAdminProduk
 
     public function editproduk($id)
     {
+        $WabiApiController = new WabiApiController();
         $produk = ProdukModel::find($id);
         $kategoris = KategoriModel::all();
-        return view('dashboard.content.editproduk', compact('produk', 'kategoris'));
+        $GetItems = $WabiApiController->GetItemGame();
+        $items = json_decode($GetItems, false)->data;
+        return view('dashboard.content.editproduk', compact('produk', 'kategoris', 'items'));
     }
 
     public function saveproduk(Request $request)
@@ -76,6 +79,7 @@ class WabiAdminProduk
         $request->validate([
             'produk_id' => 'required|exists:wabi_produk,id',
             'produk_name' => 'required|string|max:255',
+            'name_item' => 'required|string|max:255',
             'kategori' => 'required|exists:wabi_kategori,id',
             'harga' => 'required|numeric|min:1000',
             'deskripsi' => 'required|string',
@@ -142,6 +146,7 @@ class WabiAdminProduk
             'label' => $request->produk_name,
             'kategori_id' => $request->kategori,
             'harga' => $request->harga,
+            'name_item' => $request->name_item,
             'deskripsi' => $request->deskripsi,
             'images' => json_encode($finalImages)
         ]);
