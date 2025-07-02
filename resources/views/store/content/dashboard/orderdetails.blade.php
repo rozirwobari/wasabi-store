@@ -147,7 +147,7 @@
                                             @php
                                                 $reason_claim = json_decode($orders->reason_game, false);
                                                 $reason_claim_array = [];
-                                                if ($reason_claim && isset($reason_claim->pengiriman)) {
+                                                if ($reason_claim && isset($reason_claim->claim_item)) {
                                                     $reason_claim_array = $reason_claim->claim_item;
                                                 };
                                             @endphp
