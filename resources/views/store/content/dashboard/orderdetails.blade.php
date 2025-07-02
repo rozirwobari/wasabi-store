@@ -132,7 +132,7 @@
                                                 $reason_pengiriman = json_decode($orders->reason_game, false);
                                                 $reason_pengiriman_txt = "";
                                                 if ($reason_pengiriman->pengiriman) {
-                                                    $reason_pengiriman_txt = $reason_pengiriman->pengiriman
+                                                    $reason_pengiriman_txt = $reason_pengiriman->pengiriman;
                                                 };
                                             @endphp
                                             <div class="timeline-title">Pesanan Sampai</div>
@@ -148,7 +148,7 @@
                                                 $reason_claim = json_decode($orders->reason_game, false);
                                                 $reason_claim_array = [];
                                                 if ($reason_claim->claim_item) {
-                                                    $reason_claim_array = $reason_claim->claim_item
+                                                    $reason_claim_array = $reason_claim->claim_item;
                                                 };
                                             @endphp
                                             <div class="timeline-title">Diambil</div>
