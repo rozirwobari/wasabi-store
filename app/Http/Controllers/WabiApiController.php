@@ -188,7 +188,7 @@ class WabiApiController
                 $get_tgl_transaksi = json_decode($orders->tgl_transaksi, true);
                 $get_tgl_transaksi["4"] = time();
                 $orders->update([
-                    'status' => 5,
+                    'status' => 4,
                     'reason_game' => $request->message,
                     'tgl_transaksi' => json_encode($get_tgl_transaksi),
                 ]);
