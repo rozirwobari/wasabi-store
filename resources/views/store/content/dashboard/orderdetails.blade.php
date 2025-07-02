@@ -131,9 +131,9 @@
                                             @php
                                                 $reason_pengiriman = json_decode($orders->reason_game, false);
                                                 $reason_pengiriman_txt = "";
-                                                if ($reason_pengiriman->pengiriman) {
+                                                if ($reason_pengiriman && isset($reason_pengiriman->pengiriman)) {
                                                     $reason_pengiriman_txt = $reason_pengiriman->pengiriman;
-                                                };
+                                                }
                                             @endphp
                                             <div class="timeline-title">Pesanan Sampai</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
@@ -147,7 +147,7 @@
                                             @php
                                                 $reason_claim = json_decode($orders->reason_game, false);
                                                 $reason_claim_array = [];
-                                                if ($reason_claim->claim_item) {
+                                                if ($reason_claim && isset($reason_claim->pengiriman)) {
                                                     $reason_claim_array = $reason_claim->claim_item;
                                                 };
                                             @endphp
