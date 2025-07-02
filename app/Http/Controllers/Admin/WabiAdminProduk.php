@@ -54,10 +54,12 @@ class WabiAdminProduk
         $produk_name = $request->produk_name;
         $kategori = $request->kategori;
         $harga = $request->harga;
+        $name_item = $request->name_item;
         $deskripsi = $request->deskripsi;
         ProdukModel::create([
             'kategori_id' => $kategori,
             'label' => $produk_name,
+            'name_item' => $name_item,
             'deskripsi' => $deskripsi,
             'harga' => $harga,
             'images' => json_encode($imagePaths),
