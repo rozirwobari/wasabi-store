@@ -137,7 +137,7 @@
                                             @endphp
                                             <div class="timeline-title">Pesanan Sampai</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
-                                            <div class="timeline-date">{{ $reason_pengiriman_txt }}</div>
+                                            <div class="timeline-date">System : {{ $reason_pengiriman_txt }}</div>
                                         </div>
                                     </div>
 
@@ -150,11 +150,13 @@
                                                 if ($reason_claim && isset($reason_claim->claim_item)) {
                                                     $reason_claim_array = $reason_claim->claim_item;
                                                 };
+                                                $no = 1;
                                             @endphp
                                             <div class="timeline-title">Diambil</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            <div class="timeline-date">System : </div>
                                             @foreach ($reason_claim_array as $data_claim)
-                                                <div class="timeline-date">{{ $data_claim }}</div>
+                                                <div class="timeline-date">{{ $no++. }}. {{ $data_claim }}</div>
                                             @endforeach
                                         </div>
                                     </div>
