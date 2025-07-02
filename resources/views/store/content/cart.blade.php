@@ -328,7 +328,7 @@
                         {{-- <a href="{{ url('checkout') }}" class="btn btn-checkout w-100">
                             Ke Pembayaran <i class="fas fa-arrow-right ms-2"></i>
                         </a> --}}
-                        <button class="btn btn-checkout w-100" id="proceedCheckoutBtn">
+                        <button type="button" class="btn btn-checkout w-100" id="proceedCheckoutBtn">
                             Ke Pembayaran <i class="fas fa-arrow-right ms-2"></i>
                         </button>
 
@@ -611,27 +611,6 @@
 
         function tambahAlamat() {
             window.location.href = `{{ url('dataplayers') }}`;
-        }
-
-        function CheckOut(id, jumlah) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', `{{ url('updatecarts') }}`, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
-
-            var data = JSON.stringify({
-                cart_id: id,
-                jumlah: jumlah,
-            });
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-
-                    }
-                }
-            };
-            xhr.send(data);
         }
     </script>
 @endsection
