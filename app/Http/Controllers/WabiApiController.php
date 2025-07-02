@@ -183,7 +183,7 @@ class WabiApiController
     public function GameWebhook(Request $request)
     {
         if ($request->success) {
-            if ($request->order_id) {
+            if ($request->status == 'pengiriman') {
                 $orders = OrdersModel::firstWhere('no_invoice', $request->order_id);
                 if ($orders) {
                     $get_tgl_transaksi = json_decode($orders->tgl_transaksi, true);
