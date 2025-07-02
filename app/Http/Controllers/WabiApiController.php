@@ -180,7 +180,7 @@ class WabiApiController
         }
     }
 
-    public function WebhookGame(Request $request)
+    public function GameWebhook(Request $request)
     {
         Log::error($request->all());
     }

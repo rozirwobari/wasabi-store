@@ -130,6 +130,7 @@
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Sampai</div>
                                             <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            <div class="timeline-date">{{ $orders->reason_game ?? "" }}</div>
                                         </div>
                                     </div>
 

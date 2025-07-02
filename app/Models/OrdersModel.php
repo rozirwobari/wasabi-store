@@ -18,6 +18,7 @@ class OrdersModel extends Model
         'data_midtrans',
         'tgl_transaksi',
         'identifier',
+        'reason_game',
         'created_at',
         'updated_at',
     ];
