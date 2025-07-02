@@ -192,8 +192,16 @@ class WabiApiController
                     'reason_game' => $request->message,
                     'tgl_transaksi' => json_encode($get_tgl_transaksi),
                 ]);
+                response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil Update Data',
+                ], 200);
             }
         }
+        response()->json([
+            'success' => false,
+            'message' => 'Transaksi Tidak Ditemukan',
+        ], 404);
         Log::error($request->all());
     }
 }
