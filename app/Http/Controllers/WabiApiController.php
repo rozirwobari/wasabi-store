@@ -213,8 +213,8 @@ class WabiApiController
                     array_push($reason_games['claim_item'], $request->message);
                     $orders->update([
                         'status' => 5,
-                        'reason_game' => $request->message,
-                        'tgl_transaksi' => json_encode($reason_games),
+                        'reason_game' => json_encode($reason_games),
+                        'tgl_transaksi' => json_encode($get_tgl_transaksi),
                     ]);
                     response()->json([
                         'success' => true,
