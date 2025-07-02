@@ -146,13 +146,9 @@ class WabiApiController
     private function SendDataToGame($data)
     {
         try {
-            $sampleData = [
-                'data' => $data,
-                'timestamp' => time()
-            ];
-            $signature = $this->CreateSignature($sampleData);
+            $signature = $this->CreateSignature($data);
             $payload = [
-                'data' => $sampleData,
+                'data' => $data,
                 'signature' => $signature
             ];
             $response = Http::timeout(10)->post($this->gameEndpoint.'api/proses', $payload);
