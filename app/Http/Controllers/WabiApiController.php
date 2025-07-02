@@ -97,7 +97,8 @@ class WabiApiController
                 $this->SendDataToGame([
                     'order_id' => $orderId,
                     'steam_hex' => $orders->user->steam_hex,
-                    'email' => $orders->user->email
+                    'email' => $orders->user->email,
+                    'data_items' => $orders->items,
                 ]);
             }
         }

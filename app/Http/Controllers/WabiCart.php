@@ -153,6 +153,7 @@ class WabiCart
             $items[] = [
                 'id' => $cart->produk->id,
                 'name' => $cart->produk->label,
+                'name_item' => $cart->produk->name_item,
                 'jumlah' => $cart->jumlah,
                 'harga' => $cart->produk->harga,
                 'total' => $cart->produk->harga * $cart->jumlah,
