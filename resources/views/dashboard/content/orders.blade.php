@@ -10,7 +10,7 @@
             padding: 12px 15px;
             transition: all 0.3s;
         }
-        
+
     </style>
 @endsection
 
@@ -30,7 +30,7 @@
                         <div class="stat-value">Rp {{ number_format($orders->sum('total'), 0, ',', '.') }}</div>
                         <div class="stat-label">Total Pendapatan</div>
                         <div class="stat-change {{ ($persetasiPendapatan >= 0) ? 'positive' : 'negative' }}">
-                            <i class="fas fa-arrow-{{ ($persetasiPendapatan >= 0) ? 'up' : 'down' }}"></i> 
+                            <i class="fas fa-arrow-{{ ($persetasiPendapatan >= 0) ? 'up' : 'down' }}"></i>
                             {{ ($persetasiPendapatan > 0) ? '+' : '' }}{{ $persetasiPendapatan }}% from last month
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="stat-value">{{ number_format($totalTerjual, 0, ',', '.') }}</div>
                         <div class="stat-label">Total Orders</div>
                         <div class="stat-change {{ ($persetasiOrders >= 0) ? 'positive' : 'negative' }}">
-                            <i class="fas fa-arrow-{{ ($persetasiOrders >= 0) ? 'up' : 'down' }}"></i> 
+                            <i class="fas fa-arrow-{{ ($persetasiOrders >= 0) ? 'up' : 'down' }}"></i>
                             {{ ($persetasiOrders > 0) ? '+' : '' }}{{ $persetasiOrders }}% from last month
                         </div>
                     </div>
@@ -107,6 +107,9 @@
                                             {{ \App\Helpers\WabiHelper::formatDate($order->created_at) }}
                                         </td>
                                         <td class="text-center">
+                                            <a class="btn btn-sm btn-secondary-custom m-1" title="Detail Order" href="{{ url('admin/show-orders/' . $order->no_invoice) }}">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
                                             @if ($order->status == 3)
                                                 <a class="btn btn-sm btn-secondary-custom m-1" title="Proses Kirim" href="{{ url('admin/editproduk/' . $order->id) }}">
                                                     <i class="fa-solid fa-arrows-rotate"></i>

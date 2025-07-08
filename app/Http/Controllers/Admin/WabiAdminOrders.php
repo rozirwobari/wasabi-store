@@ -20,13 +20,13 @@ class WabiAdminOrders extends Controller
 
         $getPendapatan = $this->GetTotalPendapatan();
         $persetasiPendapatan = $this->hitungPersentase(
-            $getPendapatan['bulanLalu'], 
+            $getPendapatan['bulanLalu'],
             $getPendapatan['bulanIni'],
         );
 
         $getPendapatan = $this->GetTotalOrder();
         $persetasiOrders = $this->hitungPersentase(
-            $getPendapatan['bulanLalu'], 
+            $getPendapatan['bulanLalu'],
             $getPendapatan['bulanIni'],
         );
 
@@ -54,7 +54,7 @@ class WabiAdminOrders extends Controller
 
         $pendapatanBulanLalu = OrdersModel::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$bulanLalu])
             ->where('status', 0)->get();
-            
+
         foreach ($pendapatanBulanLalu as $key => $value) {
             $item = json_decode($value->items);
             $countItemBulanLalu += count($item);
@@ -87,8 +87,23 @@ class WabiAdminOrders extends Controller
         if ($nilaiLama == 0) {
             return $nilaiBaru > 0 ? 100 : 0;
         }
-        
+
         $persentase = (($nilaiBaru - $nilaiLama) / $nilaiLama) * 100;
         return round($persentase, 1);
+    }
+
+    public function show($invoice = null)
+    {
+        if ($invoice) {
+            $orders = OrdersModel::where('no_invoice', $invoice)->first();
+            if ($orders) {
+                return view("dashboard.content.orderdetail", compact('orders'));
+            }
+        }
+        return redirect()->back()->with('alert', [
+                'title' => 'Gagal',
+                'text' => "Invoice ".$invoice." Tidak Terdaftar",
+                'type' => "warning"
+            ]);
     }
 }

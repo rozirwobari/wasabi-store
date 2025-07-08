@@ -74,6 +74,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
     Route::post('/updateproduk', [WabiAdminProduk::class, 'updateproduk'])->name('updateproduk');
     // Orders
     Route::get('/orders', [WabiAdminOrders::class, 'index'])->name('orders');
+    Route::get('/show-orders/{invoice}', [WabiAdminOrders::class, 'show'])->name('show.orders');
     // Pengguna
     Route::get('/pengguna', [WabiAdminUsers::class, 'index'])->name('pengguna');
     Route::get('/editpengguna/{id}', [WabiAdminUsers::class, 'editpengguna'])->name('editpengguna');

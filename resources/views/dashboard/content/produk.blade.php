@@ -26,7 +26,7 @@
 
                 <div class="produk-table">
                     <div class="row align-items-center mb-3">
-                        <div class="col-auto">
+                        <div class="col-auto" style="width: 15vw;">
                             <select class="form-select">
                                 <option>Semua Kategori</option>
                                 @foreach ($kategoris as $kategori)
@@ -35,7 +35,7 @@
                             </select>
                         </div>
                         <div class="col-auto ms-auto">
-                            <input type="text" class="form-control" placeholder="Cari Produk..." style="width: 350px;">
+                            <input type="text" class="form-control" placeholder="Cari Produk..." style="width: 15vw;">
                         </div>
                     </div>
 
