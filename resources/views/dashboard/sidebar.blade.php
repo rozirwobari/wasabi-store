@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li>
-                <a class="{{ (request()->is('admin/orders') || request()->is('admin/show-orders?*')) ? 'active' : '' }}" href="{{ url('admin/orders') }}">
+                <a class="{{ (request()->is('admin/orders') || request()->is('admin/show-orders/*')) ? 'active' : '' }}" href="{{ url('admin/orders') }}">
                     <i class="fa-solid fa-cart-flatbed"></i>
                     Orders Management
                 </a>
