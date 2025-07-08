@@ -26,6 +26,7 @@ class WabiAdminProduk
         $WabiApiController = new WabiApiController();
         $kategoris = KategoriModel::all();
         $GetItems = $WabiApiController->GetItemGame();
+        dd($GetItems);
         $items = json_decode($GetItems, false)->data;
         return view('dashboard.content.addproduk', compact('kategoris', 'items'));
     }
@@ -96,10 +97,10 @@ class WabiAdminProduk
                 $finalImages[$index] = $imagePath;
             }
         }
-        
+
         if ($request->deleted_images) {
             $deletedImagePaths = json_decode($request->deleted_images, true);
-            
+
             if (is_array($deletedImagePaths)) {
                 foreach ($deletedImagePaths as $imagePath) {
                     $deletePosition = array_search($imagePath, $finalImages);
@@ -112,7 +113,7 @@ class WabiAdminProduk
                 }
             }
         }
-        
+
         for ($i = 0; $i < 5; $i++) {
             if ($request->hasFile("images.{$i}")) {
                 $file = $request->file("images.{$i}");
@@ -125,11 +126,11 @@ class WabiAdminProduk
                 $finalImages[$i] = $path;
             }
         }
-        
+
         $finalImages = array_values(array_filter($finalImages, function($value) {
             return $value !== null;
         }));
-        
+
         $mainImageIndex = $request->main_image_index ?? 0;
         if ($mainImageIndex >= count($finalImages)) {
             $mainImageIndex = 0;
@@ -141,7 +142,7 @@ class WabiAdminProduk
             array_unshift($finalImages, $mainImage);
             $finalImages = array_values($finalImages);
         }
-        
+
         $produk->update([
             'label' => $request->produk_name,
             'kategori_id' => $request->kategori,
