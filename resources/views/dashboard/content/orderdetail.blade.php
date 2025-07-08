@@ -177,7 +177,7 @@
                             </div>
                             <div class="step-content {{ $orders->status == 0 ? 'active' : ($orders->status > 0 ? 'completed' : '') }}">
                                 <h6>Pesanan Diterima</h6>
-                                <small class="text-muted">{{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                                <small class="text-muted">{{ \App\Helpers\WabiHelper::formatDate($orders->created_at) }}</small>
                             </div>
                         </div>
                         <div class="progress-step  {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
@@ -186,7 +186,7 @@
                             </div>
                             <div class="step-content">
                                 <h6>Pembayaran Berhasil</h6>
-                                <small class="text-muted">{{ ($value = $tgl_transaksi['3'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                                <small class="text-muted">{{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                             </div>
                         </div>
                         <div class="progress-step {{ $orders->status == 2 ? 'active' : ($orders->status > 2 ? 'completed' : '') }}">
@@ -195,7 +195,7 @@
                             </div>
                             <div class="step-content">
                                 <h6>Pesanan Diproses</h6>
-                                <small class="text-muted">{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                                <small class="text-muted">{{ ($value = $tgl_transaksi['3'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                             </div>
                         </div>
                         <div class="progress-step {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
@@ -204,7 +204,7 @@
                             </div>
                             <div class="step-content">
                                 <h6>Pesanan Sampai</h6>
-                                <small class="text-muted">{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                                <small class="text-muted">{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                             </div>
                         </div>
                         <div class="progress-step {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
@@ -213,11 +213,7 @@
                             </div>
                             <div class="step-content">
                                 <h6>Diambil</h6>
-                                <div class="timeline-date">1. Jamal Kususuma Meswara</div>
-                                <div class="timeline-date">2. Sword 2</div>
-                                <div class="timeline-date">3. Sword 3</div>
-                                <div class="timeline-date">4. Sword 4</div>
-                                {{-- <div class="timeline-date">{{ $no++ }}. {{ $data_claim }}</div> --}}
+                                <small class="text-muted">{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                             </div>
                         </div>
                     </div>
