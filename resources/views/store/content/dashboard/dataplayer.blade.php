@@ -35,10 +35,17 @@
                                                 <p>Steam Hex : <b>{{ $steamhex->identifier }}</b></p>
                                             </div>
                                             <div class="order-actions">
-                                                <button type="button" class="btn btn-primary-custom"
-                                                    onclick="RefreshData('{{ $steamhex->identifier }}')">
-                                                    <i class="fa-solid fa-arrows-rotate"></i>
-                                                </button>
+                                                @if ($steamhex->status == 0)
+                                                    <button type="button" class="btn btn-resend-custom"
+                                                        onclick="Resend('{{ $steamhex->identifier }}')">
+                                                        <i class="fa-solid fa-paper-plane"></i>
+                                                    </button>
+                                                @elseif ($steamhex->status == 1)
+                                                    <button type="button" class="btn btn-resend-custom"
+                                                        onclick="RefreshData('{{ $steamhex->identifier }}')">
+                                                        <i class="fa-solid fa-arrows-rotate"></i>
+                                                    </button>
+                                                @endif
                                                 <button type="button" class="btn btn-danger-custom"
                                                     onclick="HapusPlayerData('{{ $steamhex->identifier }}', '{{ $steamhex->name }}')">
                                                     <i class="fa-solid fa-trash"></i>
@@ -59,6 +66,10 @@
 
 @section('scripts')
     <script>
+        function Resend(identifier) {
+
+        }
+
         function SavePlayerData(data) {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', `{{ url('saveplayerdata') }}`, true);
