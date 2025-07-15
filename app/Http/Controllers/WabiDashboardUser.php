@@ -252,4 +252,20 @@ class WabiDashboardUser
             'message' => 'Data Berhaisl Dihapus',
         ], 200);
     }
+
+    public function resendlinked(Request $request)
+    {
+        $dataPlayer = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->first();
+        if (!$dataPlayer) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Tidak Ditemukan',
+            ], 500);
+        }
+        $dataPlayer->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhaisl Dihapus',
+        ], 200);
+    }
 }

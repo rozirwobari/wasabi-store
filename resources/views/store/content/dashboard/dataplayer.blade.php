@@ -67,7 +67,34 @@
 @section('scripts')
     <script>
         function Resend(identifier) {
-
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', `{{ url('resendlinked') }}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+            var data = JSON.stringify({
+                identifier: identifier,
+            });
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    const respon = JSON.parse(xhr.responseText);
+                    if (xhr.status === 200) {
+                        if (respon.success) {
+                            Swal.fire({
+                                title: "Berhasil",
+                                text: `${respon.message}`,
+                                icon: "success"
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: `${respon.message}`,
+                            icon: "denger"
+                        });
+                    }
+                }
+            };
+            xhr.send(data);
         }
 
         function SavePlayerData(data) {
@@ -78,6 +105,17 @@
             var data = JSON.stringify({
                 name: data.name,
                 identifier: data.identifier,
+            });
+            Swal.fire({
+                title: `Memproses...`,
+                text: 'Sedang mengupdate data Player',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
             });
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {

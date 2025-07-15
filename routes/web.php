@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/saveplayerdata', [WabiDashboardUser::class, 'SavePlayerData'])->name('saveplayerdata');
     Route::post('/updateplayerdata', [WabiDashboardUser::class, 'updateplayerdata'])->name('updateplayerdata');
     Route::post('/deleteplayerdata', [WabiDashboardUser::class, 'deleteplayerdata'])->name('deleteplayerdata');
+    Route::post('/resendlinked', [WabiDashboardUser::class, 'resendlinked'])->name('resendlinked');
 });
 
 Route::get('/adminlogin', [WabiAdminAuth::class, 'admin'])->name('admin.login');
