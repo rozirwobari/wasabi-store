@@ -47,7 +47,7 @@ class WabiHome
             $produk = ProdukModel::find($id);
             $carts = CartModel::where('user_id', auth()->id())->get();
             if (!$produk) {
-                return redirect()->back()->with('error', 'Product not found');
+                return redirect()->back()->with('error', 'Produk Tidak Ditemukan');
             }
             return view("store.content.detail", compact("produk", "carts"));
         }

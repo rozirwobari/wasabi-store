@@ -217,6 +217,13 @@
                                 showConfirmButton: true
                             });
                         }
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Gagal!',
+                            text: `Error : ${JSON.stringify(xhr.responseText)}`,
+                            showConfirmButton: true
+                        });
                     }
                 }
             };

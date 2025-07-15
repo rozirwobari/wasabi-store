@@ -9,7 +9,7 @@ class WabiGameProfile extends Model
     protected $table = 'wabi_game_profile';
     protected $fillable = [
         'user_id',
-        'identifier', 
+        'identifier',
         'name',
     ];
 

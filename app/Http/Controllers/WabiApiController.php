@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 use App\Models\OrdersModel;
+use App\Models\WabiGameProfile;
 use Illuminate\Support\Facades\Log;
 
 class WabiApiController
@@ -180,7 +181,7 @@ class WabiApiController
         }
     }
 
-    public function GameWebhook(Request $request)
+    public function updatepesanan(Request $request)
     {
         if ($request->success) {
             if ($request->status == 'pengiriman') {
@@ -228,5 +229,46 @@ class WabiApiController
             'message' => 'Transaksi Tidak Ditemukan',
         ], 404);
         Log::error($request->all());
+    }
+
+    public function GetPlayerData($data)
+    {
+        $response = Http::post($this->gameEndpoint.'api/getdataplayer', $data);
+        if ($response->successful()) {
+            return $response->json();
+        }
+        return false;
+    }
+
+    public function LinkedAccount($data)
+    {
+        $response = Http::post($this->gameEndpoint.'api/linkaccount', $data);
+        if ($response->successful()) {
+            return $response->json();
+        }
+        return false;
+    }
+
+    public function linkedRespon(Request $request)
+    {
+        $user_id = $request->user_id;
+        $identifier = $request->identifier;
+        $PlayerData = $request->playerdata;
+        $status = $request->status;
+        $GameProfile = WabiGameProfile::where('user_id', $user_id)->where('identifier', $identifier)->first();
+        if ($GameProfile) {
+            $GameProfile->status = $status;
+            $GameProfile->updated_at = now();
+            $GameProfile->save();
+            return response()->json([
+                'success' => true,
+                'message' => "Data Berhasil Diupdate"
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "Data Tidak Ditemukan"
+            ], 500);
+        }
     }
 }

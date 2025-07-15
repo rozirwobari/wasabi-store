@@ -16,8 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('identifier', 150)->nullable();
             $table->mediumText('name')->nullable();
-            $table->timestamps();
+            $table->tinyInteger('status')->default(0);
             $table->index('user_id');
+            $table->timestamps();
         });
     }
 

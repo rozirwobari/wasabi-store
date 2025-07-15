@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\CartModel;
 use App\Models\OrdersModel;
 use App\Models\WabiGameProfile;
+use App\Http\Controllers\WabiApiController;
 
 class WabiDashboardUser
 {
@@ -76,7 +77,7 @@ class WabiDashboardUser
         $password = $request->input('password');
         $new_password = $request->input('new_password');
         $confirm_password = $request->input('confirm_password');
-        
+
         try {
             $validatedData = $request->validate([
                 'password' => 'required',
@@ -96,11 +97,11 @@ class WabiDashboardUser
         if (!Hash::check($request->password, auth()->user()->password)) {
             return redirect()->back()->withErrors(['password' => 'Password lama tidak sesuai.']);
         }
-        
+
         $user = auth()->user();
         $user->password = Hash::make($request->new_password);
         $user->save();
-        
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -132,23 +133,23 @@ class WabiDashboardUser
 
     public function GetPlayerData(Request $request)
     {
+        $WabiApi = new WabiApiController();
         try {
             $data = [
                 'identifier' => $request->identifier // atau nilai langsung
             ];
-            $response = Http::post($this->gameEndpoint.'api/getdataplayer', $data);
-            $dataRespon = $response->json();
-            if ($response->successful()) {
-                
+            $response = $WabiApi->GetPlayerData($data);
+            if ($response) {
+                $dataRespon = $response;
                 return response()->json([
                     'success' => true,
                     'data' => $dataRespon
-                ]);
+                ], 200);
             } else {
                 return response()->json([
                     'success' => false,
                     'message' => "(".$request->identifier.") ".$dataRespon['message'],
-                ], $response->status());
+                ], 500);
             }
 
         } catch (\Exception $e) {
@@ -161,29 +162,44 @@ class WabiDashboardUser
 
     public function SavePlayerData(Request $request)
     {
-        $dataPlayeres = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->get();
-        if (count($dataPlayeres) > 0) {
+
+        try {
+            $WabiApi = new WabiApiController();
+            $dataPlayeres = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->get();
+            if (count($dataPlayeres) > 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Data Sudah Terdaftar",
+                ]);
+            }
+            $profile = WabiGameProfile::create([
+                'user_id' => auth()->id(),
+                'name' => $request->name,
+                'identifier' => $request->identifier,
+            ]);
+            $WabiApi->LinkedAccount([
+                'identifier' => $request->identifier,
+                'email' => auth()->user()->email,
+                'user_id' => auth()->id(),
+            ]);
+            if ($profile) {
+                return response()->json([
+                    'success' => true,
+                    'data' => $profile,
+                ]);
+            }
+        } catch (\Throwable $e) {
             return response()->json([
                 'success' => false,
-                'message' => "Data Sudah Terdaftar",
-            ]); 
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
         }
-        $profile = WabiGameProfile::create([
-            'user_id' => auth()->id(),
-            'name' => $request->name,
-            'identifier' => $request->identifier,
-        ]);
 
-        if ($profile) {
-            return response()->json([
-                'success' => true,
-                'data' => $profile,
-            ]);
-        }
     }
 
     public function updateplayerdata(Request $request)
     {
+        $WabiApi = new WabiApiController();
         $dataPlayer = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->first();
         if (!$dataPlayer) {
             return response()->json([
@@ -195,23 +211,22 @@ class WabiDashboardUser
             $data = [
                 'identifier' => $request->identifier
             ];
-            $response = Http::post($this->gameEndpoint.'api/getdataplayer', $data);
-            if ($response->successful()) {
-                $playerData = $response->json();
-
+            $response = $WabiApi->GetPlayerData($data);
+            if ($response) {
+                $playerData = $response;
                 $dataPlayer->name = $playerData['data']['name'];
                 $dataPlayer->save();
-                
+
                 return response()->json([
                     'success' => true,
                     'message' => "Data Berhasil Diupdate",
                     'data' => $playerData['data']
-                ]);
+                ], 200);
             } else {
                 return response()->json([
                     'success' => false,
                     'message' => 'Failed to fetch player data',
-                ], $response->status());
+                ], 500);
             }
 
         } catch (\Exception $e) {
