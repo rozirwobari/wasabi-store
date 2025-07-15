@@ -113,9 +113,11 @@ body {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(1);
     }
@@ -342,11 +344,9 @@ a {
     align-items: center;
     justify-content: center;
     padding: 40px 0;
-    background: linear-gradient(
-        135deg,
-        rgba(62, 76, 44, 0.05) 0%,
-        rgba(231, 166, 92, 0.05) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(62, 76, 44, 0.05) 0%,
+            rgba(231, 166, 92, 0.05) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -358,11 +358,9 @@ a {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(
-        circle,
-        rgba(231, 166, 92, 0.1) 0%,
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(231, 166, 92, 0.1) 0%,
+            transparent 70%);
     animation: float 20s infinite linear;
 }
 
@@ -414,8 +412,7 @@ a {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(231,166,92,0.2)" stroke-width="0.5"/><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(231,166,92,0.2)" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(231,166,92,0.2)" stroke-width="0.5"/></svg>')
-        center/50% no-repeat;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(231,166,92,0.2)" stroke-width="0.5"/><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(231,166,92,0.2)" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(231,166,92,0.2)" stroke-width="0.5"/></svg>') center/50% no-repeat;
     animation: rotate 30s infinite linear;
 }
 
@@ -522,12 +519,10 @@ a {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
     transition: left 0.5s;
 }
 
@@ -645,11 +640,9 @@ a {
     align-items: center;
     justify-content: center;
     padding: 40px 0;
-    background: linear-gradient(
-        135deg,
-        rgba(231, 166, 92, 0.05) 0%,
-        rgba(62, 76, 44, 0.05) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(231, 166, 92, 0.05) 0%,
+            rgba(62, 76, 44, 0.05) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -661,11 +654,9 @@ a {
     right: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(
-        circle,
-        rgba(62, 76, 44, 0.1) 0%,
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(62, 76, 44, 0.1) 0%,
+            transparent 70%);
     animation: float-reverse 25s infinite linear;
 }
 
@@ -673,6 +664,7 @@ a {
     0% {
         transform: translate(50%, -50%) rotate(0deg);
     }
+
     100% {
         transform: translate(50%, -50%) rotate(-360deg);
     }
@@ -736,10 +728,12 @@ a {
 }
 
 @keyframes pulse {
+
     0%,
     100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.1);
     }
@@ -819,6 +813,7 @@ a {
     position: relative;
     margin-bottom: 20px;
 }
+
 /*
 .input-icon {
     position: absolute;
@@ -857,12 +852,10 @@ a {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
     transition: left 0.5s;
 }
 
@@ -1005,9 +998,11 @@ a {
         transform: scale(0);
         opacity: 0;
     }
+
     50% {
         transform: scale(1.2);
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
@@ -1034,6 +1029,7 @@ a {
     0% {
         stroke-dasharray: 0 188;
     }
+
     100% {
         stroke-dasharray: 188 188;
     }
@@ -1154,11 +1150,9 @@ a {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.2) 0%,
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 0.2) 0%,
+            transparent 70%);
     animation: rotate 10s linear infinite;
 }
 
@@ -1242,11 +1236,9 @@ a {
 }
 
 .stat-card {
-    background: linear-gradient(
-        135deg,
-        rgba(231, 166, 92, 0.05) 0%,
-        rgba(62, 76, 44, 0.05) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(231, 166, 92, 0.05) 0%,
+            rgba(62, 76, 44, 0.05) 100%);
     border-radius: 15px;
     padding: 25px;
     border: 1px solid rgba(231, 166, 92, 0.2);
@@ -1262,11 +1254,9 @@ a {
     right: -50%;
     width: 100%;
     height: 100%;
-    background: radial-gradient(
-        circle,
-        rgba(231, 166, 92, 0.1) 0%,
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(231, 166, 92, 0.1) 0%,
+            transparent 70%);
     transform: rotate(45deg);
 }
 
@@ -1366,6 +1356,22 @@ a {
 .btn-primary-custom:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(231, 166, 92, 0.3);
+    color: white;
+}
+
+.btn-resend-custom {
+    background: linear-gradient(135deg, #5cb4e7 0%, #5798be 100%);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-resend-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px #5cb4e7b2;
     color: white;
 }
 
@@ -1539,6 +1545,7 @@ a {
     font-size: 1.2rem;
     font-weight: 700;
 }
+
 /* New Navbar Button Styles */
 .auth-buttons {
     display: flex;
@@ -1565,12 +1572,10 @@ a {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
     transition: left 0.6s;
 }
 
@@ -1681,13 +1686,16 @@ a {
 }
 
 @keyframes cartShake {
+
     0%,
     100% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(-3px) rotate(-5deg);
     }
+
     75% {
         transform: translateX(3px) rotate(5deg);
     }
@@ -1717,9 +1725,11 @@ a {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(1);
     }
@@ -1753,12 +1763,10 @@ a {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(231, 166, 92, 0.3),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(231, 166, 92, 0.3),
+            transparent);
     transition: left 0.6s;
 }
 
@@ -1816,6 +1824,7 @@ a {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1903,11 +1912,9 @@ a {
 
 /* Order Details Specific Styles */
 .order-header {
-    background: linear-gradient(
-        135deg,
-        rgba(231, 166, 92, 0.05) 0%,
-        rgba(62, 76, 44, 0.05) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(231, 166, 92, 0.05) 0%,
+            rgba(62, 76, 44, 0.05) 100%);
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 30px;
@@ -2095,11 +2102,9 @@ a {
 /* Product Detail Styles */
 .product-detail-container {
     padding: 60px 0;
-    background: linear-gradient(
-        135deg,
-        rgba(62, 76, 44, 0.02) 0%,
-        rgba(231, 166, 92, 0.02) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(62, 76, 44, 0.02) 0%,
+            rgba(231, 166, 92, 0.02) 100%);
 }
 
 .breadcrumb {
@@ -2297,9 +2302,11 @@ a {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
     }
+
     100% {
         transform: scale(1);
     }
@@ -2407,12 +2414,10 @@ a {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
     transition: left 0.5s;
 }
 
