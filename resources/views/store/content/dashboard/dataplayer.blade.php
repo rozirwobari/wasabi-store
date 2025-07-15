@@ -106,9 +106,10 @@
                 name: data.name,
                 identifier: data.identifier,
             });
+
             Swal.fire({
                 title: `Memproses...`,
-                text: 'Sedang mengupdate data Player',
+                text: 'Sedang Linked Akun Ke Player',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false,
@@ -117,6 +118,7 @@
                     Swal.showLoading();
                 }
             });
+
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     const respon = JSON.parse(xhr.responseText);
