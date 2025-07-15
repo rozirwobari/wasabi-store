@@ -70,8 +70,8 @@
             });
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
+                    const respon = JSON.parse(xhr.responseText);
                     if (xhr.status === 200) {
-                        const respon = JSON.parse(xhr.responseText);
                         if (respon.success) {
                             location.reload(true);
                         } else {
@@ -81,6 +81,12 @@
                                 icon: "warning"
                             });
                         }
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: `${respon.message}`,
+                            icon: "denger"
+                        });
                     }
                 }
             };
