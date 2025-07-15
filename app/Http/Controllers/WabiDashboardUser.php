@@ -177,12 +177,12 @@ class WabiDashboardUser
                 'name' => $request->name,
                 'identifier' => $request->identifier,
             ]);
-            $WabiApi->LinkedAccount([
-                'identifier' => $request->identifier,
-                'email' => auth()->user()->email,
-                'user_id' => auth()->id(),
-            ]);
             if ($profile) {
+                $WabiApi->LinkedAccount([
+                    'identifier' => $request->identifier,
+                    'email' => auth()->user()->email,
+                    'user_id' => auth()->id(),
+                ]);
                 return response()->json([
                     'success' => true,
                     'data' => $profile,
