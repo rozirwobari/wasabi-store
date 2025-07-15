@@ -41,7 +41,7 @@
                                                         <i class="fa-solid fa-paper-plane"></i>
                                                     </button>
                                                 @elseif ($steamhex->status == 1)
-                                                    <button type="button" class="btn btn-resend-custom"
+                                                    <button type="button" class="btn btn-primary-custom"
                                                         onclick="RefreshData('{{ $steamhex->identifier }}')">
                                                         <i class="fa-solid fa-arrows-rotate"></i>
                                                     </button>
