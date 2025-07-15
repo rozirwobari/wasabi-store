@@ -11,6 +11,7 @@ class WabiGameProfile extends Model
         'user_id',
         'identifier',
         'name',
+        'status',
     ];
 
     public function user()
