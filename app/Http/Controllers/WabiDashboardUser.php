@@ -262,10 +262,14 @@ class WabiDashboardUser
                 'message' => 'Data Tidak Ditemukan',
             ], 500);
         }
-        $dataPlayer->delete();
+        $WabiApi->LinkedAccount([
+            'identifier' => $request->identifier,
+            'email' => auth()->user()->email,
+            'user_id' => auth()->id(),
+        ]);
         return response()->json([
             'success' => true,
-            'message' => 'Data Berhaisl Dihapus',
-        ], 200);
+            'message' => 'Berhasil Dikirimkan',
+        ], 500);
     }
 }

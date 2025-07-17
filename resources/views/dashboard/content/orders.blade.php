@@ -120,7 +120,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="2" class="text-center">Tidak ada Orders.</td>
+                                    <td colspan="7" class="text-center">Tidak ada Orders.</td>
                                 </tr>
                             @endif
                         </tbody>

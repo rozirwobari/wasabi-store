@@ -62,7 +62,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="2" class="text-center">Tidak ada Produk Yang Tersedia.</td>
+                                    <td colspan="4" class="text-center">Tidak ada Kategori Yang Tersedia.</td>
                                 </tr>
                             @endif
                         </tbody>
