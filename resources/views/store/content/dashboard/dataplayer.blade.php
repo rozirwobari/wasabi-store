@@ -106,16 +106,16 @@
                     if (xhr.status === 200) {
                         if (respon.success) {
                             Swal.fire({
-                                title: "Berhasil",
+                                title: `${respon.title}`,
                                 text: `${respon.message}`,
-                                icon: "success"
+                                icon: `${respon.type}`
                             });
                         }
                     } else {
                         Swal.fire({
-                            title: "Error",
+                            title: `${respon.title}`,
                             text: `${respon.message}`,
-                            icon: "denger"
+                            icon: `${respon.type}`
                         });
                     }
                 }

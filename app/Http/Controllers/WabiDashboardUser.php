@@ -262,14 +262,26 @@ class WabiDashboardUser
                 'message' => 'Data Tidak Ditemukan',
             ], 500);
         }
-        $WabiApi->LinkedAccount([
-            'identifier' => $request->identifier,
-            'email' => auth()->user()->email,
-            'user_id' => auth()->id(),
-        ]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Berhasil Dikirimkan',
-        ], 500);
+        try {
+            $respon = $WabiApi->LinkedAccount([
+                'identifier' => $request->identifier,
+                'email' => auth()->user()->email,
+                'user_id' => auth()->id(),
+            ]);
+            return response()->json([
+                'success' => true,
+                'type' => 'success',
+                'title' => 'Berhasil',
+                'message' => $respon['message'],
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'type' => 'danger',
+                'title' => 'Gagal',
+                'message' => $th->getMessage(),
+            ], 200);
+        }
+
     }
 }
