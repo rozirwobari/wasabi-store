@@ -253,6 +253,21 @@ class WabiApiController
         $identifier = $request->identifier;
         $PlayerData = $request->playerdata;
         $status = $request->status;
+        if ($request->action == 'removelinked') {
+            $GameProfile = WabiGameProfile::where('user_id', $user_id)->where('identifier', $identifier)->first();
+            if ($GameProfile) {
+                $GameProfile->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => "Data Berhasil Dihapus"
+                ], 200);
+            }
+            return response()->json([
+                'success' => false,
+                'message' => "Data Tidak Ditemukan"
+            ], 200);
+        }
+
         $GameProfile = WabiGameProfile::where('user_id', $user_id)->where('identifier', $identifier)->first();
         if ($GameProfile) {
             $GameProfile->status = $status;
