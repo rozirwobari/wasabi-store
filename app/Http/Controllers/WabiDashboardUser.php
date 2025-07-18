@@ -255,6 +255,7 @@ class WabiDashboardUser
 
     public function resendlinked(Request $request)
     {
+        $WabiApi = new WabiApiController();
         $dataPlayer = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->first();
         if (!$dataPlayer) {
             return response()->json([

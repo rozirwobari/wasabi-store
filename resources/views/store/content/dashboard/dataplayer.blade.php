@@ -63,7 +63,7 @@
                                             <div class="order-actions">
                                                 @if ($steamhex->status == 0)
                                                     <button type="button" class="btn btn-resend-custom"
-                                                        onclick="Resend('{{ $steamhex->identifier }}')">
+                                                        onclick="ResendToPlayer('{{ $steamhex->identifier }}')">
                                                         <i class="fa-solid fa-paper-plane"></i>
                                                     </button>
                                                 @elseif ($steamhex->status == 1)
@@ -92,7 +92,7 @@
 
 @section('scripts')
     <script>
-        function Resend(identifier) {
+        function ResendToPlayer(identifier) {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', `{{ url('resendlinked') }}`, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
