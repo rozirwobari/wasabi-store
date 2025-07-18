@@ -346,22 +346,6 @@
             color: white;
         }
 
-        .btn-resend-custom {
-            background: linear-gradient(135deg, #5cb4e7 0%, #5798be 100%);
-            border: none;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-resend-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px #5cb4e7b2;
-            color: white;
-        }
-
         .btn-secondary-custom {
             background: linear-gradient(135deg, var(--gold) 0%, #d4965a 100%);
             border: none;

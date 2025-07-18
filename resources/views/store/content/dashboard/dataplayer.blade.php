@@ -1,5 +1,25 @@
 @extends('store.layout')
 
+@section('css')
+    <style>
+        .btn-resend-custom {
+            background: linear-gradient(135deg, #5cb4e7 0%, #5798be 100%);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-resend-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px #5cb4e7b2;
+            color: white;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="dashboard-container">
         <div class="container">
@@ -31,7 +51,13 @@
                                     @foreach ($steamhexs as $steamhex)
                                         <div class="order-item d-flex justify-content-between align-items-center">
                                             <div class="order-info">
-                                                <h5 id="player_name_{{ $steamhex->identifier }}">{{ $steamhex->name }}</h5>
+                                                @if ($steamhex->status == 1)
+                                                    <h5 id="player_name_{{ $steamhex->identifier }}">{{ $steamhex->name }}
+                                                        <span class="badge bg-success">Active</span></h5>
+                                                @else
+                                                    <h5 id="player_name_{{ $steamhex->identifier }}">{{ $steamhex->name }}
+                                                        <span class="badge bg-warning">Pending</span></h5>
+                                                @endif
                                                 <p>Steam Hex : <b>{{ $steamhex->identifier }}</b></p>
                                             </div>
                                             <div class="order-actions">

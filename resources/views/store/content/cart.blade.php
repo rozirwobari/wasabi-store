@@ -372,20 +372,22 @@
                             $no = 0;
                         @endphp
                         @foreach ($dataPlayers as $dataPlayer)
-                            <div class="address-card" data-address-id="{{ $no++ }}">
-                                <div class="address-name">
-                                    <b>{{ $dataPlayer->name }}</b>
+                            @if ($dataPlayer->status == 1)
+                                <div class="address-card" data-address-id="{{ $no++ }}">
+                                    <div class="address-name">
+                                        <b>{{ $dataPlayer->name }}</b>
+                                    </div>
+                                    <div class="address-details">
+                                        Steam HEX : <b>{{ $dataPlayer->identifier }}</b>
+                                    </div>
                                 </div>
-                                <div class="address-details">
-                                    Steam HEX : <b>{{ $dataPlayer->identifier }}</b>
-                                </div>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
 
                     <!-- Add New Address Button -->
                     <button class="btn-add-address mt-3" onclick="tambahAlamat()">
-                        <i class="fas fa-plus me-2"></i>Tambah Alamat Baru
+                        <i class="fas fa-plus me-2"></i>Tambah Player Baru
                     </button>
                 </div>
                 <div class="modal-footer">
@@ -393,7 +395,7 @@
                         <i class="fas fa-times me-2"></i>Batal
                     </button>
                     <button type="button" class="btn btn-primary" id="confirmAddressBtn" disabled>
-                        <i class="fas fa-check me-2"></i>Konfirmasi Alamat
+                        <i class="fas fa-check me-2"></i>Konfirmasi Player
                     </button>
                 </div>
             </div>
@@ -550,13 +552,13 @@
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = `{{ url('checkout') }}`;
-                
+
                 const csrfInput = document.createElement('input');
                 csrfInput.type = 'hidden';
                 csrfInput.name = '_token';
                 csrfInput.value = `{{ csrf_token() }}`;
                 form.appendChild(csrfInput);
-                
+
                 const addressInput = document.createElement('input');
                 addressInput.type = 'hidden';
                 addressInput.name = 'identifier';
