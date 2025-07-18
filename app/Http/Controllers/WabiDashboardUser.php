@@ -259,8 +259,10 @@ class WabiDashboardUser
         if (!$dataPlayer) {
             return response()->json([
                 'success' => false,
-                'message' => 'Data Tidak Ditemukan',
-            ], 500);
+                'type' => 'danger',
+                'title' => 'Gagal',
+                'message' => "Data Tidak Ditemukan",
+            ], 200);
         }
         try {
             $respon = $WabiApi->LinkedAccount([
