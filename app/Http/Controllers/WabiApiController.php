@@ -111,28 +111,25 @@ class WabiApiController
         try {
             $response = Http::timeout(10)->post($this->gameEndpoint.'api/getitems', []);
             if ($response->successful()) {
-                response()->json([
-                    'status' => 'success',
-                    'message' => 'Test berhasil!',
-                ]);
-                return $response->body();
-            } else {
-                response()->json([
-                    'status' => 'error',
-                    'message' => 'Test gagal!',
-                    'error' => $response->body(),
-                ], 500);
                 return [
+                    'success' => true,
+                    'status' => 'success',
+                    'data' => $response->body(),
+                ];
+            } else {
+                return [
+                    'success' => false,
                     'status' => 'error',
-                    'message' => 'Test gagal!',
+                    'message' => 'Error',
                     'error' => $response->body(),
                 ];
             }
         } catch (\Exception $e) {
             return [
-                'status' => 'error 2',
-                'message' => 'Test error!',
-                'error' => $e->getMessage()
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Error',
+                'error' => $e->getMessage(),
             ];
         }
     }

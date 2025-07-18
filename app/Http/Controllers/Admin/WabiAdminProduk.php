@@ -26,7 +26,14 @@ class WabiAdminProduk
         $WabiApiController = new WabiApiController();
         $kategoris = KategoriModel::all();
         $GetItems = $WabiApiController->GetItemGame();
-        $items = json_decode($GetItems, false)->data;
+        if (!$GetItems['success']) {
+            return redirect()->back()->with('alert', [
+                'title' => $GetItems['message'],
+                'text' => $GetItems['error'],
+                'type' => $GetItems['status']
+            ]);
+        }
+        $items = json_decode($GetItems['data'], false)->data;
         return view('dashboard.content.addproduk', compact('kategoris', 'items'));
     }
 
