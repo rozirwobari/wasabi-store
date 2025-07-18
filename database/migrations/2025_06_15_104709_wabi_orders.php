@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wabi_orders', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // bigint unsigned auto_increment primary key
             $table->string('no_invoice', 150)->default('0');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('identifier', 150)->nullable();
             $table->json('items')->default('[]');
             $table->integer('total');
@@ -22,7 +22,10 @@ return new class extends Migration
             $table->string('snap_token', 200)->nullable();
             $table->json('data_midtrans')->nullable();
             $table->longText('tgl_transaksi')->nullable();
+            $table->longText('reason_game')->default('[]');
             $table->timestamps();
+
+            // Index
             $table->index('user_id');
         });
     }
