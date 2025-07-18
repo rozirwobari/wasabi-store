@@ -96,12 +96,20 @@ class WabiApiController
                     'data_midtrans' => ($reason ?? json_encode($request->data)),
                     'tgl_transaksi' => json_encode($tgl_transaksi),
                 ]);
-                $this->SendDataToGame([
+                $responGame = $this->SendDataToGame([
                     'order_id' => $orderId,
                     'steam_hex' => $orders->identifier,
                     'email' => $orders->user->email,
                     'data_items' => $orders->items,
                 ]);
+                if ($responGame) {
+                    $tgl_transaksi["4"] = time();
+                    $orders->update([
+                        'status' => 4,
+                        'data_midtrans' => ($reason ?? json_encode($request->data)),
+                        'tgl_transaksi' => json_encode($tgl_transaksi),
+                    ]);
+                }
             }
         }
         return response()->json(['status' => 'ok'], 200);
