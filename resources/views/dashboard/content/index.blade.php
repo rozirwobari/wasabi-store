@@ -18,7 +18,7 @@
                         <div class="stat-value">Rp {{ number_format($orders->sum('total'), 0, ',', '.') }}</div>
                         <div class="stat-label">Total Pendapatan</div>
                         <div class="stat-change {{ ($persetasiPendapatan >= 0) ? 'positive' : 'negative' }}">
-                            <i class="fas fa-arrow-{{ ($persetasiPendapatan >= 0) ? 'up' : 'down' }}"></i> 
+                            <i class="fas fa-arrow-{{ ($persetasiPendapatan >= 0) ? 'up' : 'down' }}"></i>
                             {{ ($persetasiPendapatan > 0) ? '+' : '' }}{{ $persetasiPendapatan }}% from last month
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <div class="stat-value">{{ number_format($totalTerjual, 0, ',', '.') }}</div>
                         <div class="stat-label">Total Orders</div>
                         <div class="stat-change {{ ($persetasiOrders >= 0) ? 'positive' : 'negative' }}">
-                            <i class="fas fa-arrow-{{ ($persetasiOrders >= 0) ? 'up' : 'down' }}"></i> 
+                            <i class="fas fa-arrow-{{ ($persetasiOrders >= 0) ? 'up' : 'down' }}"></i>
                             {{ ($persetasiOrders > 0) ? '+' : '' }}{{ $persetasiOrders }}% from last month
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="2" class="text-center">Tidak ada Orders.</td>
+                                    <td colspan="6" class="text-center">Tidak ada Orders.</td>
                                 </tr>
                             @endif
                         </tbody>
