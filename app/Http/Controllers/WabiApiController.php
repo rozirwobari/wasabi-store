@@ -33,8 +33,10 @@ class WabiApiController
         $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
 
         if ($signatureKey !== $expectedSignature) {
-            Log::error('Invalid signature from Midtrans callback, '.$signatureKey." expectedSignature : ".$expectedSignature);
-            return response()->json(['status' => 'error'], 403);
+            return response()->json([
+                'success' => false,
+                'message' => 'Signature Tidak Cocok'
+            ], 403);
         }
 
         $transactionStatus = $request->transaction_status ?? $request->data['no_invoice'] ?? null;
@@ -82,7 +84,6 @@ class WabiApiController
                 break;
         }
 
-        Log::info('Midtrans callback received', $request->all());
         if ($orders) {
             $orders->update([
                 'status' => $status_code,
@@ -112,7 +113,10 @@ class WabiApiController
                 }
             }
         }
-        return response()->json(['status' => 'ok'], 200);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhasil Terupdate'
+        ], 200);
     }
 
     public function GetItemGame()
@@ -202,7 +206,7 @@ class WabiApiController
                         ]),
                         'tgl_transaksi' => json_encode($get_tgl_transaksi),
                     ]);
-                    response()->json([
+                    return response()->json([
                         'success' => true,
                         'message' => 'Berhasil Update Data',
                     ], 200);
@@ -223,18 +227,17 @@ class WabiApiController
                         'reason_game' => json_encode($reason_games),
                         'tgl_transaksi' => json_encode($get_tgl_transaksi),
                     ]);
-                    response()->json([
+                    return response()->json([
                         'success' => true,
                         'message' => 'Berhasil Update Data',
                     ], 200);
                 }
             }
         }
-        response()->json([
+        return response()->json([
             'success' => false,
             'message' => 'Transaksi Tidak Ditemukan',
         ], 404);
-        Log::error($request->all());
     }
 
     public function GetPlayerData($data)
