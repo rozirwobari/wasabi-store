@@ -25,11 +25,6 @@ return new class extends Migration
         Schema::table('wabi_cart', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-        
-        // Foreign key untuk wabi_orders -> users
-        Schema::table('wabi_orders', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
     }
 
     /**
@@ -43,10 +38,6 @@ return new class extends Migration
 
         Schema::table('wabi_cart', function (Blueprint $table) {
             $table->dropForeign(['produk_id']);
-            $table->dropForeign(['user_id']);
-        });
-
-        Schema::table('wabi_orders', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
         });
     }
