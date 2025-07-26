@@ -109,7 +109,7 @@
                         </tbody>
                     </table>
                     <div class="text-center">
-                        <a class="btn btn-sm btn-secondary-custom m-1" title="[L3] Leihat Lebih Lengkap" href="{{ url('admin/orders') }}">
+                        <a class="btn btn-sm btn-secondary-custom m-1" title="[L3] Lihat Lebih Lengkap" href="{{ url('admin/orders') }}">
                             Lebih Lengkap
                         </a>
                     </div>
