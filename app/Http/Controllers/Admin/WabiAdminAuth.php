@@ -10,7 +10,7 @@ use App\Models\ProdukModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class WabiAdminAuth
+class WabiAdminAuth extends Controller
 {
     /**
      * Display a listing of the resource.
