@@ -17,7 +17,7 @@ class WabiApiController
     public function __construct()
     {
         // $this->gameEndpoint = "http://api.yumeroleplay.my.id/";
-        $this->gameEndpoint = "http://208.76.40.92/";
+        $this->gameEndpoint = "https://api.wasabistore.my.id/";
     }
     /**
      * Display a listing of the resource.
