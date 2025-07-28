@@ -43,8 +43,18 @@ class WabiAdminProduk
         $produk = ProdukModel::find($id);
         $kategoris = KategoriModel::all();
         $GetItems = $WabiApiController->GetItemGame();
-        $items = json_decode($GetItems, false)->data;
-        return view('dashboard.content.editproduk', compact('produk', 'kategoris', 'items'));
+        if ($GetItems['success']) {
+            $itemsData = json_decode($GetItems['data'], false);
+            if ($itemsData->success) {
+                $items = $itemsData->data;
+                return view('dashboard.content.editproduk', compact('produk', 'kategoris', 'items'));
+            }
+        }
+        return redirect()->back()->with('alert', [
+            'title' => 'Error',
+            'text' => "Berhasil Menyimpan Produk ",
+            'type' => "error"
+        ]);
     }
 
     public function saveproduk(Request $request)
