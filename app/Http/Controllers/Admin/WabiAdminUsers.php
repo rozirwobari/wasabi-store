@@ -61,12 +61,12 @@ class WabiAdminUsers
             'type' => "success"
         ]);
     }
-    
+
     public function tambahpengguna()
     {
         return view('dashboard.content.addpengguna');
     }
-    
+
     public function hapususer(Request $request)
     {
         $user_id = $request->user_id;

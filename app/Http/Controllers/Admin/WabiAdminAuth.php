@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +10,7 @@ use App\Models\ProdukModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class WabiAdminAuth extends Controller
+class WabiAdminAuth
 {
     /**
      * Display a listing of the resource.
