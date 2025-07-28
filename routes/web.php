@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WabiDashboardAdmin;
 
+use App\Http\Controllers\Admin\WabiAdminAuth;
 use App\Http\Controllers\Admin\WabiAdminDashboard;
 use App\Http\Controllers\Admin\WabiAdminKategori;
 use App\Http\Controllers\Admin\WabiAdminProduk;
