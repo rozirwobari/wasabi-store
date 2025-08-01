@@ -34,8 +34,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('WabiHome/css/style.css') }}">
-    {{-- <script src="https://kit.fontawesome.com/7d89982a7c.js" crossorigin="anonymous"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/111b8c6336.js" crossorigin="anonymous"></script>
     <link href="{{ asset('WabiHome/lib/lightbox2/css/lightbox.min.css') }}" rel="stylesheet" />
 </head>
 
