@@ -182,14 +182,14 @@
             easing: 'ease-in-out',
             once: true
         });
-        
+
         // Animate stat cards on hover
         const statCards = document.querySelectorAll('.stat-card');
         statCards.forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-5px) scale(1.02)';
             });
-            
+
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
@@ -204,7 +204,7 @@
         "description": "{!! json_encode(trim(strip_tags(isset($deskripsi_website) ? $deskripsi_website : 'Deskripsi default'))) !!}",
         "url": "{!! json_encode(url('/')) !!}",
         "mainEntity": {
-            "@type": "Organization", 
+            "@type": "Organization",
             "name": "Wasabi Garden",
             "url": "{!! json_encode(url('/')) !!}",
             "logo": "{!! json_encode(asset('images/home/logo/wasabi.png')) !!}"
