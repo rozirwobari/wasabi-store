@@ -267,7 +267,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center py-3">
-                                                    <span class="badge bg-light text-dark">2</span>
+                                                    <span class="badge bg-light text-dark">{{ $item->jumlah }}</span>
                                                 </td>
                                                 <td class="text-center py-3">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                                                 <td class="text-center py-3"><strong>Rp {{ number_format($item->harga * $item->jumlah, 0, ',', '.') }}</strong></td>
