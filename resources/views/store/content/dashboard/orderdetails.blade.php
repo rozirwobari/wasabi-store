@@ -99,7 +99,7 @@
                                 <h4 class="section-title mt-4">Order Tracking</h4>
                                 <div class="order-timeline">
                                     <div
-                                        class="timeline-item {{ $orders->status == 0 ? 'active' : ($orders->status == 0 ? 'completed' : '') }}">
+                                        class="timeline-item {{ $orders->status >= 0 ? 'active' : ($orders->status > 0 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Diterima</div>
                                             <div class="timeline-date">
