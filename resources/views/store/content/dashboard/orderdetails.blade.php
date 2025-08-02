@@ -99,7 +99,7 @@
                                 <h4 class="section-title mt-4">Order Tracking</h4>
                                 <div class="order-timeline">
                                     <div
-                                        class="timeline-item {{ $orders->status == 0 ? 'active' : ($orders->status > 0 ? 'completed' : '') }}">
+                                        class="timeline-item {{ $orders->status == 0 ? 'active' : ($orders->status == 0 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Diterima</div>
                                             <div class="timeline-date">
@@ -107,17 +107,32 @@
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
-                                        <div class="timeline-content">
-                                            <div class="timeline-title">Pembayaran Berhasil</div>
-                                            <div class="timeline-date">
-                                                {{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                    @if ($orders->status == 404)
+                                        <div
+                                            class="timeline-item {{ $orders->status == 1 ? 'active' : 'error' }}">
+                                            <div class="timeline-content">
+                                                <div class="timeline-title">Pembayaran Gagal</div>
+                                                <div class="timeline-date">
+                                                    {{ ($value = $tgl_transaksi['404'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}
+                                                </div>
+                                                <div class="timeline-date">
+                                                    {{ $orders->data_midtrans }}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div
+                                            class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status == 1 ? 'completed' : '') }}">
+                                            <div class="timeline-content">
+                                                <div class="timeline-title">Pembayaran Berhasil</div>
+                                                <div class="timeline-date">
+                                                    {{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div
-                                        class="timeline-item {{ $orders->status == 2 ? 'active' : ($orders->status > 2 ? 'completed' : '') }}">
+                                        class="timeline-item {{ $orders->status == 2 ? 'active' : ($orders->status == 2 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Diproses</div>
                                             <div class="timeline-date">
@@ -126,7 +141,7 @@
                                     </div>
 
                                     <div
-                                        class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
+                                        class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status == 3 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             @php
                                                 $reason_pengiriman = json_decode($orders->reason_game, false);
@@ -142,7 +157,7 @@
                                     </div>
 
                                     <div
-                                        class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
+                                        class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status == 4 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             @php
                                                 $reason_claim = json_decode($orders->reason_game, false);
