@@ -1968,7 +1968,7 @@ a {
 }
 
 .timeline-item.bermasalah::before {
-    background: red;
+    background: red !important;
 }
 
 .timeline-content {
