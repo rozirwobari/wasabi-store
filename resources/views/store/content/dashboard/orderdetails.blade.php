@@ -139,8 +139,7 @@
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status == 3 ? 'completed' : '') }}">
+                                    <div class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status == 3 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             @php
                                                 $reason_pengiriman = json_decode($orders->reason_game, false);
@@ -155,8 +154,7 @@
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status == 4 ? 'completed' : '') }}">
+                                    <div class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status == 4 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             @php
                                                 $reason_claim = json_decode($orders->reason_game, false);
