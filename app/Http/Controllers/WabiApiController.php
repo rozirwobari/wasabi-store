@@ -96,6 +96,10 @@ class WabiApiController
                     'data_midtrans' => ($reason ?? json_encode($request->data)),
                     'tgl_transaksi' => json_encode($tgl_transaksi),
                 ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data Berhasil Terupdate'
+                ], 200);
             }
             if ($status_code >= 2 and $status_code < 2) {
                 $tgl_transaksi["3"] = time();
