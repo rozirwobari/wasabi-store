@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('identifier', 150)->nullable();
             $table->json('items')->default('[]');
             $table->integer('total');
-            $table->tinyInteger('status')->default(0);
+            $table->integer('status')->default(0);
             $table->string('snap_token', 200)->nullable();
-            $table->json('data_midtrans')->nullable();
+            $table->longText('data_midtrans')->nullable();
             $table->longText('tgl_transaksi')->nullable();
             $table->longText('reason_game')->default('[]');
             $table->timestamps();

@@ -90,7 +90,14 @@ class WabiApiController
                 'data_midtrans' => ($reason ?? json_encode($request->data)),
                 'tgl_transaksi' => json_encode($tgl_transaksi),
             ]);
-            if ($status_code >= 2) {
+            if ($status_code == 404) {
+                $orders->update([
+                    'status' => 404,
+                    'data_midtrans' => ($reason ?? json_encode($request->data)),
+                    'tgl_transaksi' => json_encode($tgl_transaksi),
+                ]);
+            }
+            if ($status_code >= 2 and $status_code < 2) {
                 $tgl_transaksi["3"] = time();
                 $orders->update([
                     'status' => 3,
