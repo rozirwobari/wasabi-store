@@ -108,8 +108,7 @@
                                     </div>
 
                                     @if ($orders->status == 404)
-                                        <div
-                                            class="timeline-item {{ $orders->status == 1 ? 'active' : 'error' }}">
+                                        <div class="timeline-item {{ $orders->status == 1 ? 'active' : 'error' }}">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran Gagal</div>
                                                 <div class="timeline-date">
