@@ -108,7 +108,7 @@
                                     </div>
 
                                     @if ($orders->status == 404)
-                                        <div class="timeline-item error">
+                                        <div class="timeline-item bermasalah">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran Gagal</div>
                                                 <div class="timeline-date">

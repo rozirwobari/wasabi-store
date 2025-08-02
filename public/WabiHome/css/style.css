@@ -1967,8 +1967,8 @@ a {
     background: #4caf50;
 }
 
-.timeline-item.error::before {
-    background: var(--red);
+.timeline-item.bermasalah::before {
+    background: red;
 }
 
 .timeline-content {
