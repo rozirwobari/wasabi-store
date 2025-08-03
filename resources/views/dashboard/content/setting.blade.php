@@ -668,18 +668,6 @@
     <div class="col-lg-9 col-md-8">
         <div data-aos="fade-up">
             <div class="container-fluid px-4">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-decoration-none">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pengguna') }}"
-                                class="text-decoration-none">User Management</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
-                    </ol>
-                </nav>
-
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="fas fa-exclamation-triangle me-2"></i>
@@ -725,7 +713,7 @@
                                     <div class="form-group">
                                         <label class="form-label" for="email">Email <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" required>
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" readonly>
                                         @error('email')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
