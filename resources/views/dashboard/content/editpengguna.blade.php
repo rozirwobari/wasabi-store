@@ -668,18 +668,6 @@
     <div class="col-lg-9 col-md-8">
         <div data-aos="fade-up">
             <div class="container-fluid px-4">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-decoration-none">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pengguna') }}"
-                                class="text-decoration-none">User Management</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
-                    </ol>
-                </nav>
-
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="fas fa-exclamation-triangle me-2"></i>
@@ -707,7 +695,7 @@
                     <div class="form-step active" data-step="1">
                         <div class="form-card fade-in">
                             <div class="form-header">
-                                <h4><i class="fas fa-info-circle"></i>Informasi Dasar User</h4>
+                                <h4>Informasi Dasar User</h4>
                             </div>
 
                             <div class="row">
@@ -790,9 +778,6 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <a href="{{ url('admin/pengguna') }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i>Kembali
-                                </a>
                                 <button type="submit" class="btn btn-primary-custom">
                                     <i class="fas fa-save me-2"></i>Update User
                                 </button>
