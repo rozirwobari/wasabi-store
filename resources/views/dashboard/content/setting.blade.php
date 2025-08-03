@@ -721,33 +721,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="email">Email <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" required>
-                                        @error('email')
-                                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="email">Password <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email" value="{{ $user->email }}" required>
-                                        @error('email')
-                                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div> --}}
-
                             <div class="d-flex justify-content-between">
-                                <a href="{{ url('admin/pengguna') }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i>Kembali
-                                </a>
                                 <button type="submit" class="btn btn-primary-custom">
                                     <i class="fas fa-save me-2"></i>Update User
                                 </button>
