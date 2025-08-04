@@ -80,7 +80,7 @@ class WabiAdminUsers
             'name' => $name,
         ]);
 
-        return redirect()->route('admin.pengguna')->with('alert', [
+        return redirect()->back()->with('alert', [
             'title' => 'Berhasil',
             'text' => "User Berhasil Diupdate ".$name,
             'type' => "success"
