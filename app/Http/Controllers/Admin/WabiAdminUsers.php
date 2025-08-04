@@ -10,6 +10,7 @@ use App\Models\KategoriModel;
 use App\Models\ProdukModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class WabiAdminUsers
 {
