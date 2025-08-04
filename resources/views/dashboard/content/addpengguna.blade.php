@@ -701,7 +701,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ url('admin/updatepengguna') }}">
+                <form method="POST" action="{{ url('admin/savepengguna') }}">
                     @csrf
                     <div class="form-step active" data-step="1">
                         <div class="form-card fade-in">

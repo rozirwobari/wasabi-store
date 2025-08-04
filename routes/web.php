@@ -84,4 +84,5 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
     Route::get('/setting', [WabiAdminUsers::class, 'setting'])->name('setting');
     Route::post('/hapususer', [WabiAdminUsers::class, 'hapususer'])->name('hapususer');
     Route::post('/updatepengguna', [WabiAdminUsers::class, 'updatepengguna'])->name('updatepengguna');
+    Route::post('/savepengguna', [WabiAdminUsers::class, 'savepengguna'])->name('savepengguna');
 });
