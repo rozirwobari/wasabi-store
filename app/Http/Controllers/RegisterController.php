@@ -42,7 +42,7 @@ class RegisterController
         ]);
 
         $activationToken = Str::random(60);
-        
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -50,7 +50,7 @@ class RegisterController
             'activation_token' => $activationToken,
         ]);
         $this->sendActivationEmail($user, $activationToken);
-        
+
 
         return redirect('/login')->with('alert', [
             'title' => 'Berhasil',

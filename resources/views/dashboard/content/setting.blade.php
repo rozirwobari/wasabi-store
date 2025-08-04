@@ -695,7 +695,7 @@
                     <div class="form-step active" data-step="1">
                         <div class="form-card fade-in">
                             <div class="form-header">
-                                <h4><i class="fas fa-info-circle"></i>Informasi Dasar User</h4>
+                                <h4>Informasi Dasar User</h4>
                             </div>
 
                             <div class="row">

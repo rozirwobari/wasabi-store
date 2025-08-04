@@ -668,18 +668,6 @@
     <div class="col-lg-9 col-md-8">
         <div data-aos="fade-up">
             <div class="container-fluid px-4">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('admin') }}" class="text-decoration-none">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="{{ url('admin/produk') }}"
-                                class="text-decoration-none">Produk</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Produk</li>
-                    </ol>
-                </nav>
-
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="fas fa-exclamation-triangle me-2"></i>
@@ -707,7 +695,7 @@
                     <div class="form-step active" data-step="1">
                         <div class="form-card fade-in">
                             <div class="form-header">
-                                <h4><i class="fas fa-info-circle"></i>Informasi Dasar Produk</h4>
+                                <h4>Edit Dasar User</h4>
                             </div>
 
                             <div class="row">
