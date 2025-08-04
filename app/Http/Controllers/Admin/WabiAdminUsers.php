@@ -64,14 +64,6 @@ class WabiAdminUsers
 
     public function savepengguna(Request $request)
     {
-        // Validasi input terlebih dahulu
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'role' => 'required|string',
-            'is_active' => 'required|number',
-        ]);
-
         $name = $request->name;
         $email = $request->email;
         $role = $request->role;
