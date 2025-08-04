@@ -63,6 +63,30 @@ class WabiAdminUsers
         ]);
     }
 
+    public function UpdateSetting(Request $request)
+    {
+        $user_id = $request->user_id;
+        $name = $request->name;
+        $user = User::where('id', $user_id)->first();
+        if (!$user) {
+            return redirect()->back()->with('alert', [
+                'title' => 'Kesalahan',
+                'text' => 'User Id Tidak Ditemukan',
+                'type' => 'warning',
+            ]);
+        };
+
+        $user->update([
+            'name' => $name,
+        ]);
+
+        return redirect()->route('admin.pengguna')->with('alert', [
+            'title' => 'Berhasil',
+            'text' => "User Berhasil Diupdate ".$name,
+            'type' => "success"
+        ]);
+    }
+
     public function savepengguna(Request $request)
     {
         $name = $request->name;

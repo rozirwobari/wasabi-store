@@ -689,7 +689,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ url('admin/updatepengguna') }}">
+                <form method="POST" action="{{ url('admin/UpdateSetting') }}">
                     @csrf
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <div class="form-step active" data-step="1">
