@@ -193,8 +193,7 @@
                                     <i class="fas fa-credit-card"></i>
                                 </div>
                                 <div class="step-content">
-                                    <h6>Pembayaran Gagal</h6>
-                                    <small class="text-muted">{{ $orders->data_midtrans }}</small><br>
+                                    <h6>{{ $orders->data_midtrans }}</h6>
                                     <small class="text-muted">{{ ($value = $tgl_transaksi['404'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                                 </div>
                             </div>
