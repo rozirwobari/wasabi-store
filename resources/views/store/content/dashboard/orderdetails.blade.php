@@ -213,7 +213,7 @@
 @endsection
 
 @section('scripts')
-    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+    <script src="{{ config('midtrans.client_endpoint') }}" data-client-key="{{ config('midtrans.client_key') }}">
     </script>
     <script type="text/javascript">
         function UpdateDatas(result) {
