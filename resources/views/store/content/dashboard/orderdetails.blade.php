@@ -121,7 +121,7 @@
                                         </div>
                                     @else
                                         <div
-                                            class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status == 1 ? 'completed' : '') }}">
+                                            class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status >= 1 ? 'completed' : '') }}">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran Berhasil</div>
                                                 <div class="timeline-date">
