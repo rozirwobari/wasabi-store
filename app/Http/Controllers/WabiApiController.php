@@ -101,7 +101,7 @@ class WabiApiController
                     'message' => 'Data Berhasil  [404]'
                 ], 200);
             }
-            if ($status_code >= 2 and $status_code < 2) {
+            if ($status_code >= 2 and $status_code < 3) {
                 $tgl_transaksi["3"] = time();
                 $orders->update([
                     'status' => 3,
