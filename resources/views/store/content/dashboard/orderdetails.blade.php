@@ -22,7 +22,7 @@
         }
 
         .timeline-item.bermasalah::before {
-            background: red !important;
+            background: #bb0000 !important;
         }
     </style>
 @endsection
