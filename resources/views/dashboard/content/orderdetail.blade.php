@@ -51,6 +51,11 @@
             color: white;
         }
 
+        .progress-step.gagal .step-icon {
+            background: #af4c4c;
+            color: white;
+        }
+
         .progress-step.active .step-icon {
             background: var(--gold);
             color: white;
@@ -181,16 +186,30 @@
                                 <small class="text-muted">{{ \App\Helpers\WabiHelper::formatDate($orders->created_at) }}</small>
                             </div>
                         </div>
-                        <div class="progress-step  {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
-                            <div class="step-icon">
-                                <i class="fas fa-credit-card"></i>
+
+                        @if ($orders->status == 404)
+                            <div class="progress-step">
+                                <div class="step-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="step-content {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'gagal' : '') }}">
+                                    <h6>Pembayaran Gagal</h6>
+                                    <small class="text-muted">{{ ($value = $tgl_transaksi['404'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                                </div>
                             </div>
-                            <div class="step-content">
-                                <h6>Pembayaran Berhasil</h6>
-                                <small class="text-muted">{{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                        @else
+                            <div class="progress-step">
+                                <div class="step-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="step-content {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
+                                    <h6>Pembayaran Berhasil</h6>
+                                    <small class="text-muted">{{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="progress-step {{ $orders->status == 2 ? 'active' : ($orders->status > 2 ? 'completed' : '') }}">
+                        @endif
+
+                        <div class="progress-step {{ $orders->status <= 6 ? $orders->status == 2 ? 'active' : ($orders->status > 2 ? 'completed' : '') : '' }}">
                             <div class="step-icon">
                                 <i class="fas fa-box"></i>
                             </div>
@@ -199,7 +218,7 @@
                                 <small class="text-muted">{{ ($value = $tgl_transaksi['3'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                             </div>
                         </div>
-                        <div class="progress-step {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
+                        <div class="progress-step {{ $orders->status <= 6 ? $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') : '' }}">
                             <div class="step-icon">
                                 <i class="fas fa-truck"></i>
                             </div>
@@ -208,7 +227,7 @@
                                 <small class="text-muted">{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                             </div>
                         </div>
-                        <div class="progress-step {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
+                        <div class="progress-step {{ $orders->status <= 6 ? $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') : '' }}">
                             <div class="step-icon">
                                 <i class="fas fa-check-circle"></i>
                             </div>
