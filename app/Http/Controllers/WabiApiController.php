@@ -101,6 +101,17 @@ class WabiApiController
                     'message' => 'Data Berhasil  [404]'
                 ], 200);
             }
+            if ($status_code == 404) {
+                $tgl_transaksi["1"] = time();
+                $orders->update([
+                    'status' => 1,
+                    'tgl_transaksi' => json_encode($tgl_transaksi),
+                ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data Berhasil [Pending]'
+                ], 200);
+            }
             if ($status_code >= 2 and $status_code < 3) {
                 $tgl_transaksi["3"] = time();
                 $orders->update([
@@ -115,10 +126,6 @@ class WabiApiController
                     'email' => $orders->user->email,
                     'data_items' => $orders->items,
                 ]);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Data Berhasil Terupdate Dan Dikirim Ke Game',
-                ], 200);
                 if ($responGame) {
                     $tgl_transaksi["4"] = time();
                     $orders->update([
