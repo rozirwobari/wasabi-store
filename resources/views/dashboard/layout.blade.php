@@ -325,7 +325,7 @@
             color: #9c27b0;
         }
 
-        .status-cancelled {
+        .status-canceled {
             background-color: rgba(244, 67, 54, 0.2);
             color: #f44336;
         }

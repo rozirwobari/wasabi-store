@@ -1913,11 +1913,6 @@ a {
     display: inline-block;
 }
 
-.status-completed {
-    background-color: rgba(76, 175, 80, 0.2);
-    color: #4caf50;
-}
-
 .status-processing {
     background-color: rgba(33, 150, 243, 0.2);
     color: #2196f3;
