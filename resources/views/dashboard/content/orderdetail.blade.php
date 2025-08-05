@@ -188,21 +188,21 @@
                         </div>
 
                         @if ($orders->status == 404)
-                            <div class="progress-step">
+                            <div class="progress-step {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'gagal' : '') }}">
                                 <div class="step-icon">
                                     <i class="fas fa-credit-card"></i>
                                 </div>
-                                <div class="step-content {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'gagal' : '') }}">
+                                <div class="step-content">
                                     <h6>Pembayaran Gagal</h6>
                                     <small class="text-muted">{{ ($value = $tgl_transaksi['404'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                                 </div>
                             </div>
                         @else
-                            <div class="progress-step">
+                            <div class="progress-step {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
                                 <div class="step-icon">
                                     <i class="fas fa-credit-card"></i>
                                 </div>
-                                <div class="step-content {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
+                                <div class="step-content">
                                     <h6>Pembayaran Berhasil</h6>
                                     <small class="text-muted">{{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                                 </div>
