@@ -114,6 +114,11 @@ class WabiApiController
                     'email' => $orders->user->email,
                     'data_items' => $orders->items,
                 ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data Berhasil Terupdate Dan Dikirim Ke Game',
+                    'data' => $responGame,
+                ], 200);
                 if ($responGame) {
                     $tgl_transaksi["4"] = time();
                     $orders->update([
