@@ -1326,6 +1326,16 @@ a {
     font-size: 0.9rem;
 }
 
+.status-processing {
+    background-color: rgba(33, 150, 243, 0.2);
+    color: #2196f3;
+}
+
+.status-shipped {
+    background-color: rgba(156, 39, 176, 0.2);
+    color: #9c27b0;
+}
+
 .order-status {
     padding: 5px 15px;
     border-radius: 20px;
@@ -1344,7 +1354,7 @@ a {
 }
 
 .status-canceled {
-    background-color: rgba(76, 175, 80, 0.2);
+    background-color: rgba(175, 76, 76, 0.2);
     color: #f44336;
 }
 
@@ -1916,16 +1926,6 @@ a {
     font-size: 0.9rem;
     font-weight: 600;
     display: inline-block;
-}
-
-.status-processing {
-    background-color: rgba(33, 150, 243, 0.2);
-    color: #2196f3;
-}
-
-.status-shipped {
-    background-color: rgba(156, 39, 176, 0.2);
-    color: #9c27b0;
 }
 
 .order-timeline {
