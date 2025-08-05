@@ -147,7 +147,11 @@ class WabiCart
     {
         $identifier = $request->identifier;
         $carts = CartModel::where('user_id', auth()->id())->get();
-        $dataPlayers = WabiGameProfile::where('identifier', $identifier)->first();
+        $dataPlayers = WabiGameProfile::where([
+            ['identifier', '=', $identifier],
+            ['user_id', '=', auth()->id()]
+        ])->first();
+        dd($dataPlayers);
         $items = [];
         $generateInvoice = 'INV-WG-' . time();
         foreach ($carts as $cart) {
