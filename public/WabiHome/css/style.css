@@ -1343,6 +1343,11 @@ a {
     color: #4caf50;
 }
 
+.status-canceled {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: #f44336;
+}
+
 .btn-primary-custom {
     background: linear-gradient(135deg, var(--gold) 0%, #d4965a 100%);
     border: none;
