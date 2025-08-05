@@ -1967,10 +1967,6 @@ a {
     background: #4caf50;
 }
 
-.timeline-item.bermasalah::before {
-    background: red !important;
-}
-
 .timeline-content {
     background: white;
     padding: 15px;

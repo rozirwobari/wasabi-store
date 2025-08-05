@@ -20,6 +20,10 @@
             color: var(--gold);
             background: #3e4c2cc7;
         }
+
+        .timeline-item.bermasalah::before {
+            background: red !important;
+        }
     </style>
 @endsection
 
