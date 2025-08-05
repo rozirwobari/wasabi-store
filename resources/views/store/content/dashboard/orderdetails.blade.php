@@ -125,7 +125,7 @@
                                         </div>
                                     @else
                                         <div
-                                            class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status >= 1 ? 'completed' : '') }}">
+                                            class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran Berhasil</div>
                                                 <div class="timeline-date">
@@ -135,7 +135,7 @@
                                     @endif
 
                                     <div
-                                        class="timeline-item {{ $orders->status == 2 ? 'active' : ($orders->status == 2 ? 'completed' : '') }}">
+                                        class="timeline-item {{ $orders->status == 2 ? 'active' : ($orders->status > 2 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             <div class="timeline-title">Pesanan Diproses</div>
                                             <div class="timeline-date">
@@ -143,7 +143,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status == 3 ? 'completed' : '') }}">
+                                    <div class="timeline-item {{ $orders->status == 3 ? 'active' : ($orders->status > 3 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             @php
                                                 $reason_pengiriman = json_decode($orders->reason_game, false);
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status == 4 ? 'completed' : '') }}">
+                                    <div class="timeline-item {{ $orders->status == 4 ? 'active' : ($orders->status > 4 ? 'completed' : '') }}">
                                         <div class="timeline-content">
                                             @php
                                                 $reason_claim = json_decode($orders->reason_game, false);
