@@ -201,9 +201,6 @@
                                             <i class="fa-solid fa-file-invoice me-2"></i>Bayar Sekarang
                                         </button>
                                     @endif
-                                    <button class="btn btn-primary-custom w-100 mb-2">
-                                        <i class="fas fa-download me-2"></i>Download Invoice
-                                    </button>
                                 </div>
                             </div>
                         </div>
