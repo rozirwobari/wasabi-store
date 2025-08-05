@@ -98,7 +98,7 @@ class WabiApiController
                 ]);
                 return response()->json([
                     'success' => true,
-                    'message' => 'Data Berhasil Terupdate'
+                    'message' => 'Data Berhasil  [404]'
                 ], 200);
             }
             if ($status_code >= 2 and $status_code < 2) {
