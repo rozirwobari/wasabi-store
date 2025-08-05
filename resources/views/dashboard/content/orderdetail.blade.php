@@ -194,7 +194,7 @@
                                 </div>
                                 <div class="step-content">
                                     <h6>Pembayaran Gagal</h6>
-                                    <small class="text-muted">{{ $orders->data_midtrans }}</small>
+                                    <small class="text-muted">{{ $orders->data_midtrans }}</small><br>
                                     <small class="text-muted">{{ ($value = $tgl_transaksi['404'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</small>
                                 </div>
                             </div>
