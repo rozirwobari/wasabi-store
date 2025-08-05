@@ -131,7 +131,8 @@ class WabiApiController
         }
         return response()->json([
             'success' => true,
-            'message' => 'Data Berhasil Terupdate'
+            'message' => 'Data Berhasil Terupdate',
+            'data' => $orders,
         ], 200);
     }
 
