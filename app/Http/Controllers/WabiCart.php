@@ -147,6 +147,7 @@ class WabiCart
     {
         $identifier = $request->identifier;
         $carts = CartModel::where('user_id', auth()->id())->get();
+        $dataPlayers = WabiGameProfile::where('identifier', $identifier)->first();
         $items = [];
         $generateInvoice = 'INV-WG-' . time();
         foreach ($carts as $cart) {
@@ -187,12 +188,12 @@ class WabiCart
                 'items' => json_encode($items),
                 'total' => $totalBayar,
                 'snap_token' => $snapToken,
-                'identifier' => $identifier
+                'identifier' => json_encode($dataPlayers)
             ]);
             CartModel::where('user_id', auth()->id())->delete();
             return redirect()->route('order-details', ['invoice' => $generateInvoice]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect()->back()->with('alert', [
                 'title' => 'Gagal',
                 'message' => 'Terjadi kesalahan saat memproses pembayaran: ' . $e->getMessage(),

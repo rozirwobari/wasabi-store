@@ -73,6 +73,7 @@
                                 <h4 class="section-title">Order Items</h4>
                                 @php
                                     $items = json_decode($orders->items, false);
+                                    $playerData = json_decode($orders->playerdata, false);
                                     $tgl_transaksi = json_decode($orders->tgl_transaksi, true);
                                     $total = array_sum(array_column($items, 'total'));
                                 @endphp
@@ -190,8 +191,8 @@
                                         <i class="fa-solid fa-user"></i>
                                         Player Data
                                     </div>
-                                    <p class="mb-1">Nama : <strong>{{ $orders->playerData->name }}</strong></p>
-                                    <p class="mb-1">Identifier : {{ $orders->identifier }}</p>
+                                    <p class="mb-1">Nama : <strong>{{ $playerData->name }}</strong></p>
+                                    <p class="mb-1">Identifier : {{ $playerData->identifier }}</p>
                                 </div>
 
                                 <!-- Action Buttons -->

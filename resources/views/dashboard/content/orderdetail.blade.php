@@ -154,6 +154,7 @@
 @section('content')
 @php
     $items = json_decode($orders->items, false);
+    $playerData = json_decode($orders->playerdata, false);
     $tgl_transaksi = json_decode($orders->tgl_transaksi, true);
     $total = array_sum(array_column($items, 'total'));
 @endphp
@@ -233,8 +234,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p class="mb-1"><strong>Steam Hex:</strong> {{ $orders->identifier }}</p>
-                                    <p class="mb-1"><strong>Nama:</strong> {{ $orders->playerData->name }}</p>
+                                    <p class="mb-1"><strong>Nama:</strong> {{ $playerData->name }}</p>
+                                    <p class="mb-1"><strong>Steam Hex:</strong> {{ $playerData->identifier }}</p>
                                 </div>
                             </div>
                         </div>

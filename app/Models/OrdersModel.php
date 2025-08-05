@@ -10,14 +10,14 @@ class OrdersModel extends Model
     protected $table = 'wabi_orders';
     protected $fillable = [
         'no_invoice',
-        'user_id', 
+        'user_id',
         'items',
         'total',
         'status',
         'snap_token',
         'data_midtrans',
         'tgl_transaksi',
-        'identifier',
+        'playerdata',
         'reason_game',
         'created_at',
         'updated_at',
@@ -26,10 +26,5 @@ class OrdersModel extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function playerData()
-    {
-        return $this->belongsTo(WabiGameProfile::class, 'identifier', 'identifier');
     }
 }

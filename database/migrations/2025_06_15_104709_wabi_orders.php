@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); // bigint unsigned auto_increment primary key
             $table->string('no_invoice', 150)->default('0');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->string('identifier', 150)->nullable();
+            $table->longText('playerdata')->nullable();
             $table->json('items')->default('[]');
             $table->integer('total');
             $table->integer('status')->default(0);
