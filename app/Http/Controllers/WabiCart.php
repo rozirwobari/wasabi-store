@@ -151,7 +151,6 @@ class WabiCart
             ['identifier', '=', $identifier],
             ['user_id', '=', auth()->id()]
         ])->first();
-        dd($dataPlayers);
         $items = [];
         $generateInvoice = 'INV-WG-' . time();
         foreach ($carts as $cart) {
@@ -192,7 +191,7 @@ class WabiCart
                 'items' => json_encode($items),
                 'total' => $totalBayar,
                 'snap_token' => $snapToken,
-                'identifier' => json_encode($dataPlayers)
+                'playerdata' => json_encode($dataPlayers)
             ]);
             CartModel::where('user_id', auth()->id())->delete();
             return redirect()->route('order-details', ['invoice' => $generateInvoice]);
