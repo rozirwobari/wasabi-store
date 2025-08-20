@@ -72,7 +72,7 @@ class WabiApiController
                 break;
 
             case 'expire':
-                $status_code = 404;
+                $status_code = 4001;
                 $tgl_transaksi["404"] = time();
                 $reason = "Pembayaran Kadaluarsa";
                 break;

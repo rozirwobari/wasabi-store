@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
 
-                                    @if ($orders->status == 404)
+                                    @if ($orders->status == 404 || $orders->status == 4001)
                                         <div class="timeline-item bermasalah">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran Gagal</div>
