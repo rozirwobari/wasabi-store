@@ -74,6 +74,8 @@
                                         <div class="order-status-badge status-completed">Diambil</div>
                                     @elseif ($orders->status == 404)
                                         <div class="order-status-badge status-canceled">Canceled</div>
+                                    @elseif ($orders->status == 4001)
+                                        <div class="order-status-badge status-canceled">Expired</div>
                                     @else
                                         <span class="order-status-badge status-unknown">Unknown</span>
                                     @endif
