@@ -62,8 +62,10 @@ class WabiAdminOrders extends Controller
             $countItemBulanLalu += count($item);
         };
 
-        dd($pendapatanBulanLalu);
-        dd($pendapatanBulanIni);
+        dd([
+            $pendapatanBulanIni,
+            $pendapatanBulanLalu,
+        ]);
         return [
             'bulanIni' => $countItemBulanIni,
             'bulanLalu' => $countItemBulanLalu,
