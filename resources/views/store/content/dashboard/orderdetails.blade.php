@@ -170,8 +170,10 @@
                                                 }
                                             @endphp
                                             <div class="timeline-title">Pesanan Sampai</div>
-                                            <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
-                                            <div class="timeline-date">System : {{ $reason_pengiriman_txt }}</div>
+                                            @if ($reason_pengiriman_txt != '')
+                                                <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                                <div class="timeline-date">System : {{ $reason_pengiriman_txt }}</div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -186,11 +188,13 @@
                                                 $no = 1;
                                             @endphp
                                             <div class="timeline-title">Diambil</div>
-                                            <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
-                                            <br>
-                                            @foreach ($reason_claim_array as $data_claim)
-                                                <div class="timeline-date m-1"><b>{{ $no++ }}</b>. {{ $data_claim }}</div>
-                                            @endforeach
+                                            @if (count($reason_claim_array) > 0 )
+                                                <div class="timeline-date">Pesanan Kamu Sudah Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['5'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                                <br>
+                                                @foreach ($reason_claim_array as $data_claim)
+                                                    <div class="timeline-date m-1"><b>{{ $no++ }}</b>. {{ $data_claim }}</div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
