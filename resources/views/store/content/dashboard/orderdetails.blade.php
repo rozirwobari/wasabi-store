@@ -170,8 +170,10 @@
                                                 }
                                             @endphp
                                             <div class="timeline-title">Pesanan Sampai</div>
-                                            @if ($reason_pengiriman_txt != '')
+                                            @if (isset($tgl_transaksi['4']) && $tgl_transaksi['4'])
                                                 <div class="timeline-date">Pesanan Kamu Sudah Bisa Di Ambil Di Dalam Game <br>{{ ($value = $tgl_transaksi['4'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            @endif
+                                            @if ($reason_pengiriman_txt != '')
                                                 <div class="timeline-date">System : {{ $reason_pengiriman_txt }}</div>
                                             @endif
                                         </div>
