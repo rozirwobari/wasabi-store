@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <div class="timeline-item active">
+                                        <div class="timeline-item {{ $orders->status > 0 ? 'active' : '' }}">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran</div>
                                                 <div class="timeline-date">
