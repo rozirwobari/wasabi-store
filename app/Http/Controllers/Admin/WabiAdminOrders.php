@@ -45,7 +45,7 @@ class WabiAdminOrders extends Controller
         $countItemBulanIni = 0;
         $countItemBulanLalu = 0;
         $pendapatanBulanIni = OrdersModel::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$bulanIni])
-            ->whereBetween('status', [3, 6])->get();
+            ->whereIn('status', [2, 3, 4, 5, 6])->get();
             // ->where('status', 0)->get();
 
         foreach ($pendapatanBulanIni as $key => $value) {
@@ -54,7 +54,7 @@ class WabiAdminOrders extends Controller
         };
 
         $pendapatanBulanLalu = OrdersModel::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$bulanLalu])
-            ->whereBetween('status', [3, 6])->get();
+            ->whereIn('status', [2, 3, 4, 5, 6])->get();
             // ->where('status', 0)->get();
 
         foreach ($pendapatanBulanLalu as $key => $value) {
@@ -72,11 +72,11 @@ class WabiAdminOrders extends Controller
         $bulanIni = date('Y-m');
         $bulanLalu = date('Y-m', strtotime('-1 month'));
         $pendapatanBulanIni = OrdersModel::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$bulanIni])
-            ->whereBetween('status', [3, 6])
+            ->whereIn('status', [2, 3, 4, 5, 6])
             ->sum('total');
 
         $pendapatanBulanLalu = OrdersModel::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$bulanLalu])
-            ->whereBetween('status', [3, 6])
+            ->whereIn('status', [2, 3, 4, 5, 6])
             ->sum('total');
         return [
             'bulanIni' => $pendapatanBulanIni,
