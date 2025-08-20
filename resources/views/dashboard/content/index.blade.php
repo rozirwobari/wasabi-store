@@ -93,6 +93,8 @@
                                                 <div class="status-badge status-completed">Diambil</div>
                                             @elseif ($order->status == 404)
                                                 <div class="status-badge status-canceled">Batal</div>
+                                            @elseif ($order->status == 4001)
+                                                <div class="status-badge status-canceled">Expired</div>
                                             @else
                                                 <span class="status-badge status-inactive">Unknown</span>
                                             @endif
