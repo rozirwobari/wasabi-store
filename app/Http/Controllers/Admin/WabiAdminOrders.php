@@ -51,8 +51,10 @@ class WabiAdminOrders extends Controller
             // ->where('status', 0)->get();
 
         foreach ($pendapatanBulanIni as $key => $value) {
-            $item = json_decode($value->items);
-            $countItemBulanIni += count($item);
+            if ($order->status > 2 && $order->status <= 6) {
+                $item = json_decode($value->items);
+                $countItemBulanIni += count($item);
+            }
         };
 
         $pendapatanBulanLalu = OrdersModel::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$bulanLalu])
