@@ -281,9 +281,9 @@
             });
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
+                    const respon = JSON.parse(xhr.responseText);
                     if (xhr.status === 200) {
-                        const respon = JSON.parse(xhr.responseText);
-                        if (respon.success) {
+                        if (respon?.success) {
                             let PlayerData = respon.data
                             document.getElementById(`player_name_${steam}`).textContent = PlayerData.name;
                             Swal.fire({
@@ -304,7 +304,8 @@
                         Swal.fire({
                             icon: 'warning',
                             title: 'Gagal!',
-                            text: `Error : ${JSON.stringify(xhr.responseText)}`,
+                            // text: `Error : ${JSON.stringify(xhr.responseText)}`,
+                            text: `Error : ${respon.message}`,
                             showConfirmButton: true
                         });
                     }
