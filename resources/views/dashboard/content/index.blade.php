@@ -15,7 +15,8 @@
                         <div class="stat-icon">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
-                        <div class="stat-value">Rp {{ number_format($orders->sum('total'), 0, ',', '.') }}</div>
+                        {{-- <div class="stat-value">Rp {{ number_format($orders->sum('total'), 0, ',', '.') }}</div> --}}
+                        <div class="stat-value">Rp {{ number_format($orders->whereBetween('status', [3, 6])->sum('total'), 0, ',', '.') }}</div>
                         <div class="stat-label">Total Pendapatan</div>
                         <div class="stat-change {{ ($persetasiPendapatan >= 0) ? 'positive' : 'negative' }}">
                             <i class="fas fa-arrow-{{ ($persetasiPendapatan >= 0) ? 'up' : 'down' }}"></i>
