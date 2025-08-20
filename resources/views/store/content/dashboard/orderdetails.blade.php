@@ -133,11 +133,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @else
+                                    @elseif ($orders->status == 2 || ($orders->status > 2 && $orders->status <= 6))
                                         <div
                                             class="timeline-item {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'completed' : '') }}">
                                             <div class="timeline-content">
                                                 <div class="timeline-title">Pembayaran Berhasil</div>
+                                                <div class="timeline-date">
+                                                    {{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="timeline-item active">
+                                            <div class="timeline-content">
+                                                <div class="timeline-title">Pembayaran</div>
                                                 <div class="timeline-date">
                                                     {{ ($value = $tgl_transaksi['2'] ?? null) ? \App\Helpers\WabiHelper::formatDate(date('Y-m-d H:i:s', $value)) : '' }}</div>
                                             </div>
