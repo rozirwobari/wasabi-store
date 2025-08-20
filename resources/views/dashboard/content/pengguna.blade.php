@@ -59,7 +59,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $user->email }}</td>
-                                        <td>Rp {{ number_format($user->orders->sum('total'), 0, ',', '.') }}</td>
+                                        <td>Rp {{ number_format($user->orders->whereBetween('status', [3, 6])->sum('total'), 0, ',', '.') }}</td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-secondary-custom me-1" title="Edit Produk"
                                                 href="{{ url('admin/editpengguna/' . $user->id) }}">
