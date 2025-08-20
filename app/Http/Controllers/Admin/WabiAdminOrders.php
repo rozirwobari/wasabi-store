@@ -32,8 +32,10 @@ class WabiAdminOrders extends Controller
 
         $totalTerjual = 0;
         foreach ($orders as $order) {
-            $item = json_decode($order->items);
-            $totalTerjual += count($item);
+            if ($order->items > 2 && $order->items <= 6) {
+                $item = json_decode($order->items);
+                $totalTerjual += count($item);
+            }
         }
         return view('dashboard.content.orders', compact('orders', 'totalTerjual', 'persetasiPendapatan', 'persetasiOrders'));
     }
@@ -62,10 +64,10 @@ class WabiAdminOrders extends Controller
             $countItemBulanLalu += count($item);
         };
 
-        dd([
-            $pendapatanBulanIni,
-            $pendapatanBulanLalu,
-        ]);
+        // dd([
+        //     $pendapatanBulanIni,
+        //     $pendapatanBulanLalu,
+        // ]);
         return [
             'bulanIni' => $countItemBulanIni,
             'bulanLalu' => $countItemBulanLalu,
