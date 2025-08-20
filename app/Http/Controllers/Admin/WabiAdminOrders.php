@@ -51,7 +51,7 @@ class WabiAdminOrders extends Controller
             // ->where('status', 0)->get();
 
         foreach ($pendapatanBulanIni as $key => $value) {
-            if ($order->status > 2 && $order->status <= 6) {
+            if ($value->status > 2 && $value->status <= 6) {
                 $item = json_decode($value->items);
                 $countItemBulanIni += count($item);
             }
@@ -62,7 +62,7 @@ class WabiAdminOrders extends Controller
             // ->where('status', 0)->get();
 
         foreach ($pendapatanBulanLalu as $key => $value) {
-            if ($order->status > 2 && $order->status <= 6) {
+            if ($value->status > 2 && $value->status <= 6) {
                 $item = json_decode($value->items);
                 $countItemBulanLalu += count($item);
             }
