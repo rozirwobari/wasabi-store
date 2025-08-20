@@ -330,6 +330,11 @@
             color: #f44336;
         }
 
+        .status-unknown {
+            background-color: rgba(175, 76, 76, 0.2);
+            color: #c0c0c0;
+        }
+
         .btn-primary-custom {
             background: linear-gradient(135deg, var(--red) 0%, #d63a46 100%);
             border: none;
