@@ -187,7 +187,7 @@
                             </div>
                         </div>
 
-                        @if ($orders->status == 404)
+                        @if ($orders->status == 404 || $orders->status == 4001)
                             <div class="progress-step {{ $orders->status == 1 ? 'active' : ($orders->status > 1 ? 'gagal' : '') }}">
                                 <div class="step-icon">
                                     <i class="fas fa-credit-card"></i>
