@@ -1,5 +1,18 @@
 @extends('store.layout')
 
+@section('css')
+    <style>
+        .status-canceled {
+            background-color: rgba(175, 76, 76, 0.2);
+            color: #f44336;
+        }
+        .status-unknown {
+            background-color: rgba(158, 158, 158, 0.2);
+            color: #000000;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="dashboard-container">
         <div class="container">
