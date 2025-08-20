@@ -32,7 +32,7 @@ class WabiAdminOrders extends Controller
 
         $totalTerjual = 0;
         foreach ($orders as $order) {
-            if ($order->items > 2 && $order->items <= 6) {
+            if ($order->status > 2 && $order->status <= 6) {
                 $item = json_decode($order->items);
                 $totalTerjual += count($item);
             }
