@@ -17,23 +17,25 @@ class WabiAdminDashboard
     {
         $orders = OrdersModel::orderBy('created_at', 'desc')->get();
         $produks = ProdukModel::orderBy('created_at', 'desc')->get();
-        $WabiAdminOrders = new WabiAdminOrders();        
+        $WabiAdminOrders = new WabiAdminOrders();
         $getPendapatan = $WabiAdminOrders->GetTotalPendapatan();
         $persetasiPendapatan = $WabiAdminOrders->hitungPersentase(
-            $getPendapatan['bulanLalu'], 
+            $getPendapatan['bulanLalu'],
             $getPendapatan['bulanIni'],
         );
 
         $getPendapatan = $WabiAdminOrders->GetTotalOrder();
         $persetasiOrders = $WabiAdminOrders->hitungPersentase(
-            $getPendapatan['bulanLalu'], 
+            $getPendapatan['bulanLalu'],
             $getPendapatan['bulanIni'],
         );
 
         $totalTerjual = 0;
         foreach ($orders as $order) {
-            $item = json_decode($order->items);
-            $totalTerjual += count($item);
+            if ($order->status > 2 && $order->status <= 6) {
+                $item = json_decode($order->items);
+                $totalTerjual += count($item);
+            }
         }
 
         return view('dashboard.content.index', compact('orders', 'persetasiOrders', 'persetasiPendapatan', 'totalTerjual', 'produks'));
