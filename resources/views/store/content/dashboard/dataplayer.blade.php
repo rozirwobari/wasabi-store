@@ -302,7 +302,7 @@
                         }
                     } else {
                         Swal.fire({
-                            icon: 'warning',
+                            icon: 'error',
                             title: 'Gagal!',
                             // text: `Error : ${JSON.stringify(xhr.responseText)}`,
                             text: `Error : ${respon.message}`,
