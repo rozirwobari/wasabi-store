@@ -28,23 +28,23 @@ class LoginController
         $remember = $request->has('remember');
 
         $user = User::where('email', $email)->first();
-    
+
         if (!$user) {
             return back()->withErrors([
                 'email' => 'Email tidak terdaftar.',
-            ])->withInput($request->only('email'));
+            ])->withInput($request->input('email'));
         }
 
         if ($user->is_active == 0) {
             return back()->withErrors([
                 'email' => 'Kamu Perlu Verifikasi Email',
-            ])->withInput($request->only('email'));
+            ])->withInput($request->input('email'));
         }
 
         if ($user->is_active == 9) {
             return back()->withErrors([
                 'email' => 'Aku Kamu Ditangguhkan',
-            ])->withInput($request->only('email'));
+            ])->withInput($request->input('email'));
         }
 
         if (Auth::attempt($credentials, $remember)) {
@@ -54,7 +54,7 @@ class LoginController
 
         return back()->withErrors([
             'password' => 'Password salah.',
-        ])->withInput($request->only('email'));
+        ])->withInput($request->input('email'));
     }
 
     public function logout(Request $request)

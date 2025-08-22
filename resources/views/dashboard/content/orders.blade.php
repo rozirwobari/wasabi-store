@@ -84,7 +84,7 @@
                                         <td>
                                             <div class="product-info">
                                                 <strong>{{ $order->user->name }}</strong>
-                                                <small class="text-muted d-block">Terimakasih Telah Membeli...</small>
+                                                <small class="text-muted d-block">{{ $order->no_invoice }}</small>
                                             </div>
                                         </td>
                                         <td class="text-center">{{ number_format(count($item), 0, ',', '.') }} Produk</td>
