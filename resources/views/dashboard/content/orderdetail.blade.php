@@ -162,6 +162,7 @@
     $playerData = json_decode($orders->playerdata, false);
     $tgl_transaksi = json_decode($orders->tgl_transaksi, true);
     $total = array_sum(array_column($items, 'total'));
+    $totalTransaksi = 0
 @endphp
     <div class="col-lg-9 col-md-8">
         <div id="order-view" class="tab-content">
@@ -301,6 +302,9 @@
                                                 </td>
                                                 <td class="text-center py-3">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                                                 <td class="text-center py-3"><strong>Rp {{ number_format($item->harga * $item->jumlah, 0, ',', '.') }}</strong></td>
+                                                @php
+                                                    $totalTransaksi += ($item->harga * $item->jumlah)
+                                                @endphp
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -322,34 +326,16 @@
                             <div class="order-summary">
                                 <div class="summary-row">
                                     <span>Subtotal:</span>
-                                    <span>Rp 235.000</span>
+                                    <span>Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</span>
                                 </div>
                                 <hr>
                                 <div class="summary-row total">
                                     <span><strong>Total:</strong></span>
-                                    <span><strong>Rp 265.000</strong></span>
+                                    <span><strong>Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</strong></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Payment Information -->
-                    {{-- <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <i class="fas fa-credit-card me-2"></i>Payment Information
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <p class="mb-2"><strong>Payment Method:</strong> Bank Transfer</p>
-                            <p class="mb-2"><strong>Payment Status:</strong>
-                                <span class="status-badge status-completed">Paid</span>
-                            </p>
-                            <p class="mb-2"><strong>Transaction ID:</strong> TXN-123456789</p>
-                            <p class="mb-2"><strong>Payment Date:</strong> 28 May 2025, 10:45 AM</p>
-                            <p class="mb-0"><strong>Bank:</strong> Bank Mandiri</p>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
