@@ -282,6 +282,15 @@ class WabiApiController
         return false;
     }
 
+    public function UnLinkedAccount($data)
+    {
+        $response = Http::post($this->gameEndpoint.'api/unlinkaccount', $data);
+        if ($response->successful()) {
+            return $response->json();
+        }
+        return false;
+    }
+
     public function linkedRespon(Request $request)
     {
         $user_id = $request->user_id;

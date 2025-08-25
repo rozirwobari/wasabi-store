@@ -239,6 +239,7 @@ class WabiDashboardUser
 
     public function deleteplayerdata(Request $request)
     {
+        $WabiApi = new WabiApiController();
         $dataPlayer = WabiGameProfile::where('user_id', auth()->id())->where('identifier', $request->identifier)->first();
         if (!$dataPlayer) {
             return response()->json([
@@ -247,6 +248,11 @@ class WabiDashboardUser
             ], 500);
         }
         $dataPlayer->delete();
+        $WabiApi->UnLinkedAccount([
+            'identifier' => $dataPlayer->identifier,
+            'email' => auth()->user()->email,
+            'user_id' => $dataPlayer->user_id,
+        ]);
         return response()->json([
             'success' => true,
             'message' => 'Data Berhaisl Dihapus',
